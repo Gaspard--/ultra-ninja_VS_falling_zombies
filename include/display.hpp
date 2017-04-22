@@ -29,6 +29,9 @@ public:
   ~Display();
 
   GLFWwindow *getWindow() const;
+
+  void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
+
   /**
    * Displays a renderable in the world.
    * Optional rotation argument rotates the renderable around 0, 0
