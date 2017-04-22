@@ -1,8 +1,8 @@
 #include <stdexcept>
 #include <fstream>
 #include <memory>
-#include "my_opengl.hpp"
 #include <iostream>
+#include "my_opengl.hpp"
 
 void my_opengl::shaderError(GLenum const shadertype, GLuint const shader)
 {
@@ -310,7 +310,7 @@ Texture my_opengl::loadTexture(std::string const &name)
     //         std::swap(data[sourcePos * 4 + 3], data[destPos * 4 + 3]);
     //       }
     // }
-     
+
     for (auto it = &data[0]; it < &data[dim[0] * dim[1] * sizeof(unsigned int)]; it += sizeof(unsigned int))
       {
         std::swap(it[0], it[3]);
