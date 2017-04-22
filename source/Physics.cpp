@@ -16,27 +16,19 @@ bool                    Physics::move(Fixture& fixture) const
   fixture.pos += fixture.speed;
   distance = sqrt(CAR(fixture.pos.x() - _planet.pos.x()) + CAR(fixture.pos.y() - _planet.pos.y()));
   vec = Vect<2, double>((fixture.pos.x() - _planet.pos.x()) / distance, (fixture.pos.y() - _planet.pos.y()) / distance);
+  /* Is fixture touching the planet ?*/
   if (haveCollision(fixture, _planet))
     {
+      /* fix the fixture to the planet ground */
       vec *= (fixture.radius + _planet.radius) - distance;
       fixture.pos += vec;
+      /* friction */
+      fixture.speed *= 0.9;
       return (true);
     }
+  /* application of gravity */
   fixture.speed *= vec * ((_G * fixture.mass * _planet.mass / CAR(distance)) * fixture.mass);
+  /* friction */
+  fixture.speed *= 0.99;
   return (false);
-}
-
-void    Physics::makePhysicsOnEntity(const std::vector<Entity *>& ent) const
-{
-  for (unsigned int i = 0 ; i < ent.size() ; i++)
-    if (this->move(ent[i]->getFixture()))
-      ent[i]->setIsOnPlanet(true);
-
-  for (unsigned int i = 0 ; i < ent.size() ; i++)
-    for (unsigned int j = i + 1 ; j < ent.size() ; j++)
-      if (haveCollision(ent[i]->getFixture(), ent[j]->getFixture()))
-        {
-          ent[i]->collision(*ent[j]);
-          ent[j]->collision(*ent[i]);
-        }
 }

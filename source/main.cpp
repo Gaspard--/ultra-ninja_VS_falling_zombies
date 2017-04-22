@@ -14,7 +14,7 @@ int main()
     while (display.isRunning())
       {
 	logic.tick();
-	display.render();
+	display.render(logic);
       }
   } catch (std::runtime_error const &e) {
     std::cerr << "program encoutered runtime error:" << std::endl
