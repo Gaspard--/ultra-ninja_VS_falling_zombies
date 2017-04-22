@@ -15,6 +15,8 @@ SRCS_CPP = 	source/main.cpp \
 		source/render_context.cpp \
 		source/gl3w.cpp \
 		source/FreeTypeLib.cpp \
+		source/Physics.cpp \
+		sourcs/Entities.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
