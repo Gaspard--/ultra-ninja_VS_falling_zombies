@@ -12,9 +12,9 @@
 # define LOGIC_HPP_
 
 # include <vector>
+# include "Entity.hpp"
 
-class Entity;
-
+//FIXME: forward declaration of entity ?
 class Logic
 {
 private:

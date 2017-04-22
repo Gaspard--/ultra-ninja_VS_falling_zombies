@@ -9,8 +9,11 @@
 //
 
 #include <algorithm>
-#include "Entity.hpp"
 #include "Logic.hpp"
+
+Logic::Logic()
+{
+}
 
 void Logic::tick(void)
 {

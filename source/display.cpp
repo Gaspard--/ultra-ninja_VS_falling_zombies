@@ -75,6 +75,10 @@ Display::~Display()
 {
 }
 
+GLFWwindow *Display::getWindow() const {
+  return window.get();
+}
+
 static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
 {
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
@@ -105,7 +109,7 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-bool Display::render()
+void Display::render()
 {
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
@@ -114,5 +118,9 @@ bool Display::render()
 
   glfwSwapBuffers(window.get());
   glfwPollEvents();
+}
+
+bool Display::isRunning()
+{
   return (!glfwWindowShouldClose(window.get()));
 }

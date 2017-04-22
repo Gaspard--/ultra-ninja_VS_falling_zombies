@@ -28,6 +28,7 @@ public:
 
   ~Display();
 
+  GLFWwindow *getWindow() const;
   /**
    * Displays a renderable in the world.
    * Optional rotation argument rotates the renderable around 0, 0
@@ -37,7 +38,8 @@ public:
    */
   void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
 
-  bool render();
+  void render();
+  bool isRunning();
 };
 
 #endif
