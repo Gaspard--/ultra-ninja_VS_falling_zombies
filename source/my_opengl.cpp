@@ -295,21 +295,22 @@ Texture my_opengl::loadTexture(std::string const &name)
 
     file.exceptions(std::ios::goodbit);
 
-    {
-      Vect<2u, unsigned int> i{0, 0};
+    // {
+    //   Vect<2u, int> i{0, 0};
 
-      for (i[0] = 0; i[0] < dim[0]; ++i[0])
-        for (i[1] = 0; i[1] < (dim[1] >> 1u); ++i[1])
-          {
-            unsigned int sourcePos(i[0] + (dim[1] - i[1] - 1) * dim[0]);
-            unsigned int destPos(i[0] + i[1] * dim[0]);
+    //   for (i[0] = 0; i[0] < dim[0]; ++i[0])
+    //     for (i[1] = 0; i[1] < (dim[1] >> 1u); ++i[1])
+    //       {
+    //         unsigned int sourcePos(i[0] + (dim[1] - i[1] - 1) * dim[0]);
+    //         unsigned int destPos(i[0] + i[1] * dim[0]);
 
-            std::swap(data[sourcePos * 4 + 0], data[destPos * 4 + 0]);
-            std::swap(data[sourcePos * 4 + 1], data[destPos * 4 + 1]);
-            std::swap(data[sourcePos * 4 + 2], data[destPos * 4 + 2]);
-            std::swap(data[sourcePos * 4 + 3], data[destPos * 4 + 3]);
-          }
-    }
+    //         std::swap(data[sourcePos * 4 + 0], data[destPos * 4 + 0]);
+    //         std::swap(data[sourcePos * 4 + 1], data[destPos * 4 + 1]);
+    //         std::swap(data[sourcePos * 4 + 2], data[destPos * 4 + 2]);
+    //         std::swap(data[sourcePos * 4 + 3], data[destPos * 4 + 3]);
+    //       }
+    // }
+     
     for (auto it = &data[0]; it < &data[dim[0] * dim[1] * sizeof(unsigned int)]; it += sizeof(unsigned int))
       {
         std::swap(it[0], it[3]);
