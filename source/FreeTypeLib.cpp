@@ -2,14 +2,14 @@
 #include "FreeTypeLib.hpp"
 #include "display.hpp"
 
-display::FreeTypeLib::FreeTypeLib()
+FreeTypeLib::FreeTypeLib()
   : fontLoaded(false), face(nullptr)
 {
   if (FT_Init_FreeType(&library))
     throw std::runtime_error("failed to init FreeType");
 }
 
-void display::FreeTypeLib::loadFont(std::string fontFile)
+void FreeTypeLib::loadFont(std::string fontFile)
 {
   if (face)
     FT_Done_Face(face);
@@ -25,7 +25,7 @@ void display::FreeTypeLib::loadFont(std::string fontFile)
   fontLoaded = true;
 }
 
-void display::FreeTypeLib::renderText(std::string text, Vect<2u, float> pos, display::Display &display)
+void FreeTypeLib::renderText(std::string text, Vect<2u, float> pos, Display &display)
 {
   if (!face)
     throw std::runtime_error("No font loaded to render text.");
@@ -44,7 +44,7 @@ void display::FreeTypeLib::renderText(std::string text, Vect<2u, float> pos, dis
     }
 }
 
-display::FreeTypeLib::~FreeTypeLib()
+FreeTypeLib::~FreeTypeLib()
 {
   FT_Done_FreeType(library);
 }

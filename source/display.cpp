@@ -8,14 +8,14 @@ static void errorCallback(int, const char *str)
   throw std::runtime_error(str);
 }
 
-display::Display::GlfwContext::GlfwContext()
+Display::GlfwContext::GlfwContext()
 {
   glfwSetErrorCallback(&errorCallback);
   if (!glfwInit())
     throw std::runtime_error("opengl: failed to initialize glfw");
 }
 
-display::Display::GlfwContext::~GlfwContext()
+Display::GlfwContext::~GlfwContext()
 {
   glfwTerminate();
 }
@@ -34,20 +34,20 @@ static std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> createWindow()
   return window;
 }
 
-display::Display::Display()
+Display::Display()
   : window(createWindow())
 {
 }
 
-display::Display::~Display()
+Display::~Display()
 {
 }
 
 
-bool display::Display::render()
+bool Display::render()
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glfwSwapBuffers(window.get());
   glfwPollEvents();
-  return (glfwWindowShouldClose(window.get()));
+  return (!glfwWindowShouldClose(window.get()));
 }

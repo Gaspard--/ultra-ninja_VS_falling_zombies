@@ -9,23 +9,20 @@
 
 #include "vect.hpp"
 
-namespace display
-{
-  class Display;
+class Display;
 
-  class FreeTypeLib
-  {
-    FT_Library library;
-    bool fontLoaded;
-    FT_Face face;
-    char badPadding[8];
-  public:
-    FreeTypeLib();
-    FreeTypeLib(FreeTypeLib const &) = delete;
-    ~FreeTypeLib();
-    void loadFont(std::string fontFile);
-    void renderText(std::string text, Vect<2u, float> pos, Display &display);
-  };
-}
+class FreeTypeLib
+{
+  FT_Library library;
+  bool fontLoaded;
+  FT_Face face;
+  char badPadding[8];
+public:
+  FreeTypeLib();
+  FreeTypeLib(FreeTypeLib const &) = delete;
+  ~FreeTypeLib();
+  void loadFont(std::string fontFile);
+  void renderText(std::string text, Vect<2u, float> pos, Display &display);
+};
 
 #endif
