@@ -58,7 +58,11 @@ void Logic::handleKey(GLFWwindow *window, Key key)
 
 void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 {
+  int width = 1920;
+  int height = 1080;
+
   _mousePos = {mouse.x, mouse.y};
+  _mousePos = (_mousePos - Vect<2u, double>(width - height, 0) * 0.5) / Vect<2u, double>(height * 0.5, -height * 0.5) + Vect<2u, double>(-1.0, 1.0);
 }
 
 void Logic::handleButton(GLFWwindow *, Button button)
