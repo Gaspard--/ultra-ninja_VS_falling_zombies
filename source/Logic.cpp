@@ -8,7 +8,6 @@
 // Last update Sat Apr 22 22:08:25 2017 Louis Guittard
 //
 
-#include <algorithm>
 #include "Logic.hpp"
 
 Logic::Logic()
@@ -19,6 +18,5 @@ Logic::Logic()
 void Logic::tick(void)
 {
   this->_physics.makePhysicsOnEntity(_entities.begin(), _entities.end());
-  std::for_each(_entities.begin(), _entities.end(),
-		[](Entity &e) { e.update(); });
+  for_each_entity([](Entity &e) { e.update(); });
 }
