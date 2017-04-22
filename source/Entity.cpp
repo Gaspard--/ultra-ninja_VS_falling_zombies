@@ -1,26 +1,7 @@
-# include "Entity.hpp"
-
-Physics::Fixture&       Entity::getFixture(void)
-{
-  return (_fixture);
-}
-
-const Physics::Fixture& Entity::getFixture(void) const
-{
-  return (_fixture);
-}
-
-void    Entity::setIsOnPlanet(bool isOnPlanet)
-{
-  _isOnPlanet = isOnPlanet;
-}
+#include "Entity.hpp"
 
 void Entity::update(void)
 {
-
-}
-
-Renderable const &Entity::getRenderable() const
-{
-  return (_renderable);
+  renderable.destSize = renderable.sourceSize;
+  renderable.destPos = fixture.pos;
 }

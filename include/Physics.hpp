@@ -5,7 +5,7 @@
 # include <cmath>
 # include <vector>
 
-class Entity;
+struct Entity;
 
 # define CAR(x) ((x) * (x))
 
@@ -25,6 +25,7 @@ public:
 
   struct                Fixture
   {
+    Fixture();
     Fixture(const Vect<2, double>& i_pos, const Vect<2, double>& i_speed, double i_radius, double i_mass) : pos(i_pos),
                                                                                                       speed(i_speed),
                                                                                                       radius(i_radius),
@@ -55,12 +56,12 @@ public:
   void  makePhysicsOnEntity(T begin, T end) const
   {
     for (T i = begin ; i != end ; ++i)
-      if (this->move(i->getFixture()))
-        i->setIsOnPlanet(true);
+      if (this->move(i->fixture))
+        i->isOnPlanet = true;
 
     for (T i = begin ; i != end ; ++i)
       for (T j = i + 1 ; j != end ; ++j)
-        if (haveCollision(i->getFixture(), j->getFixture()))
+        if (haveCollision(i->fixture, j->fixture))
           {
             i->collision(*j);
             j->collision(*i);
