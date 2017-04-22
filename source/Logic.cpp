@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include "Logic.hpp"
+#include "Input.hpp"
 
 Logic::Logic()
 {
@@ -19,4 +20,45 @@ void Logic::tick(void)
 {
   std::for_each(_entities.begin(), _entities.end(),
 		[](Entity &e) { e.update(); });
+}
+
+void Logic::handleEvent(Event const& event)
+{
+  if (event)
+    {
+      switch (event.type)
+	{
+	case Event::KEY:
+	  handleKey(event.window, event.val.key);
+	  break;
+	case Event::MOUSE:
+	  handleMouse(event.window, event.val.mouse);
+	  break;
+	case Event::BUTTON:
+	  handleButton(event.window, event.val.button);
+	  break;
+	}
+    }
+}
+
+void Logic::handleKey(GLFWwindow *window, Key key)
+{
+  switch (key.key)
+    {
+    case GLFW_KEY_ESCAPE:
+      glfwSetWindowShouldClose(window, true);
+      break;
+    }
+}
+
+void Logic::handleMouse(GLFWwindow *window, Mouse mouse)
+{
+  (void)window;
+  (void)mouse;
+}
+
+void Logic::handleButton(GLFWwindow *window, Button button)
+{
+  (void)window;
+  (void)button;
 }

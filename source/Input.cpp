@@ -8,17 +8,17 @@ void Input::setWindow(GLFWwindow *window)
   // set glfw callback
   glfwSetKeyCallback(window, [] (GLFWwindow *window, int key, int scancode, int action, int mode) {
       (void)window;
-      Event ev = {true, Event::KEY, {.key = {key, scancode, action, mode}}};
+      Event ev = {true, Event::KEY, window, {.key = {key, scancode, action, mode}}};
       Input::instance._events.push(ev);
     });
   glfwSetCursorPosCallback(window, [] (GLFWwindow *window, double x, double y) {
       (void)window;
-      Event ev = {true, Event::MOUSE, {.mouse = {x, y}}};
+      Event ev = {true, Event::MOUSE, window, {.mouse = {x, y}}};
       Input::instance._events.push(ev);
     });
   glfwSetMouseButtonCallback(window, [] (GLFWwindow *window, int button, int action, int mods) {
       (void)window;
-      Event ev = {true, Event::BUTTON, {.button = {button, action, mods}}};
+      Event ev = {true, Event::BUTTON, window, {.button = {button, action, mods}}};
       Input::instance._events.push(ev);
     });
 }

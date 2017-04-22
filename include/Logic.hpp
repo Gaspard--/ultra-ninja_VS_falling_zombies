@@ -13,16 +13,22 @@
 
 # include <vector>
 # include "Entity.hpp"
+# include "Input.hpp"
 
-//FIXME: forward declaration of entity ?
 class Logic
 {
 private:
   std::vector<Entity> _entities;
 
+private:
+  void handleKey(GLFWwindow *window, Key key);
+  void handleMouse(GLFWwindow *window, Mouse mouse);
+  void handleButton(GLFWwindow *window, Button button);
+
 public:
   Logic();
 
+  void handleEvent(Event const& event);
   void tick(void);
 };
 

@@ -1,10 +1,27 @@
 #ifndef INPUT_HPP_
 # define INPUT_HPP_
 
-# include <my_opengl.hpp>
 # include <iostream>
 # include <queue>
-# include "Logic.hpp"
+# include "my_opengl.hpp"
+
+struct Key {
+  int key;
+  int scancode;
+  int action;
+  int mode;
+};
+
+struct Mouse {
+  double x;
+  double y;
+};
+
+struct Button {
+  int button;
+  int action;
+  int mods;
+};
 
 struct Event
 {
@@ -15,25 +32,15 @@ struct Event
     BUTTON,
   } type;
 
+  GLFWwindow *window;
+
   union {
-    struct {
-      int key;
-      int scancode;
-      int action;
-      int mode;
-    } key;
-    struct {
-      double x;
-      double y;
-    } mouse;
-    struct {
-      int button;
-      int action;
-      int mods;
-    } button;
+    Key key;
+    Mouse mouse;
+    Button button;
   } val;
 
-  operator bool() { return hasEvent; };
+  operator bool() const { return hasEvent; };
 };
 
 /**
