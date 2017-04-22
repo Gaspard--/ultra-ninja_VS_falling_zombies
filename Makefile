@@ -17,7 +17,7 @@ SRCS_CPP = 	source/main.cpp \
 		source/FreeTypeLib.cpp \
 		source/Physics.cpp \
 		source/Input.cpp \
-		source/Entities.cpp
+		source/Entity.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 

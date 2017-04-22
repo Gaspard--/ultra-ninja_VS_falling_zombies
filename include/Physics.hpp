@@ -5,7 +5,7 @@
 # include <cmath>
 # include <vector>
 
-class Entities;
+class Entity;
 
 # define CAR(x) ((x) * (x))
 
@@ -40,11 +40,11 @@ public:
 
   /****************************/
   /*                          */
-  /*  Entities management ... */
+  /*  Entity management ... */
   /*                          */
   /****************************/
 
-  void  makePhysicesOnEntities(const std::vector<Entities *>&) const;
+  void  makePhysicesOnEntity(const std::vector<Entity *>&) const;
 
 private:
 

@@ -1,5 +1,5 @@
 # include "Physics.hpp"
-# include "Entities.hpp"
+# include "Entity.hpp"
 
 bool    Physics::haveCollision(const Fixture& a, const Fixture& b) const
 {
@@ -11,7 +11,7 @@ void    Physics::move(Fixture& fixture) const
   fixture.pos += fixture.speed;
 }
 
-void    Physics::makePhysicesOnEntities(const std::vector<Entities *>& ent) const
+void    Physics::makePhysicesOnEntity(const std::vector<Entity *>& ent) const
 {
   for (unsigned int i = 0 ; i < ent.size() ; i++)
     this->move(ent[i]->getFixture());
