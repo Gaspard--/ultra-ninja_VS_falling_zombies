@@ -43,7 +43,7 @@ Display::GlfwContext::~GlfwContext()
 
 Display::Display()
   : window([]{
-      std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", NULL, NULL), &glfwDestroyWindow);
+      std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", nullptr, nullptr), &glfwDestroyWindow);
 
       if (!window)
 	throw std::runtime_error("opengl: failed to open window");
@@ -89,8 +89,6 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   Bind<RenderContext> bind(textureContext);
   float buffer[4u * 4u];
   Vect<2u, float> up(renderable.destPos.normalized());
-  // Vect<2u, float> left(up[1], -up[0]);
-
 
   for (unsigned int j(0u); j != 4u; ++j)
     {
@@ -109,12 +107,16 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void Display::render()
+void Display::render(Logic const &logic)
 {
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, (time(nullptr) % 10) * 0.1), Vect<2u, float>(0.5, 0.5)});
+  logic.for_each_entity([this](Entity const &e)
+			{
+			  displayRenderable(e.getRenderable());
+			});
+  // displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, (time(nullptr) % 10) * 0.1), Vect<2u, float>(0.5, 0.5)});
 
   glfwSwapBuffers(window.get());
   glfwPollEvents();

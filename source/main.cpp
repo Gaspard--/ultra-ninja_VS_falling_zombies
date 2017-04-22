@@ -22,7 +22,7 @@ int main()
 	logic.tick();
 
 	// render
-	display.render();
+	display.render(logic);
       }
 
   } catch (std::runtime_error const &e) {

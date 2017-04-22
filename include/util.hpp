@@ -12,7 +12,7 @@ public:
     : op(op)
   {}
 
-  constexpr R get() {
+  constexpr R get() const {
     return op();
   }
 };
@@ -28,7 +28,7 @@ public:
     : op(op)
   {}
   
-  constexpr Y apply(X const &x) {
+  constexpr Y apply(X const &x) const {
     return op(x);
   }
 };
