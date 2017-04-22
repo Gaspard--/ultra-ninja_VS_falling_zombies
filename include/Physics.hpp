@@ -67,6 +67,10 @@ public:
           }
   }
 
+  /* Planet size getter */
+
+  double        getPlanetRadius(void) const;
+
 private:
 
   const Fixture _planet;

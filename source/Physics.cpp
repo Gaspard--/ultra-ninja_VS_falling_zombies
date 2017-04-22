@@ -32,3 +32,8 @@ bool                    Physics::move(Fixture& fixture) const
   fixture.speed *= 0.99;
   return (false);
 }
+
+double  Physics::getPlanetRadius(void) const
+{
+  return (_planet.radius);
+}
