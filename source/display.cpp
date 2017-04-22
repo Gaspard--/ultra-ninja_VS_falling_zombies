@@ -84,6 +84,29 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
 }
 
+void Display::displayPlanet(Texture tex, float size, Vect<2u, float> rotation)
+{
+  Bind<RenderContext> bind(textureContext);
+  float buffer[4u * 4u];
+  Vect<2u, float> up(renderable.destPos.normalized());
+
+  for (unsigned int j(0u); j != 4u; ++j)
+    {
+      Vect<2u, float> const corner((j & 1u), (j >> 1u));
+      Vect<2u, float> const sourceCorner(renderable.sourcePos + corner * renderable.sourceSize);
+      Vect<2u, float> const destCorner(rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * size, rotation));
+
+      std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
+      std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
+    }
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, renderable.texture);
+  glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(0u, "tex", textureContext.program);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
 void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> rotation)
 {
   Bind<RenderContext> bind(textureContext);
