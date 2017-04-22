@@ -20,7 +20,7 @@ void Entity::update(void)
 
 }
 
-Renderable const &Entity::getRenderable()
+Renderable const &Entity::getRenderable() const
 {
   return (_renderable);
 }
