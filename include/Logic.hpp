@@ -5,7 +5,7 @@
 // Login   <guitta_l@epitech.eu>
 //
 // Started on  Sat Apr 22 10:13:21 2017 Louis Guittard
-// Last update Sat Apr 22 20:30:35 2017 Louis Guittard
+// Last update Sun Apr 23 00:18:56 2017 Louis Guittard
 //
 
 #ifndef LOGIC_HPP_
@@ -20,7 +20,7 @@ class Logic
 {
 private:
   std::vector<Entity> _entities;
-  Physics               _physics;
+  Physics             _physics;
 
 private:
   void handleKey(GLFWwindow *window, Key key);
@@ -31,6 +31,7 @@ public:
   Logic();
 
   void handleEvent(Event const& event);
+  float getPlanetSize(void) const;
   void tick(void);
 
   template <class func>
