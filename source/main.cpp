@@ -8,7 +8,8 @@ int main()
   try {
     Logic logic;
     Display display;
-    Input input(display.getWindow(), logic);
+    // init input with GLFW window
+    Input::setWindow(display.getWindow());
 
     while (display.isRunning())
       {
