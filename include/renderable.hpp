@@ -1,6 +1,9 @@
 #ifndef RENDERABLE_HPP
 # define RENDERABLE_HPP
 
+# include "my_opengl.hpp"
+# include "vect.hpp"
+
 struct Renderable
 {
   Texture texture;
