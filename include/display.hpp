@@ -31,8 +31,9 @@ public:
   /**
    * Displays a renderable in the world.
    * Optional rotation argument rotates the renderable around 0, 0
-   * (for most elements this should be the position of the player * {1, -1})
+   * (for most world elements this should be the position of the player * {1, -1})
    * See Renderable for details on how renderables are rendered
+   * This function is not suitable to render GUI
    */
   void displayRenderable(Renderable const renderable, Vect<2u, float> const rotation = {1.0, 0.0});
 

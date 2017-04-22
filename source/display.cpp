@@ -6,7 +6,7 @@
 #include "display.hpp"
 #include "bind.hpp"
 
-static inline RenderContext contextFromFiles(std::string name)
+inline RenderContext contextFromFiles(std::string name)
 {
   std::stringstream vert;
   std::stringstream frag;
@@ -19,6 +19,11 @@ static inline RenderContext contextFromFiles(std::string name)
   frag << fragInput.rdbuf();
   return {Vao(), my_opengl::createProgram<2>({GL_VERTEX_SHADER, GL_FRAGMENT_SHADER},
                                              {vert.str(), frag.str()})};
+}
+
+inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
+{
+  glViewport((width - height) / 2, 0, height, height);
 }
 
 Display::GlfwContext::GlfwContext()
@@ -42,6 +47,7 @@ Display::Display()
 
       if (!window)
 	throw std::runtime_error("opengl: failed to open window");
+      glfwSetFramebufferSizeCallback(window.get(), &framebufferSizeCallback);
       glfwMakeContextCurrent(window.get());
       glfwSwapInterval(1);
       if (gl3wInit())
@@ -104,7 +110,7 @@ bool Display::render()
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, 0.0), Vect<2u, float>(0.5, 0.5)});
+  displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, (time(nullptr) % 10) * 0.1), Vect<2u, float>(0.5, 0.5)});
 
   glfwSwapBuffers(window.get());
   glfwPollEvents();
