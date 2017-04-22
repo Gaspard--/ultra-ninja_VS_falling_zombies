@@ -16,6 +16,7 @@ public:
 
   Physics::Fixture&             getFixture(void);
   const Physics::Fixture&       getFixture(void) const;
+  void update(void);
 
 private:
 

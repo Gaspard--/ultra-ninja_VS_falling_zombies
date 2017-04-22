@@ -11,14 +11,19 @@
 #ifndef LOGIC_HPP_
 # define LOGIC_HPP_
 
+# include <vector>
+
+class Entity;
+
 class Logic
 {
-public:
-    Logic();
-    ~Logic();
+private:
+  std::vector<Entity> _entities;
 
 public:
-    void tick();
+  Logic();
+
+  void tick(void);
 };
 
 #endif // !LOGIC_HPP_

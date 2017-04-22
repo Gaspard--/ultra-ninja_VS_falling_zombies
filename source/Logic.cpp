@@ -8,14 +8,12 @@
 // Last update Sat Apr 22 10:32:09 2017 Louis Guittard
 //
 
+#include <algorithm>
+#include "Entity.hpp"
 #include "Logic.hpp"
 
-Logic::Logic()
+void Logic::tick(void)
 {
-
-}
-
-Logic::~Logic()
-{
-
+  std::for_each(_entities.begin(), _entities.end(),
+		[](Entity &e) { e.update(); });
 }
