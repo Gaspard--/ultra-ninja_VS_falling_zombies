@@ -261,8 +261,7 @@ public:
     return ((*this * *this).sum());
   }
 
-  Vect<dim, T> normalized()
-
+  Vect<dim, T> normalized() const
   {
     return length2() > 0 ? ((*this) / sqrt(length2())) : *this;
   }

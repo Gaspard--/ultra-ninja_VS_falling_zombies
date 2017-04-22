@@ -78,12 +78,15 @@ void Display::displayRenderable(Renderable const renderable, Vect<2u, float> con
 {
   Bind<RenderContext> bind(textureContext);
   float buffer[4u * 4u];
+  Vect<2u, float> up(renderable.destPos.normalized());
+  // Vect<2u, float> left(up[1], -up[0]);
+  
 
   for (unsigned int j(0u); j != 4u; ++j)
     {
       Vect<2u, float> const corner((j & 1u), (j >> 1u));
       Vect<2u, float> const sourceCorner(renderable.sourcePos + corner * renderable.sourceSize);
-      Vect<2u, float> const destCorner(rotate(renderable.destPos + (corner - Vect<2u, float>{0.5f, 0.5f}) * renderable.destSize, rotation));
+      Vect<2u, float> const destCorner(rotate(renderable.destPos + (rotate(corner - Vect<2u, float>{0.5f, 0.5f}, {up[1], -up[0]})) * renderable.destSize, rotation));
 
       std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
       std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
@@ -101,7 +104,7 @@ bool Display::render()
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
-  displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(0, -0.5), Vect<2u, float>(0.5, 0.5)});
+  displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, 0.0), Vect<2u, float>(0.5, 0.5)});
 
   glfwSwapBuffers(window.get());
   glfwPollEvents();
