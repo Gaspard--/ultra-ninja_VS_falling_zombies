@@ -22,6 +22,8 @@ private:
   std::vector<Entity> _entities;
   Physics             _physics;
 
+  Vect<2u, float> _mousePos;
+
 private:
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);

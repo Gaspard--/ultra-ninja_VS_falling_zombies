@@ -136,7 +136,7 @@ void Display::render(Logic const &logic)
   displayPlanet(test, logic.getPlanetSize(), {1.0, 0.0});
   logic.for_each_entity([this](Entity const &e)
 			{
-			  displayRenderable(e.getRenderable());
+			  displayRenderable(e.renderable);
 			});
   // displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, (time(nullptr) % 10) * 0.1), Vect<2u, float>(0.5, 0.5)});
 
