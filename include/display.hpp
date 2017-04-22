@@ -30,6 +30,8 @@ public:
 
   GLFWwindow *getWindow() const;
 
+  void displayRect();
+
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
 
   /**
