@@ -18,7 +18,7 @@ Logic::Logic()
 
 void Logic::tick(void)
 {
-  this->_physics.makePhysicsOnEntity(this->_entities);
+  this->_physics.makePhysicsOnEntity(_entities.begin(), _entities.end());
   std::for_each(_entities.begin(), _entities.end(),
 		[](Entity &e) { e.update(); });
 }
