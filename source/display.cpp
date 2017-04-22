@@ -80,13 +80,13 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
 }
 
-void Display::displayRenderable(Renderable const renderable, Vect<2u, float> const rotation)
+void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> rotation)
 {
   Bind<RenderContext> bind(textureContext);
   float buffer[4u * 4u];
   Vect<2u, float> up(renderable.destPos.normalized());
   // Vect<2u, float> left(up[1], -up[0]);
-  
+
 
   for (unsigned int j(0u); j != 4u; ++j)
     {
