@@ -1,18 +1,18 @@
-#ifndef ENTITIES_HPP
-# define ENTITIES_HPP
+#ifndef ENTITIE_HPP
+# define ENTITIE_HPP
 
 # include "Physics.hpp"
 
 /*
-** kind of entities class
+** kind of entitie class
 */
 
-class   Entities
+class   Entitie
 {
 
 public:
 
-  void  collision(const Entities& e) {(void)e; /* some stuff ... */ }
+  void  collision(const Entitie& e) {(void)e; /* some stuff ... */ }
 
   Physics::Fixture&             getFixture(void);
   const Physics::Fixture&       getFixture(void) const;
@@ -24,4 +24,4 @@ private:
 };
 
 
-#endif /* ENTITIES_HPP */
+#endif /* ENTITIE_HPP */
