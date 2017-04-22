@@ -16,11 +16,15 @@ public:
 
   Physics::Fixture&             getFixture(void);
   const Physics::Fixture&       getFixture(void) const;
+
+  void  setIsOnPlanet(bool);
+
   void update(void);
 
 private:
 
   Physics::Fixture      _fixture;
+  bool                  _isOnPlanet;
 
 };
 
