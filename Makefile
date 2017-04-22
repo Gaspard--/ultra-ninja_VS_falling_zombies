@@ -7,7 +7,7 @@ CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14 -g3
 
 LDFLAGS = `pkg-config --static --libs glfw3` -lfreetype
 
-NAME = super-ninja_VS_falling_zombies
+NAME = ultra-ninja_VS_falling_zombies
 
 SRCS_CPP = 	source/main.cpp \
 		source/my_opengl.cpp \
@@ -16,7 +16,7 @@ SRCS_CPP = 	source/main.cpp \
 		source/gl3w.cpp \
 		source/FreeTypeLib.cpp \
 		source/Physics.cpp \
-		sourcs/Entities.cpp
+		source/Entities.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
