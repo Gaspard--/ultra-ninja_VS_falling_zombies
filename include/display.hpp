@@ -23,7 +23,6 @@ private:
   FreeTypeLib fontHandler;
   RenderContext textureContext;
   glBuffer textureBuffer;
-  Texture test;
 public:
   Display();
 
@@ -41,6 +40,7 @@ public:
 
   void render(Logic const &);
   bool isRunning();
+  Texture test;
 };
 
 #endif
