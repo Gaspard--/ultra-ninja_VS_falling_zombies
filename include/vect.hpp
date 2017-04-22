@@ -291,6 +291,30 @@ public:
     return (data[3]);
   }
 
+  template<unsigned int _dim = dim, typename std::enable_if<(_dim > 0)>::type* = nullptr>
+  T &x()
+  {
+    return (data[0]);
+  }
+
+  template<unsigned int _dim = dim, typename std::enable_if<(_dim > 1)>::type* = nullptr>
+  T &y()
+  {
+    return (data[1]);
+  }
+
+  template<unsigned int _dim = dim, typename std::enable_if<(_dim > 2)>::type* = nullptr>
+  T &z()
+  {
+    return (data[2]);
+  }
+
+  template<unsigned int _dim = dim, typename std::enable_if<(_dim > 3)>::type* = nullptr>
+  T &w()
+  {
+    return (data[3]);
+  }
+
   T reduce()
   {
 
