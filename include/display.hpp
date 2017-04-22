@@ -1,10 +1,7 @@
 #ifndef DISPLAY_HPP_
 # define DISPLAY_HPP_
 
-#include <vector>
 #include <memory>
-#include <exception>
-#include <iostream>
 
 #include "vect.hpp"
 #include "render_context.hpp"
