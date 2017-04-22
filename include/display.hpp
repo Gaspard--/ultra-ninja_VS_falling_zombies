@@ -9,6 +9,7 @@
 #include "my_opengl.hpp"
 #include "FreeTypeLib.hpp"
 #include "renderable.hpp"
+#include "Rect.hpp"
 
 class Display
 {
@@ -23,6 +24,8 @@ private:
   FreeTypeLib fontHandler;
   RenderContext textureContext;
   glBuffer textureBuffer;
+  RenderContext rectContext;
+  glBuffer rectBuffer;
 public:
   Display();
 
@@ -30,7 +33,7 @@ public:
 
   GLFWwindow *getWindow() const;
 
-  void displayRect();
+  void displayRect(Rect const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
 

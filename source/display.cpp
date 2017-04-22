@@ -28,7 +28,7 @@ inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
 
 Display::GlfwContext::GlfwContext()
 {
-  glfwSetErrorCallback([](int, const char *str)
+  glfwSetErrorCallback([](int, char const *str)
 		       {
 			 throw std::runtime_error(str);
 		       });
@@ -69,6 +69,14 @@ Display::Display()
     glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * sizeof(float), nullptr);
     glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), reinterpret_cast<void *>(2u * sizeof(float)));
   }
+  {
+    Bind<RenderContext> bind(rectContext);
+
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, rectBuffer);
+    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * sizeof(float), nullptr);
+  }
 }
 
 Display::~Display()
@@ -82,6 +90,26 @@ GLFWwindow *Display::getWindow() const {
 static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
 {
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
+}
+
+void Display::displayRect(Rect const &rect)
+{
+  Bind<RenderContext> bind(rectContext);
+  float buffer[4u * 4u];
+
+  for (unsigned int j(0u); j != 4u; ++j)
+    {
+      Vect<2u, float> const corner((j & 1u), (j >> 1u));
+      Vect<2u, float> const destCorner(corner * rect.size + rect.pos);
+
+      std::copy(&corner[0u], &corner[2u], &buffer[j * 4u]);
+      std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
+    }
+  glActiveTexture(GL_TEXTURE0);
+  glBindBuffer(GL_ARRAY_BUFFER, rectBuffer);
+  my_opengl::setUniform(rect.color, "rect_color", rectContext.program);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
