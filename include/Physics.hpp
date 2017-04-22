@@ -20,7 +20,8 @@ public:
   /*                                  */
   /************************************/
 
-  Physics(const Vect<2, double>& planetCenter, double radius, double mass) : _planet(planetCenter, Vect<2, double>(0, 0), radius, mass) {}
+  Physics(const Vect<2, int>& planetCenter, double radius, double mass)
+  : _planet(planetCenter, Vect<2, int>(0, 0), radius, mass) {}
 
   struct                Fixture
   {
