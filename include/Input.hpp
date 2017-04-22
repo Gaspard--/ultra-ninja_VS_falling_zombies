@@ -2,6 +2,7 @@
 # define INPUT_HPP_
 
 # include <my_opengl.hpp>
+# include <iostream>
 # include "Logic.hpp"
 
 /**
