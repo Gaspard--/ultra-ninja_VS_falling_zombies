@@ -109,7 +109,7 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void Display::render()
+void Display::render(Logic const &logic)
 {
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);

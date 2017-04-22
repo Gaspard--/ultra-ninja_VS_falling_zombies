@@ -3,6 +3,7 @@
 
 #include <memory>
 
+#include "Logic.hpp"
 #include "vect.hpp"
 #include "render_context.hpp"
 #include "my_opengl.hpp"
@@ -38,7 +39,7 @@ public:
    */
   void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
 
-  void render();
+  void render(Logic const &);
   bool isRunning();
 };
 
