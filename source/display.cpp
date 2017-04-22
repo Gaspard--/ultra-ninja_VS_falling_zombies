@@ -38,7 +38,7 @@ Display::GlfwContext::~GlfwContext()
 
 Display::Display()
   : window([]{
-      std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "Super-ninja VS falling zombies", NULL, NULL), &glfwDestroyWindow);
+      std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", NULL, NULL), &glfwDestroyWindow);
 
       if (!window)
 	throw std::runtime_error("opengl: failed to open window");
