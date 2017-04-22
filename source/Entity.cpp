@@ -19,3 +19,8 @@ void Entity::update(void)
 {
 
 }
+
+Renderable const &Entity::getRenderable()
+{
+  return (_renderable);
+}
