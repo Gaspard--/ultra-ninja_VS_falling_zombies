@@ -13,7 +13,7 @@ private:
 
 public:
   template<class Op, class P, class... U, typename std::enable_if<sizeof...(U) < dim>::type * = nullptr>
-	   constexpr Vect(Function<T, P, Op> function, U... indices)
+  constexpr Vect(Function<T, P, Op> function, U... indices)
     : Vect(function, dim - sizeof...(indices) - 1, indices...)
   {}
 
