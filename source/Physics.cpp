@@ -25,18 +25,3 @@ bool                    Physics::move(Fixture& fixture) const
   fixture.speed *= vec * ((_G * fixture.mass * _planet.mass / CAR(distance)) * fixture.mass);
   return (false);
 }
-
-void    Physics::makePhysicsOnEntity(const std::vector<Entity *>& ent) const
-{
-  for (unsigned int i = 0 ; i < ent.size() ; i++)
-    if (this->move(ent[i]->getFixture()))
-      ent[i]->setIsOnPlanet(true);
-
-  for (unsigned int i = 0 ; i < ent.size() ; i++)
-    for (unsigned int j = i + 1 ; j < ent.size() ; j++)
-      if (haveCollision(ent[i]->getFixture(), ent[j]->getFixture()))
-        {
-          ent[i]->collision(*ent[j]);
-          ent[j]->collision(*ent[i]);
-        }
-}

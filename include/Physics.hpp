@@ -50,7 +50,21 @@ public:
   /*                          */
   /****************************/
 
-  void  makePhysicsOnEntity(const std::vector<Entity *>&) const;
+  template <class T>
+  void  makePhysicsOnEntity(T begin, T end) const
+  {
+    for (T i = begin ; i != end ; ++i)
+      if (this->move(i->getFixture()))
+        i->setIsOnPlanet(true);
+
+    for (T i = begin ; i != end ; ++i)
+      for (T j = i + 1 ; j != end ; ++j)
+        if (haveCollision(i->getFixture(), j->getFixture()))
+          {
+            i->collision(*j);
+            j->collision(*i);
+          }
+  }
 
 private:
 
