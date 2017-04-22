@@ -35,7 +35,7 @@ public:
    * See Renderable for details on how renderables are rendered
    * This function is not suitable to render GUI
    */
-  void displayRenderable(Renderable const renderable, Vect<2u, float> const rotation = {1.0, 0.0});
+  void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
 
   bool render();
 };

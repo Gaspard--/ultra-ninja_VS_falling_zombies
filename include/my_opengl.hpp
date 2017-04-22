@@ -120,8 +120,8 @@ namespace	my_opengl
   }
 
   template<unsigned int count>
-  constexpr Program createProgram(Vect<count, GLenum const> const shaderTypes,
-				  Vect<count, std::string> const shaderSrcs)
+  Program createProgram(Vect<count, GLenum const> const shaderTypes,
+			Vect<count, std::string> const shaderSrcs)
   {
     return (createProgram<count>(Vect<count, const Shader>::applyOp([shaderTypes, shaderSrcs](unsigned int i) {
 	    return (createShader(shaderTypes[i], shaderSrcs[i].c_str()));
