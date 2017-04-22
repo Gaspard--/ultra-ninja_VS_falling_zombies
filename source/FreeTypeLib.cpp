@@ -25,7 +25,7 @@ void FreeTypeLib::loadFont(std::string fontFile)
   fontLoaded = true;
 }
 
-void FreeTypeLib::renderText(std::string text, Vect<2u, float> pos, Display &display)
+void FreeTypeLib::renderText(std::string text, Vect<2u, float> pos, Display &)
 {
   if (!face)
     throw std::runtime_error("No font loaded to render text.");

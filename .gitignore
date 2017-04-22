@@ -28,3 +28,6 @@
 *.out
 *.app
 super-ninja_VS_falling_zombies
+
+# emacs backup files
+*~

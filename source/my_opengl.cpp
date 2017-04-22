@@ -1,20 +1,24 @@
 #include <stdexcept>
+#include <fstream>
+#include <memory>
 #include "my_opengl.hpp"
+#include <iostream>
 
 void my_opengl::shaderError(GLenum const shadertype, GLuint const shader)
 {
   GLint	len;
-  std::string log;
 
   glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
-  log.reserve((unsigned int)len);
-  glGetShaderInfoLog(shader, len, NULL, &log[0]);
+  std::unique_ptr<GLchar[]> log(new GLchar[len + 1]);
+
+  log[len + 1] = 0; // safety
+  glGetShaderInfoLog(shader, len, nullptr, &log[0]);
   throw std::runtime_error(std::string("Compilation failed for ")
 			   + ((shadertype == GL_VERTEX_SHADER) ?
 			      "vertex" : (shadertype == GL_FRAGMENT_SHADER) ?
 			      "fragment" : "unknown (fix this in my_opengl.cpp!)")
 			   + std::string(" shader: ")
-			   + log);
+			   + &log[0]);
 }
 
 void my_opengl::setUniform(Vect<2, float> const data, char const *target, Program program)
@@ -246,4 +250,90 @@ Texture &Texture::operator=(Texture s)
 Texture::operator GLuint() const
 {
   return texture;
+}
+
+Texture my_opengl::loadTexture(std::string const &name)
+{
+  auto bytesToInt = [](unsigned char *bytes)
+  {
+    return ((unsigned)bytes[3] << 24u)
+      | ((unsigned)bytes[2] << 16u)
+      | ((unsigned)bytes[1] << 8u)
+      | (unsigned)bytes[0];
+  };
+  std::ifstream file(name, std::ios::binary);
+
+  if (!file)
+    throw std::runtime_error("'" + name + "': failed to open");
+  file.exceptions(std::ios::badbit);
+
+  unsigned char                 readBuf[4];
+  Vect<2u, unsigned int>        dim{0, 0};
+  try {
+    file.seekg(10);
+    file.read((char *)readBuf, sizeof(readBuf));
+    unsigned int offset(bytesToInt(readBuf));
+
+    file.seekg(14);
+    file.read((char *)readBuf, sizeof(readBuf));
+
+    file.read((char *)readBuf, sizeof(readBuf));
+    dim[0] = bytesToInt(readBuf);
+
+    file.read((char *)readBuf, sizeof(readBuf));
+    dim[1] = bytesToInt(readBuf);
+
+    file.seekg(offset);
+
+    std::unique_ptr<unsigned char[]> data(new unsigned char[dim[0] * dim[1] * sizeof(unsigned int)]);
+
+    file.read(reinterpret_cast<char *>(&data[0]), std::streamsize(dim[0] * dim[1] * sizeof(unsigned int)));
+
+    std::streamsize r(file.gcount());
+    if (r != std::streamsize(dim[0] * dim[1] * sizeof(unsigned int)))
+      throw std::runtime_error(name + ": file seems truncated");
+
+    file.exceptions(std::ios::goodbit);
+
+    {
+      Vect<2u, unsigned int> i{0, 0};
+
+      for (i[0] = 0; i[0] < dim[0]; ++i[0])
+        for (i[1] = 0; i[1] < (dim[1] >> 1u); ++i[1])
+          {
+            unsigned int sourcePos(i[0] + (dim[1] - i[1] - 1) * dim[0]);
+            unsigned int destPos(i[0] + i[1] * dim[0]);
+
+            std::swap(data[sourcePos * 4 + 0], data[destPos * 4 + 0]);
+            std::swap(data[sourcePos * 4 + 1], data[destPos * 4 + 1]);
+            std::swap(data[sourcePos * 4 + 2], data[destPos * 4 + 2]);
+            std::swap(data[sourcePos * 4 + 3], data[destPos * 4 + 3]);
+          }
+    }
+    for (auto it = &data[0]; it < &data[dim[0] * dim[1] * sizeof(unsigned int)]; it += sizeof(unsigned int))
+      {
+        std::swap(it[0], it[3]);
+        std::swap(it[1], it[2]);
+      }
+    Texture texture;
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 GL_RGBA,
+                 (GLsizei)(dim[0]),
+                 (GLsizei)(dim[1]),
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 static_cast<void *>(data.get()));
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return texture;
+  } catch (std::exception const &e) {
+    throw std::runtime_error(name + ": failed to load texture");
+  }
 }

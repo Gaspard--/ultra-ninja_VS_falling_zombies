@@ -127,6 +127,8 @@ namespace	my_opengl
 	    return (createShader(shaderTypes[i], shaderSrcs[i].c_str()));
 	  })));
   }
+
+  Texture loadTexture(std::string const &name);
 };
 
 #endif // MY_OPENGL_HPP_
