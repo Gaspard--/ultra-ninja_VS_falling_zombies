@@ -13,7 +13,7 @@ inline RenderContext contextFromFiles(std::string name)
   std::ifstream vertInput("shaders/" + name + ".vert");
   std::ifstream fragInput("shaders/" + name + ".frag");
 
-  if (!fragInput)
+  if (!fragInput || !vertInput)
     throw std::runtime_error("lol");
   vert << vertInput.rdbuf();
   frag << fragInput.rdbuf();

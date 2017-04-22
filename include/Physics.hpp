@@ -1,7 +1,7 @@
 #ifndef PHYSICS_HPP
 # define PHYSICS_HPP
 
-# include "vect.hpp"
+# include "Vect.hpp"
 # include <cmath>
 # include <vector>
 

@@ -7,7 +7,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-#include "vect.hpp"
+#include "Vect.hpp"
 
 class Display;
 

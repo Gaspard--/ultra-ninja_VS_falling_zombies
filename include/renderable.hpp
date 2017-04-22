@@ -2,7 +2,7 @@
 # define RENDERABLE_HPP
 
 # include "my_opengl.hpp"
-# include "vect.hpp"
+# include "Vect.hpp"
 
 struct Renderable
 {

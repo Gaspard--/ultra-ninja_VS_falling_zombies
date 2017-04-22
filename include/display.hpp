@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "Logic.hpp"
-#include "vect.hpp"
+#include "Vect.hpp"
 #include "render_context.hpp"
 #include "my_opengl.hpp"
 #include "FreeTypeLib.hpp"
