@@ -22,7 +22,7 @@ public:
 
   void update(void);
 
-  Renderable const &getRenderable();
+  Renderable const &getRenderable() const;
 
 private:
 

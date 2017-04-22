@@ -11,6 +11,7 @@
 #ifndef LOGIC_HPP_
 # define LOGIC_HPP_
 
+# include <algorithm>
 # include <vector>
 # include "Entity.hpp"
 
@@ -25,6 +26,18 @@ public:
   Logic();
 
   void tick(void);
+
+  template <class func>
+  void for_each_entity(func f) const
+    {
+      std::for_each(_entities.begin(), _entities.end(), f);
+    }
+
+  template <class func>
+  void for_each_entity(func f)
+    {
+      std::for_each(_entities.begin(), _entities.end(), f);
+    }
 };
 
 #endif // !LOGIC_HPP_
