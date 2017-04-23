@@ -247,7 +247,7 @@ void Display::render(Logic const &logic)
 			{
 			  this->displayRenderable(e->renderable, camera);
 			});
-  displayText("RIGAUD SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
+  displayText("MASSE_B SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());
