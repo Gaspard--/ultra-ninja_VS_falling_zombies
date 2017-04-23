@@ -3,8 +3,9 @@
 Player::Player(Entity &e, bool canMove)
   : entity(e), canMove(canMove)
 {
-  entity.renderable.texture = my_opengl::loadTexture("resources/test.bmp");
+  entity.renderable.texture = my_opengl::loadTexture("resources/boyaux.bmp");
   entity.renderable.destSize = {0.1, 0.1};
+  entity.renderable.sourceSize = {1, 1};
 }
 
 void Player::acceleration(int dir)
