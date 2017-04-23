@@ -10,6 +10,8 @@ protected:
   int _hp;
 
 public:
+  bool isUseless = false;
+  
   virtual void attack(Player& player) = 0;
 
 public:

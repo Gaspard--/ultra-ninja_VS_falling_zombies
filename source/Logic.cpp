@@ -49,8 +49,15 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
+  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
+    for (auto j(_swords.begin()); j != _swords.end(); ++j)
+      if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
+	(*j)->Hit(**i);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([](auto &e) { e->update(); });
+  std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
 }
 
 float Logic::getPlanetSize(void) const
