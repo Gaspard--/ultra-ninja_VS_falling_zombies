@@ -16,6 +16,9 @@ class Display;
 class Logic
 {
 private:
+
+  static Logic instance;
+
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
   std::vector<std::shared_ptr<Enemy>> _enemies;
@@ -37,7 +40,7 @@ private:
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
 
-  void addFlesh(Vect<2, double> pos, Entity entityClone);
+  void addFlesh(Entity entityParent);
 
 public:
   Logic();

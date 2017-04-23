@@ -5,6 +5,8 @@
 #include "EnemyLarge.hpp"
 #include "EnemySmall.hpp"
 
+Logic Logic::instance = Logic();
+
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.6, 1000),
     _entities({std::shared_ptr<Entity>(new Entity({{0, 2}, {0, 0}, 0.04, 50}))}),
@@ -115,8 +117,8 @@ Vect<2, double> Logic::getPlayerPos(void) const
   return _player.entity.fixture.pos;
 }
 
-// void Logic::addFlesh(Vect<2, double> pos, Entity entityClone)
-// {
-//   _entities.push_back(std::shared_ptr<Entity>(new Entity(entityClone)));
-//   _fleshs.push_back(std::shared_ptr<Enemy>(new fleshs(*_entities.back())));
-// }
+void Logic::addFlesh(Entity entityParent)
+{
+  _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
+  _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(*_entities.back())));
+}
