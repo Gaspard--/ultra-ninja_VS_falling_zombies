@@ -1,12 +1,16 @@
 #include "Enemy.hpp"
+#include "Logic.hpp"
 
 Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
 {
 }
 
-Enemy::~Enemy()
+void Enemy::onDeath()
 {
+  Logic::getInstance().addFlesh(entity);
+  Logic::getInstance().addFlesh(entity);
+  Logic::getInstance().addFlesh(entity);
 }
 
 void Enemy::getRekt(int dmg)
