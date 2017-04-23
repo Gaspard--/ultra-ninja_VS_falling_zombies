@@ -31,7 +31,7 @@ bool                    Physics::move(Fixture& fixture) const
   // fixture.speed -= vec * ((_G * fixture.mass * _planet.mass / CAR(distance)) * fixture.mass);
   fixture.speed -= vec * fixture.mass * 0.00003;
   /* friction */
-  fixture.speed *= 0.98;
+  fixture.speed *= 0.95;
   return (false);
 }
 

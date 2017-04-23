@@ -8,6 +8,7 @@ class EnemyLarge : public Enemy
 private:
 public:
   EnemyLarge(Entity &);
+  void  update(void);
 };
 
 #endif /* !ENEMYLARGE_H_ */

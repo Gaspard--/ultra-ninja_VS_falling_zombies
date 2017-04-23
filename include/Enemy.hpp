@@ -11,6 +11,9 @@ protected:
 
 public:
   Enemy(Entity &, int hp);
+
+  virtual void  update(void) = 0;
+
   virtual ~Enemy() = default;
 };
 

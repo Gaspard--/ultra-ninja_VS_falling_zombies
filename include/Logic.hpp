@@ -1,16 +1,7 @@
-//
-// Logic.hpp for  in /home/sheep/worktree/ultra-ninja_VS_falling_zombies/include/
-//
-// Made by Louis Guittard
-// Login   <guitta_l@epitech.eu>
-//
-// Started on  Sat Apr 22 10:13:21 2017 Louis Guittard
-// Last update Sun Apr 23 11:39:28 2017 Jakob Kellendonk
-//
-
 #ifndef LOGIC_HPP_
 # define LOGIC_HPP_
 
+# include <random>
 # include <algorithm>
 # include <vector>
 # include <memory>
@@ -28,6 +19,7 @@ private:
   std::vector<std::shared_ptr<Entity>> _entities;
   std::vector<std::shared_ptr<Enemy>> _enemies;
   Player _player;
+  unsigned int  _time;
 
   Vect<2u, float> _mousePos;
 
@@ -63,6 +55,12 @@ public:
   void for_each_entity(func f)
   {
     std::for_each(_entities.begin(), _entities.end(), f);
+  }
+
+  template <class func>
+  void for_each_enemy(func f)
+  {
+    std::for_each(_enemies.begin(), _enemies.end(), f);
   }
 };
 
