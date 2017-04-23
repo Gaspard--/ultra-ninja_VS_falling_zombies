@@ -4,7 +4,6 @@
 # include "Entity.hpp"
 # include "Vect.hpp"
 
-
 class Player
 {
 private:
@@ -14,7 +13,7 @@ public:
   Player(Entity &e);
 
   void update(void);
-  void setSpeed()
+  void setSpeed(Vect<2, double>);
 };
 
 #endif /* !PLAYER_H_ */
