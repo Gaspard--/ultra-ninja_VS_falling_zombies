@@ -50,9 +50,9 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-	(*j)->Hit(**i);
+        (*j)->Hit(**i);
   for_each_entity([](auto &e) { e->update(); });
-  for_each_enemy([](auto &e) { e->update(); });
+  for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
 
   std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
@@ -100,13 +100,13 @@ void Logic::checkEvents(Display const &display)
   if (_player.canMove)
     {
       if (display.isKeyPressed(GLFW_KEY_RIGHT))
-	this->_player.acceleration(-1);
+        this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_LEFT))
-	this->_player.acceleration(1);
+        this->_player.acceleration(1);
       if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
-	this->_player.jump();
+        this->_player.jump();
       if (display.isKeyPressed(GLFW_KEY_DOWN))
-	this->_player.fastFall();
+        this->_player.fastFall();
     }
 
   if (display.isKeyPressed(GLFW_KEY_C))

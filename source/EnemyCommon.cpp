@@ -31,9 +31,9 @@ void EnemyCommon::attack(Player& player)
   player.canMove = false;
 }
 
-void    EnemyCommon::update(void)
+void    EnemyCommon::update(const Player& player)
 {
-  this->Enemy::update();
+  this->Enemy::update(player);
   if (entity.isOnPlanet && !(rand() % 5))
     entity.fixture.speed = entity.fixture.speed + entity.fixture.pos.normalized() * 0.03;
 }
