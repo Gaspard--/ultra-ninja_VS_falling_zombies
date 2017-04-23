@@ -12,7 +12,8 @@ public:
 
 public:
   EnemyCommon(Entity &);
-  void  update(void);
+  ~EnemyCommon();
+  void  update(void) override;
 };
 
 #endif /* !ENEMYCOMMON_H_ */

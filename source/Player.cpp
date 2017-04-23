@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player(Entity &e)
-  : entity(e)
+Player::Player(Entity &e, bool canMove)
+  : entity(e), canMove(canMove)
 {
   entity.renderable.texture = my_opengl::loadTexture("resources/test.bmp");
   entity.renderable.destSize = {0.1, 0.1};
@@ -24,4 +24,9 @@ void Player::fastFall()
 {
     if (!this->entity.isOnPlanet)
       this->entity.fixture.speed = -(this->entity.fixture.pos.normalized() * 0.06);
+}
+
+void Player::getRekt(int dmg)
+{
+  _hp -= dmg;
 }

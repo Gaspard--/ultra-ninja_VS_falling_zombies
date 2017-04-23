@@ -2,8 +2,7 @@
 # define ENEMY_H_
 
 # include "Entity.hpp"
-
-class Player;
+# include "Player.hpp"
 
 class Enemy
 {
@@ -19,6 +18,8 @@ public:
   virtual void  update(void) = 0;
 
   virtual ~Enemy() = default;
+
+  void getRekt(int);
 
   Entity &entity;
 };
