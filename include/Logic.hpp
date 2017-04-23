@@ -58,6 +58,7 @@ public:
   void addFlesh(Entity &entityParent);
 
   Vect<2, double> getPlayerPos(void) const;
+  Player& getPlayer();
 
   template <class func>
   void for_each_entity(func f) const
