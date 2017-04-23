@@ -5,7 +5,10 @@ std::unique_ptr<TextureHandler> TextureHandler::_instance(nullptr);
 void TextureHandler::initTextureHandler()
 {
   _instance.reset(new TextureHandler());
-  _instance->_textures[BOYAUX] = my_opengl::loadTexture("resources/test.bmp");
+  _instance->addTexture(BOYAUX, "resources/boyaux.bmp");
+  _instance->addTexture(BOYAUX, "resources/planet.bmp");
+  _instance->addTexture(BOYAUX, "resources/swordRadius.bmp");
+  _instance->addTexture(BOYAUX, "resources/test.bmp");
 }
 
 TextureHandler& TextureHandler::getInstance()
@@ -20,5 +23,10 @@ void TextureHandler::destroyTextureHandler()
 
 void TextureHandler::addTexture(TextureList id, std::string path)
 {
-  // TextureHandler::getInstance()._textures.insert
+  _instance->_textures[id] = my_opengl::loadTexture(path);
+}
+
+Texture TextureHandler::getTexture(TextureList id) const
+{
+  return (_instance->_textures[id]);
 }

@@ -21,6 +21,7 @@ public :
   static void destroyTextureHandler();
 
   void addTexture(TextureList, std::string);
+  Texture getTexture(TextureList) const;
 
 private:
 
