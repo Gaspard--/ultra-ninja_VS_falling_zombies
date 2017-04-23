@@ -25,7 +25,6 @@ public:
 
   struct                Fixture
   {
-    Fixture();
     Fixture(const Vect<2, double>& i_pos, const Vect<2, double>& i_speed, double i_radius, double i_mass) : pos(i_pos),
                                                                                                       speed(i_speed),
                                                                                                       radius(i_radius),

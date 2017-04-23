@@ -12,7 +12,10 @@
 #include "Input.hpp"
 
 Logic::Logic()
-  : _physics(Vect<2, int>(0, 0), 0.4, 1000), _mousePos({0, 0})
+  : _physics(Vect<2, int>(0, 0), 0.4, 1000),
+    _entities({Entity()}),
+    _player(_entities[0]),
+    _mousePos({0, 0})
 {
 }
 

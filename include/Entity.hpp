@@ -10,9 +10,7 @@
 */
 struct Entity
 {
-  bool isOnPlanet;
-  Renderable renderable;
-  Physics::Fixture fixture;
+  Entity(Physics::Fixture={{0, 0}, {0, 0}, 0, 0}, bool b=false);
 
   std::function<void(Entity&)> collision;
 
@@ -22,11 +20,9 @@ struct Entity
 
   Physics::Fixture &getFixture(void);
 
-private:
-
-  Physics::Fixture      _fixture;
-  bool                  _isOnPlanet;
-  Renderable		_renderable;
+  Physics::Fixture      fixture;
+  bool                  isOnPlanet;
+  Renderable		renderable;
 };
 
 #endif /* ENTITY_HPP */

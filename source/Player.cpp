@@ -9,18 +9,3 @@ void Player::update(void)
 {
   _e.update();
 }
-
-void Player::setSpeed(Vect<2, double> v)
-{
-  _e.getFixture().speed = v;
-}
-
-Vect<2, double> const &Player::getPos(void) const
-{
-  return _e.getFixture().pos;
-}
-
-Vect<2, double> const &Player::getSpeed(void) const
-{
-  return _e.getFixture().speed;
-}

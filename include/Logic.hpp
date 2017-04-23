@@ -21,10 +21,10 @@
 class Logic
 {
 private:
+  Physics _physics;
   std::vector<Entity> _entities;
   std::vector<Enemy *> _enemies;
   Player _player;
-  Physics _physics;
 
   Vect<2u, float> _mousePos;
 
