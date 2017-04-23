@@ -117,7 +117,7 @@ void Logic::checkEvents(Display const &display)
 
       _addEnemy<EnemyCommon>(enemyPos);
     }
-  if (display.isKeyPressed(GLFW_KEY_N))
+  if (display.isKeyPressed(GLFW_KEY_B))
     {
       double                angle = std::rand();
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
