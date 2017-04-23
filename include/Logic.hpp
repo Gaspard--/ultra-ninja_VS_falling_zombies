@@ -44,8 +44,8 @@ private:
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
 
-  void addFlesh(Entity entityParent);
   void spawnEnemy();
+  void addFlesh(Entity &entityParent);
 
 public:
   static void initLogic();
