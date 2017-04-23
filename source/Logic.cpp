@@ -5,7 +5,7 @@
 // Login   <guitta_l@epitech.eu>
 //
 // Started on  Sat Apr 22 10:30:13 2017 Louis Guittard
-// Last update Sun Apr 23 05:06:41 2017 Louis Guittard
+// Last update Sun Apr 23 05:50:16 2017 Louis Guittard
 //
 
 #include "Logic.hpp"
@@ -13,7 +13,7 @@
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.4, 1000),
-    _entities({Entity({{0, 1}, {0, 0}, 0.04, 10})}),
+    _entities({Entity({{0, 1}, {0, 0}, 0.04, 100})}),
     _player(_entities[0]),
     _mousePos({0, 0})
 {

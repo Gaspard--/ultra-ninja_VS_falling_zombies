@@ -13,13 +13,13 @@ void Player::acceleration(int dir)
 
     vec[0] = -this->_e.fixture.speed[1];
     vec[1] = this->_e.fixture.speed[0];
-    this->_e.fixture.speed = (this->_e.fixture.speed * 0.8 + vec.normalized() * 0.2) * dir;
+    this->_e.fixture.speed = (this->_e.fixture.speed * 0.998 + vec.normalized() * 0.002 * dir);
 }
 
 void Player::jump()
 {
     if (this->_e.isOnPlanet)
-	    this->_e.fixture.speed = this->_e.fixture.pos.normalized() * 1.5;
+	    this->_e.fixture.speed = this->_e.fixture.pos.normalized() * 0.03;
 }
 
 void Player::fastFall()
