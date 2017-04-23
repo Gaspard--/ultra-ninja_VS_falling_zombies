@@ -6,6 +6,10 @@
 class EnemyCommon : public Enemy
 {
 private:
+
+public:
+  void attack(Player& player) override;
+
 public:
   EnemyCommon(Entity &);
   void  update(void);

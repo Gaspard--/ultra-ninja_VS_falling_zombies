@@ -9,4 +9,11 @@ EnemySmall::EnemySmall(Entity &e)
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 
-void    EnemySmall::update(void) {}
+void EnemySmall::attack(Player& player)
+{
+
+}
+
+void    EnemySmall::update(void)
+{
+}

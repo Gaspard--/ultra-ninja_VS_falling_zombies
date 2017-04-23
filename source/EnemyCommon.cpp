@@ -9,8 +9,12 @@ EnemyCommon::EnemyCommon(Entity &e)
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 
+void    EnemyCommon::attack(Player &p)
+{
+}
+
 void    EnemyCommon::update(void)
 {
-  if (this->_e.isOnPlanet && !(rand() % 5))
-    this->_e.fixture.speed = this->_e.fixture.speed + this->_e.fixture.pos.normalized() * 0.03;
+  if (entity.isOnPlanet && !(rand() % 5))
+    entity.fixture.speed = entity.fixture.speed + entity.fixture.pos.normalized() * 0.03;
 }

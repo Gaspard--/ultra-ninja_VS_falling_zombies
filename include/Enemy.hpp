@@ -3,11 +3,15 @@
 
 # include "Entity.hpp"
 
+class Player;
+
 class Enemy
 {
 protected:
   int _hp;
-  Entity &_e;
+
+public:
+  virtual void attack(Player& player) = 0;
 
 public:
   Enemy(Entity &, int hp);
@@ -15,6 +19,8 @@ public:
   virtual void  update(void) = 0;
 
   virtual ~Enemy() = default;
+
+  Entity &entity;
 };
 
 #endif /* !ENEMY_H_ */

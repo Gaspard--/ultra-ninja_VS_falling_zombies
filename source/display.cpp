@@ -210,6 +210,29 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+void Display::displayRenderableAsHUD(Renderable const& renderable)
+{
+  Bind<RenderContext> bind(textureContext);
+  float buffer[4u * 4u];
+  Vect<2u, float> up(renderable.destPos.normalized());
+
+  for (unsigned int j(0u); j != 4u; ++j)
+    {
+      Vect<2u, float> const corner((j & 1u), (j >> 1u));
+      Vect<2u, float> const sourceCorner(renderable.sourcePos + corner * renderable.sourceSize);
+      Vect<2u, float> const destCorner(renderable.destPos + (corner - Vect<2u, float>{0.5f, 0.5f}));
+
+      std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
+      std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
+    }
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, renderable.texture);
+  glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(0u, "tex", textureContext.program);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
 void Display::render(Logic const &logic)
 {
   camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2()
@@ -224,7 +247,7 @@ void Display::render(Logic const &logic)
                         {
                           this->displayRenderable(e->renderable, camera);
                         });
-  displayText("J'aime les cookies !", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
+  displayText("MASSE_B SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());

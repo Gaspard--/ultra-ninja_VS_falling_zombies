@@ -105,5 +105,5 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
 Vect<2, double> Logic::getPlayerPos(void) const
 {
-  return _player.getEntity().fixture.pos;
+  return _player.entity.fixture.pos;
 }

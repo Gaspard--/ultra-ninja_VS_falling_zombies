@@ -52,6 +52,9 @@ public:
    */
   void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
 
+  void displayRenderableAsHUD(Renderable const& renderable);
+
+  
   void render(Logic const &);
   bool isRunning() const;
   bool isKeyPressed(int key) const;
