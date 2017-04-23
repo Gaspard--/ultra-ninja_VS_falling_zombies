@@ -16,7 +16,7 @@ Logic::Logic()
 void Logic::tick(void)
 {
   this->_physics.makePhysicsOnEntity(_entities.begin(), _entities.end());
-  for_each_entity([](Entity &e) { e.update(); });
+  for_each_entity([](auto &e) { e->update(); });
 }
 
 float Logic::getPlanetSize(void) const

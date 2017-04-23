@@ -219,9 +219,9 @@ void Display::render(Logic const &logic)
 
   glEnable(GL_BLEND);
   displayPlanet(planet, logic.getPlanetSize(), {1.0, 0.0});
-  logic.for_each_entity([this](Entity const &e)
+  logic.for_each_entity([this](auto const &e)
 			{
-			  displayRenderable(e.renderable);
+			  this->displayRenderable(e->renderable);
 			});
   displayText("lol MDR", 128, {0.1f, 0.1f}, {0.1f, 0.1f});
   glDisable(GL_BLEND);

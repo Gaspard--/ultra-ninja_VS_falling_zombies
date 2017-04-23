@@ -55,14 +55,14 @@ public:
   void  makePhysicsOnEntity(T begin, T end) const
   {
     for (T i = begin ; i != end ; ++i)
-      i->isOnPlanet = this->move(i->fixture);
+      (*i)->isOnPlanet = this->move((*i)->fixture);
 
     for (T i = begin ; i != end ; ++i)
       for (T j = i + 1 ; j != end ; ++j)
-        if (haveCollision(i->fixture, j->fixture))
+        if (haveCollision((*i)->fixture, (*j)->fixture))
           {
-            i->collision(*j);
-            j->collision(*i);
+            (*i)->collision(**j);
+            (*j)->collision(**i);
           }
   }
 
