@@ -9,22 +9,34 @@ int main()
   std::srand(time(NULL));
   try {
     Display display;
-    Logic logic;
+    Input::setWindow(display.getWindow());
 
     // init input with GLFW window
-    Input::setWindow(display.getWindow());
+    struct LogicInit
+    {
+      LogicInit()
+      {
+	Logic::initLogic();
+      }
+
+      ~LogicInit()
+      {
+	Logic::destroyLogic();
+      }
+    } logicIniter;
+
     while (display.isRunning())
       {
         // handle events
         for (Event ev = Input::pollEvent(); ev; ev = Input::pollEvent())
-          logic.handleEvent(ev);
-        logic.checkEvents(display);
+	  Logic::getInstance().handleEvent(ev);
+	Logic::getInstance().checkEvents(display);
 
         // update logic
-        logic.tick();
+	Logic::getInstance().tick();
 
         // render
-        display.render(logic);
+        display.render(Logic::getInstance());
       }
 
   } catch (std::runtime_error const &e) {

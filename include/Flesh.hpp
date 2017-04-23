@@ -6,7 +6,7 @@
 class Flesh
 {
 public:
-  Flesh(Entity e);
+  Flesh(Entity &e);
 
   Entity entity;
 };

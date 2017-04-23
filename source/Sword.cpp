@@ -1,7 +1,7 @@
 #include "Sword.hpp"
 
-Sword::Sword(Vect<2, double> pos, Vect<2, double> speed, double radius)
-: entity({pos, speed, radius, 0}), damage(3)
+Sword::Sword(Entity &entity, Vect<2u, double> knockback)
+  : entity(entity), damage(3), knockback(knockback)
 {
 }
 
@@ -9,8 +9,10 @@ Sword::~Sword()
 {
 }
 
-void	Sword::Hit(Enemy const & e) const
+void	Sword::Hit(Enemy &e)
 {
+  e.entity.fixture.speed += knockback;
+  e.getRect(damage);
     // TODO appliquer le vecteur de la fixture de sword à la vitesse de l'ennemi
 
     // TODO enlever des HP à l'Enemy touché.
