@@ -30,6 +30,7 @@ private:
   glBuffer textBuffer;
   Texture planet;
   Vect<2u, float> camera;
+  Vect<2u, float> dim;
 public:
   Display();
 

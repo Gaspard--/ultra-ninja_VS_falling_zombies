@@ -23,7 +23,7 @@ inline RenderContext contextFromFiles(std::string name)
 
 inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
 {
-  glViewport((width - height) / 2, 0, height, height);
+  glViewport(0, 0, width, height);
 }
 
 Display::GlfwContext::GlfwContext()
@@ -41,13 +41,15 @@ Display::GlfwContext::~GlfwContext()
   glfwTerminate();
 }
 
+static Display *display;
+
 Display::Display()
-  : window([]{
+  : window([this]{
       std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", nullptr, nullptr), &glfwDestroyWindow);
 
       if (!window)
         throw std::runtime_error("opengl: failed to open window");
-      glfwSetFramebufferSizeCallback(window.get(), &framebufferSizeCallback);
+      display = this;
       glfwMakeContextCurrent(window.get());
       glfwSwapInterval(1);
       if (gl3wInit())
@@ -61,7 +63,13 @@ Display::Display()
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/planet.bmp"))
   , camera{0, 1.0}
+  , dim{0, 0}
 {
+  glfwSetFramebufferSizeCallback(window.get(), [](GLFWwindow *, int width, int height)
+				 {
+				   glViewport(0, 0, width, height);
+				   display->dim = {height / (float)width, 1.0};
+				 });
   {
     Bind<RenderContext> bind(textureContext);
 
@@ -107,7 +115,7 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
 
 void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos, Vect<2u, float> rotation)
 {
-  fontHandler.renderText(text, [this, textPos, rotation](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> dim)
+  fontHandler.renderText(text, [this, textPos, rotation](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> fontDim)
                          {
                            Texture texture;
                            Bind<RenderContext> bind(textContext);
@@ -120,8 +128,8 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
                            glTexImage2D(GL_TEXTURE_2D,
                                         0,
                                         GL_RED,
-                                        (GLsizei)(dim[0]),
-                                        (GLsizei)(dim[1]),
+                                        (GLsizei)(fontDim[0]),
+                                        (GLsizei)(fontDim[1]),
                                         0,
                                         GL_RED,
                                         GL_UNSIGNED_BYTE,
@@ -140,6 +148,7 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
                              }
                            glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
                            glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+			   my_opengl::setUniform(dim, "dim", textContext.program);
                            my_opengl::setUniform(0u, "tex", textContext.program);
                            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
                          }, fontSize, step);
@@ -160,6 +169,7 @@ void Display::displayRect(Rect const &rect)
     }
   glActiveTexture(GL_TEXTURE0);
   glBindBuffer(GL_ARRAY_BUFFER, rectBuffer);
+  my_opengl::setUniform(dim, "dim", rectContext.program);
   my_opengl::setUniform(rect.color, "rect_color", rectContext.program);
   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -181,6 +191,7 @@ void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotatio
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture);
   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(dim, "dim", textureContext.program);
   my_opengl::setUniform(0u, "tex", textureContext.program);
   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -205,6 +216,7 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, renderable.texture);
   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(dim, "dim", textureContext.program);
   my_opengl::setUniform(0u, "tex", textureContext.program);
   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -228,6 +240,7 @@ void Display::displayRenderableAsHUD(Renderable const& renderable)
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, renderable.texture);
   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(dim, "dim", textureContext.program);
   my_opengl::setUniform(0u, "tex", textureContext.program);
   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -247,7 +260,7 @@ void Display::render(Logic const &logic)
                         {
                           this->displayRenderable(e->renderable, camera);
                         });
-  displayText("MASSE_B SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
+  displayText("MASSE BITE SUCE DES QUEUES", 256, {0.1f, 0.1f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());
