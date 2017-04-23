@@ -81,3 +81,8 @@ void Logic::handleButton(GLFWwindow *, Button button)
 {
   (void)button;
 }
+
+Vect<2, double> Logic::getPlayerPos(void) const
+{
+  return _player.getEntity().fixture.pos;
+}

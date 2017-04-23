@@ -51,6 +51,8 @@ public:
   float getPlanetSize(void) const;
   void tick(void);
 
+  Vect<2, double> getPlayerPos(void) const;
+
   template <class func>
   void for_each_entity(func f) const
   {

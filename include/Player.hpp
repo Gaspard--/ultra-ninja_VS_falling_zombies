@@ -16,6 +16,8 @@ public:
   void acceleration(int dir);
   void jump();
   void fastFall();
+
+  Entity const &getEntity(void) const;
 };
 
 #endif /* !PLAYER_H_ */

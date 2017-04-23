@@ -25,3 +25,8 @@ void Player::fastFall()
     if (!this->_e.isOnPlanet)
       this->_e.fixture.speed = -(this->_e.fixture.pos.normalized() * 0.06);
 }
+
+Entity const &Player::getEntity(void) const
+{
+  return _e;
+}
