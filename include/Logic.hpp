@@ -37,7 +37,7 @@ private:
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
 
-  void _addFlesh(Vect<2, double> pos);
+  void addFlesh(Vect<2, double> pos);
 
 public:
   Logic();
