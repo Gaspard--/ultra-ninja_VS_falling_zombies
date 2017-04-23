@@ -11,6 +11,11 @@ EnemySmall::EnemySmall(Entity &e)
 
 void EnemySmall::attack(Player& player)
 {
+  double                angle = std::rand();
+  double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+  Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+  player.entity.fixture.pos = enemyPos;
 
 }
 
