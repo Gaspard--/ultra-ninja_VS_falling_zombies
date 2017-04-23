@@ -69,18 +69,16 @@ Display::Display()
   , camera{0, 1.0}
   , dim{0, 0}
 {
-  static std::function<void(GLFWwindow *, int width, int height)> setFrameBuffer =
-    [this] (GLFWwindow *, int width, int height)
+  static std::function<void(int width, int height)> setFrameBuffer =
+    [this] (int width, int height)
     {
       glViewport(0, 0, width, height);
       dim = {height / (float)width, 1.0};
     };
 
-  auto callback = [] (GLFWwindow *window, int width, int height) {
-    setFrameBuffer(window, width, height);
-  };
-
-  glfwSetFramebufferSizeCallback(window.get(), callback);
+  glfwSetFramebufferSizeCallback(window.get(), [] (GLFWwindow *, int width, int height) {
+      setFrameBuffer(width, height);
+    });
 
   {
     Bind<RenderContext> bind(textureContext);
