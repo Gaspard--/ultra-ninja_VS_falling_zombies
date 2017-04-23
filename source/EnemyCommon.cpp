@@ -18,8 +18,11 @@ void EnemyCommon::attack(Player& player)
 {
   entity.fixture.speed = player.entity.fixture.speed;
 
-  player.entity.fixture.mass += entity.fixture.mass;
-  entity.fixture.mass = player.entity.fixture.mass;
+  if (player.canMove)
+    {
+      player.entity.fixture.mass += entity.fixture.mass;
+      entity.fixture.mass = player.entity.fixture.mass;
+    }
 
   player.canMove = false;
 }

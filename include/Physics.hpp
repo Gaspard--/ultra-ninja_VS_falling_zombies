@@ -52,20 +52,12 @@ public:
   /****************************/
 
   template <class T>
-  void  makePhysicsOnEntity(T begin, T end) const
+  void updateFixtures(T begin, T end)
   {
     for (T i = begin ; i != end ; ++i)
       (*i)->isOnPlanet = this->move((*i)->fixture);
-
-    for (T i = begin ; i != end ; ++i)
-      for (T j = i + 1 ; j != end ; ++j)
-        if (haveCollision((*i)->fixture, (*j)->fixture))
-          {
-            (*i)->collision(**j);
-            (*j)->collision(**i);
-          }
   }
-
+  
   /* Planet size getter */
 
   double        getPlanetRadius(void) const;

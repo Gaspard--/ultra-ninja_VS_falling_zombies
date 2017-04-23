@@ -10,18 +10,13 @@
 */
 struct Entity
 {
-  Entity(Physics::Fixture = {{0, 0}, {0, 0}, 0, 0}, bool b = false,
-	 std::function<void(Entity&)> collision = [](Entity&){},
-	 std::function<void(Entity&)> damage = [](Entity&){});
+  Entity(Physics::Fixture = {{0, 0}, {0, 0}, 0, 0}, bool b = false);
 
   void update(void);
 
   Physics::Fixture      fixture;
   bool                  isOnPlanet;
   Renderable		renderable;
-
-  std::function<void(Entity&)> collision;
-  std::function<void(Entity&)> damage;
 };
 
 #endif /* ENTITY_HPP */

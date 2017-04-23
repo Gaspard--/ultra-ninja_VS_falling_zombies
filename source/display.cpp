@@ -236,7 +236,7 @@ void Display::displayRenderableAsHUD(Renderable const& renderable)
 void Display::render(Logic const &logic)
 {
   camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2()
-                                   * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
+                                   * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.4f)) * 0.2;
   glClearColor(0.2, 0.2, 0.2, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
