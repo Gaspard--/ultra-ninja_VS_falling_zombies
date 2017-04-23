@@ -9,3 +9,8 @@ void Player::update(void)
 {
   _e.update();
 }
+
+void Player::setSpeed(Vect<2, double> v)
+{
+  _e.getFixture().speed = v;
+}

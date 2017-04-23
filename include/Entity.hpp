@@ -20,6 +20,8 @@ struct Entity
 
   Renderable const &getRenderable() const;
 
+  Physics::Fixture &getFixture(void);
+
 private:
 
   Physics::Fixture      _fixture;

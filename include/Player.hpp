@@ -2,6 +2,8 @@
 # define PLAYER_H_
 
 # include "Entity.hpp"
+# include "Vect.hpp"
+
 
 class Player
 {
@@ -12,6 +14,7 @@ public:
   Player(Entity &e);
 
   void update(void);
+  void setSpeed()
 };
 
 #endif /* !PLAYER_H_ */
