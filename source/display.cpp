@@ -61,6 +61,7 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/planet.bmp"))
+  , camera{0, 1.0}
 {
   {
     Bind<RenderContext> bind(textureContext);
@@ -211,15 +212,16 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
 
 void Display::render(Logic const &logic)
 {
+  camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2() * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
   glClearColor(0.2, 0.2, 0.2, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
-  displayPlanet(planet, logic.getPlanetSize(), {1.0, 0.0});
+  displayPlanet(planet, logic.getPlanetSize(), camera);
   logic.for_each_entity([this, logic](auto const &e)
 			{
-			  this->displayRenderable(e->renderable, logic.getPlayerPos().normalized() * Vect<2u, float>{1.0f, -1.0f});
+			  this->displayRenderable(e->renderable, camera);
 			});
   displayText("SAVE ME!", 64, {0.1f, 0.1f}, {-0.2f, -0.2f});
   glDisable(GL_BLEND);

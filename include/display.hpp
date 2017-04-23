@@ -29,6 +29,7 @@ private:
   RenderContext textContext;
   glBuffer textBuffer;
   Texture planet;
+  Vect<2u, float> camera;
 public:
   Display();
 
