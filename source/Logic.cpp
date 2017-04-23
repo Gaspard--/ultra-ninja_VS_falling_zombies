@@ -1,13 +1,16 @@
 #include "Logic.hpp"
 #include "Input.hpp"
 #include "display.hpp"
+#include "EnemyCommon.hpp"
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.4, 1000),
-    _entities({Entity({{0, 1}, {0, 0}, 0.04, 100})}),
-    _player(_entities[0]),
+    _entities({std::shared_ptr<Entity>(new Entity({{0, 2}, {0, 0}, 0.04, 100}))}),
+    _player(*_entities[0]),
     _mousePos({0, 0})
 {
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({{1, 0}, {0, 0}, 0.08, 10})));
+  _enemies.push_back(std::shared_ptr<Enemy>(new EnemyCommon(*_entities.back())));
 }
 
 void Logic::tick(void)

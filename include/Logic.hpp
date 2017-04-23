@@ -13,6 +13,7 @@
 
 # include <algorithm>
 # include <vector>
+# include <memory>
 # include "Entity.hpp"
 # include "Input.hpp"
 # include "Enemy.hpp"
@@ -24,8 +25,8 @@ class Logic
 {
 private:
   Physics _physics;
-  std::vector<Entity> _entities;
-  std::vector<Enemy *> _enemies;
+  std::vector<std::shared_ptr<Entity>> _entities;
+  std::vector<std::shared_ptr<Enemy>> _enemies;
   Player _player;
 
   Vect<2u, float> _mousePos;
