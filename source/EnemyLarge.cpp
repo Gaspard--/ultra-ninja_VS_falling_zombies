@@ -23,4 +23,5 @@ void EnemyLarge::attack(Player& player)
 
 void    EnemyLarge::update(void)
 {
+  this->Enemy::update();
 }
