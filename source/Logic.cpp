@@ -12,7 +12,7 @@ Logic::Logic()
     _mousePos({0, 0})
 {
   _addEnemy<EnemyCommon>({-1, -5});
-  _addEnemy<EnemyLarge>({3.5, 5});
+  _addEnemy<EnemyCommon>({3.5, 5});
   _addEnemy<EnemySmall>({-0.7 * 2 - 1, 1.4 * 2});
 }
 
