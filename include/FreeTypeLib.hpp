@@ -37,9 +37,6 @@ public:
     	renderBuffer((pen + Vect<2u, float>{slot->bitmap_left, slot->bitmap_top}) * step / (float)size,
 		     Vect<2u, float>{slot->bitmap.pitch, slot->bitmap.rows} * step / (float)size,
 		     slot->bitmap.buffer, {slot->bitmap.pitch, slot->bitmap.rows});
-
-	// std::cout << ((Vect<2u, float>{slot->bitmap.pitch, slot->bitmap.rows} / (float)size) * step
-	// 	     )[1] << std::endl;
 	pen[0] += (face->glyph->advance.x >> 6u);
       }
 }

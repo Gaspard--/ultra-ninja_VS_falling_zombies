@@ -37,7 +37,7 @@ public:
 
   GLFWwindow *getWindow() const;
 
-  void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos);
+  void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos,  Vect<2u, float> rotation);
   
   void displayRect(Rect const &);
 

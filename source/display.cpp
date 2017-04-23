@@ -1,4 +1,3 @@
-
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
@@ -106,9 +105,9 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
 }
 
-void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos)
+void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos, Vect<2u, float> rotation)
 {
-  fontHandler.renderText(text, [this, textPos](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> dim)
+  fontHandler.renderText(text, [this, textPos, rotation](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> dim)
 			 {
 			   Texture texture;
 			   Bind<RenderContext> bind(textContext);
@@ -132,12 +131,12 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
 			   for (unsigned int i(0); !(i & 4u); ++i)
 			     {
 			       Vect<2u, float> corner{i & 1u, i >> 1u};
-			       Vect<2u, float> destCorner(pen + textPos + corner * size);
+			       Vect<2u, float> destCorner(rotate(pen + textPos + corner * size, rotation));
 
 			       data[i * 4 + 0] = corner[0];
-			       data[i * 4 + 1] = corner[1];
+			       data[i * 4 + 1] = 1.0 - corner[1];
 			       data[i * 4 + 2] = destCorner[0];
-			       data[i * 4 + 3] = -destCorner[1];
+			       data[i * 4 + 3] = destCorner[1];
 			     }
 			   glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
 			   glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
@@ -223,7 +222,7 @@ void Display::render(Logic const &logic)
 			{
 			  this->displayRenderable(e->renderable, camera);
 			});
-  displayText("SAVE ME!", 64, {0.1f, 0.1f}, {-0.2f, -0.2f});
+  displayText("RIGAUD SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());

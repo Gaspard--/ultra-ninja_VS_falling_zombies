@@ -29,9 +29,9 @@ bool                    Physics::move(Fixture& fixture) const
     }
   /* application of gravity */
   // fixture.speed -= vec * ((_G * fixture.mass * _planet.mass / CAR(distance)) * fixture.mass);
-  fixture.speed -= vec * fixture.mass * 0.00004;
+  fixture.speed -= vec * fixture.mass * 0.00003;
   /* friction */
-  fixture.speed *= 0.99;
+  fixture.speed *= 0.98;
   return (false);
 }
 

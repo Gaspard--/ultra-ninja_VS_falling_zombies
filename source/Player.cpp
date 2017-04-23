@@ -16,8 +16,8 @@ void Player::acceleration(int dir)
 
 void Player::jump()
 {
-    if (this->_e.isOnPlanet)
-      this->_e.fixture.speed = this->_e.fixture.speed + this->_e.fixture.pos.normalized() * 0.03;
+  if (this->_e.isOnPlanet)
+    this->_e.fixture.speed = this->_e.fixture.speed + this->_e.fixture.pos.normalized() * 0.03;
 }
 
 void Player::fastFall()
