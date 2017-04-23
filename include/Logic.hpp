@@ -20,6 +20,7 @@ private:
   std::vector<std::shared_ptr<Entity>> _entities;
   std::vector<std::shared_ptr<Enemy>> _enemies;
   std::vector<std::shared_ptr<Flesh>> _fleshs;
+  std::vector<std::shared_ptr<Sword>> _swords;
   Player _player;
   unsigned int  _time;
 
