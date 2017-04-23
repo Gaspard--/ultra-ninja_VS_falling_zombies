@@ -5,18 +5,16 @@
 # include "Vect.hpp"
 # include "Enemy.hpp"
 
-class Sword
+struct Sword
 {
-public:
-    Sword(Vect<2, double>, Vect<2, double>, double);
-    ~Sword();
+  Entity &entity;
+  Vect<2u, float> knockBack
+  int damage;
 
-public:
-    void Hit(Enemy const &) const;
+  Sword(Entity &entity, Vect<2u, float> knockback);
+  ~Sword();
 
-public:
-	Entity entity;
-    int damage;
+  void Hit(Enemy &);
 };
 
 #endif // !SWORD_HPP_
