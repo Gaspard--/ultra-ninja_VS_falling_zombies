@@ -8,8 +8,8 @@
 struct Sword
 {
   Entity &entity;
-  int damage;
   Vect<2u, float> knockback;
+  int damage;
   bool isUseless = false;
 
   Sword(Entity &entity, Vect<2u, double> knockback);
