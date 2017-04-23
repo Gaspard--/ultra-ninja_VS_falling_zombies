@@ -19,9 +19,9 @@ void EnemyLarge::attack(Player& player)
   double scl = perp.scalar(diff);
 
   Vect<2, double> vec(-player.entity.fixture.pos[1], player.entity.fixture.pos[0]);
-  player.entity.fixture.speed = (vec.normalized() * 0.016)
-    * -((0.f < scl) - (scl < 0.f))
-    - (this->entity.fixture.pos.normalized() * 0.06);
+  player.entity.fixture.speed = (vec.normalized() * 0.014)
+    * -((0.0 < scl) - (scl < 0.0))
+    - (entity.fixture.pos.normalized() * 0.15);
 
 
   entity.fixture.speed = entity.fixture.speed * 0.5

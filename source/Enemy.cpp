@@ -9,6 +9,7 @@ Enemy::Enemy(Entity &e, int hp)
 void Enemy::update()
 {
   isUseless = _hp <= 0;
+  entity.isUseless = isUseless;
   if (isUseless)
     onDeath();
 }
