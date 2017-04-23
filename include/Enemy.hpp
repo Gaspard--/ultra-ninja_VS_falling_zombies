@@ -7,11 +7,12 @@ class Enemy
 {
 protected:
   int _hp;
-  Entity &_e;
 
 public:
   Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
+
+  Entity &entity;
 };
 
 #endif /* !ENEMY_H_ */
