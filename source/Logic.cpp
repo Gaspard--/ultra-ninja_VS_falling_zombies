@@ -149,7 +149,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
   // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
   Vect<2u, double> vec(_mousePos - getPlayerPos());
 
-  _addSword(getPlayerPos() + vec * 0.3, vec);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
   (void)button;
 }
 
