@@ -8,7 +8,7 @@ int main()
 {
   std::srand(time(NULL));
   try {
-    Display display;
+    Display& display = Display::getInstance();
     Input::setWindow(display.getWindow());
 
     // init input with GLFW window
