@@ -53,9 +53,11 @@ void Logic::tick(void)
 	(*j)->Hit(**i);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([](auto &e) { e->update(); });
+  for_each_flesh([](auto &f) { f->update(); });
 
   std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isuseless; });
+  std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isuseless; });
   std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
 }
 

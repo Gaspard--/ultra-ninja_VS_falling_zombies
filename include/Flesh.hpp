@@ -7,8 +7,13 @@ class Flesh
 {
 public:
   Flesh(Entity &e);
+  void update(void);
 
   Entity entity;
+
+private:
+  bool isUseless;
+  int cooldown;
 };
 
 #endif /* !FLESH_HPP_ */
