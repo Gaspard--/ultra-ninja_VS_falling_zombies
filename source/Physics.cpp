@@ -22,7 +22,7 @@ bool                    Physics::move(Fixture& fixture) const
       /* fix the fixture to the planet ground */
       fixture.pos += vec * ((fixture.radius + _planet.radius) - distance);
       /* delete speed against planet */
-      fixture.speed -= vec * (vec.x() * fixture.speed.x() + vec.y() * fixture.speed.y());
+      fixture.speed -= vec * (vec.scalar(fixture.speed));
       /* friction */
       fixture.speed *= 0.9;
       return (true);

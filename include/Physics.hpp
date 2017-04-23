@@ -55,8 +55,7 @@ public:
   void  makePhysicsOnEntity(T begin, T end) const
   {
     for (T i = begin ; i != end ; ++i)
-      if (this->move(i->fixture))
-        i->isOnPlanet = true;
+      i->isOnPlanet = this->move(i->fixture);
 
     for (T i = begin ; i != end ; ++i)
       for (T j = i + 1 ; j != end ; ++j)
