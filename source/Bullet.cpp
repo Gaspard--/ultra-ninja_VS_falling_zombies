@@ -14,6 +14,7 @@ void	Bullet::Hit(Enemy &e)
 {
   e.entity.fixture.speed += knockback;
   e.getRekt(damage);
+  isUseless = true;
 
     // TODO appliquer le vecteur de la fixture de bullet à la vitesse de l'ennemi
     // TODO enlever des HP à l'Enemy touché.

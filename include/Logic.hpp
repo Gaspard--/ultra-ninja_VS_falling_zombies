@@ -11,6 +11,7 @@
 # include "Flesh.hpp"
 # include "Player.hpp"
 # include "Sword.hpp"
+# include "Bullet.hpp"
 
 class Display;
 
@@ -25,6 +26,7 @@ private:
   std::vector<std::shared_ptr<Enemy>> _enemies;
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
+  std::vector<std::shared_ptr<Bullet>> _bullets;
   Player _player;
   unsigned int  _time;
 
@@ -45,6 +47,7 @@ private:
   }
 
   void _addSword(Vect<2, double> pos, Vect<2, double> knockback);
+  void _addBullet(Vect<2, double> pos, Vect<2, double> knockback)
   void spawnEnemy();
 
 public:
@@ -90,6 +93,13 @@ public:
   {
     std::for_each(_swords.begin(), _swords.end(), f);
   }
+
+  template <class func>
+  void for_each_bullet(func f)
+  {
+    std::for_each(_bulelts.begin(), _bullets.end(), f);
+  }
+
 };
 
 #endif // !LOGIC_HPP_

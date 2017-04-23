@@ -10,7 +10,7 @@ public:
   EnemyShooter(Entity &);
 
   void attack(Player& player) override;
-  void shoot()
+  void shoot();
 };
 
 #endif /* !ENEMYSHOOTER_H_ */
