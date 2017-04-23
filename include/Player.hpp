@@ -10,9 +10,10 @@ private:
   int _hp;
 
 public:
-  Player(Entity &e);
+  Player(Entity &e, bool canMove = true);
 
   Entity &entity;
+  bool canMove;
 
   void update(void);
   void acceleration(int dir);

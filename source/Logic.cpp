@@ -79,6 +79,9 @@ void Logic::handleKey(GLFWwindow *window, Key key)
 
 void Logic::checkEvents(Display const &display)
 {
+  if (!_player.canMove)
+    return;
+
   if (display.isKeyPressed(GLFW_KEY_RIGHT))
     this->_player.acceleration(-1);
   if (display.isKeyPressed(GLFW_KEY_LEFT))
