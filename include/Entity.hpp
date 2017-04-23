@@ -16,10 +16,6 @@ struct Entity
 
   void update(void);
 
-  Renderable const &getRenderable() const;
-
-  Physics::Fixture &getFixture(void);
-
   Physics::Fixture      fixture;
   bool                  isOnPlanet;
   Renderable		renderable;

@@ -36,6 +36,13 @@ private:
   void handleMouse(GLFWwindow *window, Mouse mouse);
   void handleButton(GLFWwindow *window, Button button);
 
+  template <typename T>
+  void _addEnemy(Vect<2, double> pos, double s, double w)
+    {
+      _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, s, w})));
+      _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
+    }
+
 public:
   Logic();
 

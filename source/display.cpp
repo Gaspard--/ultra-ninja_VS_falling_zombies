@@ -56,10 +56,10 @@ Display::Display()
 	throw std::runtime_error("opengl: Opengl 3.0 not supported");
       return window;
     }())
-  , fontHandler("ObelixPro-Broken-cyr.ttf")
+  , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
-  , planet(my_opengl::loadTexture("planet.bmp"))
+  , planet(my_opengl::loadTexture("resources/planet.bmp"))
 {
   {
     Bind<RenderContext> bind(textureContext);

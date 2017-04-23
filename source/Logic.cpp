@@ -9,8 +9,7 @@ Logic::Logic()
     _player(*_entities[0]),
     _mousePos({0, 0})
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({{1, 0}, {0, 0}, 0.08, 10})));
-  _enemies.push_back(std::shared_ptr<Enemy>(new EnemyCommon(*_entities.back())));
+  _addEnemy<EnemyCommon>({1, 0}, 0.2, 50);
 }
 
 void Logic::tick(void)
