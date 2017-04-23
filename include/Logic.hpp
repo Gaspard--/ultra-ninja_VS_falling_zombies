@@ -76,6 +76,12 @@ public:
   {
     std::for_each(_enemies.begin(), _enemies.end(), f);
   }
+
+  template <class func>
+  void for_each_flesh(func f)
+  {
+    std::for_each(_fleshs.begin(), _fleshs.end(), f);
+  }
 };
 
 #endif // !LOGIC_HPP_

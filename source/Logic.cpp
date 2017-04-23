@@ -51,6 +51,7 @@ void Logic::tick(void)
       (*i)->attack(_player);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([](auto &e) { e->update(); });
+  for_each_flesh([](auto &e) { e->update(); });
 }
 
 float Logic::getPlanetSize(void) const
