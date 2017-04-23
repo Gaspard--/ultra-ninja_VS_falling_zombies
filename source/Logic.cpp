@@ -5,7 +5,7 @@
 // Login   <guitta_l@epitech.eu>
 //
 // Started on  Sat Apr 22 10:30:13 2017 Louis Guittard
-// Last update Sun Apr 23 00:34:28 2017 Louis Guittard
+// Last update Sun Apr 23 05:06:41 2017 Louis Guittard
 //
 
 #include "Logic.hpp"
@@ -55,6 +55,19 @@ void Logic::handleKey(GLFWwindow *window, Key key)
     {
     case GLFW_KEY_ESCAPE:
       glfwSetWindowShouldClose(window, true);
+      break;
+    case GLFW_KEY_LEFT:
+      this->_player.acceleration(-1);
+      break;
+    case GLFW_KEY_RIGHT:
+      this->_player.acceleration(1);
+      break;
+    case GLFW_KEY_UP:
+    case GLFW_KEY_SPACE:
+      this->_player.jump();
+      break;
+    case GLFW_KEY_DOWN:
+      this->_player.fastFall();
       break;
     }
 }

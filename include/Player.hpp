@@ -11,6 +11,11 @@ private:
 
 public:
   Player(Entity &e);
+
+  void update(void);
+  void acceleration(int dir);
+  void jump();
+  void fastFall();
 };
 
 #endif /* !PLAYER_H_ */
