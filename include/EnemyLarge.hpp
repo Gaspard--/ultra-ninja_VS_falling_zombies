@@ -11,6 +11,8 @@ public:
 
   // SPIKE
   void attack(Player& player) override;
+
+  void  update(void);
 };
 
 #endif /* !ENEMYLARGE_H_ */

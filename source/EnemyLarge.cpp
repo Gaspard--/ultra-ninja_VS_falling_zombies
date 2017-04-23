@@ -1,3 +1,4 @@
+#include <iostream>
 #include "EnemyLarge.hpp"
 #include "Player.hpp"
 
@@ -12,9 +13,14 @@ EnemyLarge::EnemyLarge(Entity &e)
 
 void EnemyLarge::attack(Player& player)
 {
+  std::cout << "oui" << std::endl;
   player.entity.fixture.speed = player.entity.fixture.speed * 0.5
     - player.entity.fixture.pos.normalized() * 0.09 * 0.2;
   entity.fixture.speed = entity.fixture.speed * 0.5
     + entity.fixture.pos.normalized() * 0.09 * 0.2;
   player.getRekt(2);
+}
+
+void    EnemyLarge::update(void)
+{
 }
