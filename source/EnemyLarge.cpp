@@ -8,3 +8,8 @@ EnemyLarge::EnemyLarge(Entity &e)
   e.renderable.texture = my_opengl::loadTexture("resources/test.bmp");
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
+
+void EnemyLarge::attack(Player& player)
+{
+
+}

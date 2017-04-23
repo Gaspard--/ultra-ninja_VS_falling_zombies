@@ -8,6 +8,9 @@ class EnemySmall : public Enemy
 private:
 
 public:
+  void attack(Player& player) override;
+
+public:
   EnemySmall(Entity &);
 };
 
