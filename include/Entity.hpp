@@ -1,24 +1,20 @@
 #ifndef ENTITY_HPP
 # define ENTITY_HPP
 
+# include <functional>
 # include "Physics.hpp"
 # include "renderable.hpp"
 
 /*
 ** kind of entity class
 */
-
-class   Entity
+struct Entity
 {
+  bool isOnPlanet;
+  Renderable renderable;
+  Physics::Fixture fixture;
 
-public:
-
-  inline void  collision(const Entity& e) {(void)e; /* some stuff ... */ }
-
-  Physics::Fixture&             getFixture(void);
-  const Physics::Fixture&       getFixture(void) const;
-
-  void  setIsOnPlanet(bool);
+  std::function<void(Entity&)> collision;
 
   void update(void);
 
@@ -30,6 +26,5 @@ private:
   bool                  _isOnPlanet;
   Renderable		_renderable;
 };
-
 
 #endif /* ENTITY_HPP */

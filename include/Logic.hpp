@@ -26,6 +26,9 @@ private:
   Player _player;
   Physics _physics;
 
+  Vect<2u, float> _mousePos;
+
+private:
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);
   void handleButton(GLFWwindow *window, Button button);

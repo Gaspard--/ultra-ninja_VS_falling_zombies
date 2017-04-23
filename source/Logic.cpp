@@ -12,7 +12,7 @@
 #include "Input.hpp"
 
 Logic::Logic()
-: _physics(Vect<2, int>(0, 0), 0.4, 1000)
+  : _physics(Vect<2, int>(0, 0), 0.4, 1000), _mousePos({0, 0})
 {
 }
 
@@ -56,14 +56,16 @@ void Logic::handleKey(GLFWwindow *window, Key key)
     }
 }
 
-void Logic::handleMouse(GLFWwindow *window, Mouse mouse)
+void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 {
-  (void)window;
-  (void)mouse;
+  int width = 1920;
+  int height = 1080;
+
+  _mousePos = {mouse.x, mouse.y};
+  _mousePos = (_mousePos - Vect<2u, double>(width - height, 0) * 0.5) / Vect<2u, double>(height * 0.5, -height * 0.5) + Vect<2u, double>(-1.0, 1.0);
 }
 
-void Logic::handleButton(GLFWwindow *window, Button button)
+void Logic::handleButton(GLFWwindow *, Button button)
 {
-  (void)window;
   (void)button;
 }
