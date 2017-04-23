@@ -19,3 +19,8 @@ Vect<2, double> const &Player::getPos(void) const
 {
   return _e.getFixture().pos;
 }
+
+Vect<2, double> const &Player::getSpeed(void) const
+{
+  return _e.getFixture().speed;
+}
