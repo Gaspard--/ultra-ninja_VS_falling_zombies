@@ -29,9 +29,9 @@ inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
 Display::GlfwContext::GlfwContext()
 {
   glfwSetErrorCallback([](int, char const *str)
-		       {
-			 throw std::runtime_error(str);
-		       });
+                       {
+                         throw std::runtime_error(str);
+                       });
   if (!glfwInit())
     throw std::runtime_error("opengl: failed to initialize glfw");
 }
@@ -46,14 +46,14 @@ Display::Display()
       std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", nullptr, nullptr), &glfwDestroyWindow);
 
       if (!window)
-	throw std::runtime_error("opengl: failed to open window");
+        throw std::runtime_error("opengl: failed to open window");
       glfwSetFramebufferSizeCallback(window.get(), &framebufferSizeCallback);
       glfwMakeContextCurrent(window.get());
       glfwSwapInterval(1);
       if (gl3wInit())
-	throw std::runtime_error("opengl: failed to initialize 3.0 bindings");
+        throw std::runtime_error("opengl: failed to initialize 3.0 bindings");
       if (!gl3wIsSupported(3, 0))
-	throw std::runtime_error("opengl: Opengl 3.0 not supported");
+        throw std::runtime_error("opengl: Opengl 3.0 not supported");
       return window;
     }())
   , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
@@ -108,41 +108,41 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
 void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos, Vect<2u, float> rotation)
 {
   fontHandler.renderText(text, [this, textPos, rotation](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> dim)
-			 {
-			   Texture texture;
-			   Bind<RenderContext> bind(textContext);
+                         {
+                           Texture texture;
+                           Bind<RenderContext> bind(textContext);
 
-			   glActiveTexture(GL_TEXTURE0);
-			   glBindTexture(GL_TEXTURE_2D, texture);
-			   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-			   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			   glTexImage2D(GL_TEXTURE_2D,
-					0,
-					GL_RED,
-					(GLsizei)(dim[0]),
-					(GLsizei)(dim[1]),
-					0,
-					GL_RED,
-					GL_UNSIGNED_BYTE,
-					static_cast<void *>(buffer));
-			   float data[16];
+                           glActiveTexture(GL_TEXTURE0);
+                           glBindTexture(GL_TEXTURE_2D, texture);
+                           glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+                           glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                           glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+                           glTexImage2D(GL_TEXTURE_2D,
+                                        0,
+                                        GL_RED,
+                                        (GLsizei)(dim[0]),
+                                        (GLsizei)(dim[1]),
+                                        0,
+                                        GL_RED,
+                                        GL_UNSIGNED_BYTE,
+                                        static_cast<void *>(buffer));
+                           float data[16];
 
-			   for (unsigned int i(0); !(i & 4u); ++i)
-			     {
-			       Vect<2u, float> corner{i & 1u, i >> 1u};
-			       Vect<2u, float> destCorner(rotate(pen + textPos + corner * size, rotation));
+                           for (unsigned int i(0); !(i & 4u); ++i)
+                             {
+                               Vect<2u, float> corner{i & 1u, i >> 1u};
+                               Vect<2u, float> destCorner(rotate(pen + textPos + corner * size, rotation));
 
-			       data[i * 4 + 0] = corner[0];
-			       data[i * 4 + 1] = 1.0 - corner[1];
-			       data[i * 4 + 2] = destCorner[0];
-			       data[i * 4 + 3] = destCorner[1];
-			     }
-			   glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
-			   glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-			   my_opengl::setUniform(0u, "tex", textContext.program);
-			   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-			 }, fontSize, step);
+                               data[i * 4 + 0] = corner[0];
+                               data[i * 4 + 1] = 1.0 - corner[1];
+                               data[i * 4 + 2] = destCorner[0];
+                               data[i * 4 + 3] = destCorner[1];
+                             }
+                           glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
+                           glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+                           my_opengl::setUniform(0u, "tex", textContext.program);
+                           glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+                         }, fontSize, step);
 }
 
 void Display::displayRect(Rect const &rect)
@@ -197,7 +197,7 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
       Vect<2u, float> const corner((j & 1u), (j >> 1u));
       Vect<2u, float> const sourceCorner(renderable.sourcePos + corner * renderable.sourceSize);
       Vect<2u, float> const destCorner(rotate(renderable.destPos + (rotate((corner - Vect<2u, float>{0.5f, 0.5f})
-									   * renderable.destSize, {up[1], -up[0]})), rotation));
+                                                                           * renderable.destSize, {up[1], -up[0]})), rotation));
 
       std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
       std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
@@ -236,7 +236,7 @@ void Display::displayRenderableAsHUD(Renderable const& renderable)
 void Display::render(Logic const &logic)
 {
   camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2()
-				   * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
+                                   * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
   glClearColor(0.2, 0.2, 0.2, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
@@ -244,9 +244,9 @@ void Display::render(Logic const &logic)
   glEnable(GL_BLEND);
   displayPlanet(planet, logic.getPlanetSize(), camera);
   logic.for_each_entity([this, logic](auto const &e)
-			{
-			  this->displayRenderable(e->renderable, camera);
-			});
+                        {
+                          this->displayRenderable(e->renderable, camera);
+                        });
   displayText("MASSE_B SUCE DES QUEUES", 256, {0.05f, 0.05f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 

@@ -7,5 +7,9 @@ Enemy::Enemy(Entity &e, int hp)
 
 Enemy::~Enemy()
 {
-  
+}
+
+void Enemy::getRekt(int dmg)
+{
+  _hp -= dmg;
 }
