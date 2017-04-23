@@ -20,8 +20,9 @@ bool                    Physics::move(Fixture& fixture) const
   if (haveCollision(fixture, _planet))
     {
       /* fix the fixture to the planet ground */
-      vec *= (fixture.radius + _planet.radius) - distance;
-      fixture.pos += vec;
+      fixture.pos += vec * ((fixture.radius + _planet.radius) - distance);
+      /* delete speed against planet */
+      fixture.speed -= vec * (vec.x() * fixture.speed.x() + vec.y() * fixture.speed.y());
       /* friction */
       fixture.speed *= 0.9;
       return (true);
