@@ -51,6 +51,7 @@ class Input
 public:
   static Event pollEvent();
   static void setWindow(GLFWwindow *window);
+  static bool isKeyPressed(int key);
 
 private:
   Input() = default;

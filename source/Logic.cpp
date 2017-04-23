@@ -5,11 +5,12 @@
 // Login   <guitta_l@epitech.eu>
 //
 // Started on  Sat Apr 22 10:30:13 2017 Louis Guittard
-// Last update Sun Apr 23 05:06:41 2017 Louis Guittard
+// Last update Sun Apr 23 06:21:20 2017 Jakob Kellendonk
 //
 
 #include "Logic.hpp"
 #include "Input.hpp"
+#include "display.hpp"
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.4, 1000),
@@ -70,6 +71,18 @@ void Logic::handleKey(GLFWwindow *window, Key key)
       this->_player.fastFall();
       break;
     }
+}
+
+void Logic::checkEvents(Display const &display)
+{
+  if (display.isKeyPressed(GLFW_KEY_LEFT))
+    this->_player.acceleration(-1);
+  if (display.isKeyPressed(GLFW_KEY_RIGHT))
+    this->_player.acceleration(1);
+  if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
+    this->_player.acceleration(1);
+  if (display.isKeyPressed(GLFW_KEY_DOWN))
+    this->_player.fastFall();
 }
 
 void Logic::handleMouse(GLFWwindow *, Mouse mouse)

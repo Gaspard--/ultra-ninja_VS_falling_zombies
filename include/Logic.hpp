@@ -5,7 +5,7 @@
 // Login   <guitta_l@epitech.eu>
 //
 // Started on  Sat Apr 22 10:13:21 2017 Louis Guittard
-// Last update Sun Apr 23 00:18:56 2017 Louis Guittard
+// Last update Sun Apr 23 06:18:34 2017 Jakob Kellendonk
 //
 
 #ifndef LOGIC_HPP_
@@ -17,6 +17,8 @@
 # include "Input.hpp"
 # include "Enemy.hpp"
 # include "Player.hpp"
+
+class Display;
 
 class Logic
 {
@@ -37,6 +39,7 @@ public:
   Logic();
 
   void handleEvent(Event const& event);
+  void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
 

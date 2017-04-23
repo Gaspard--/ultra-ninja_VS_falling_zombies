@@ -17,7 +17,8 @@ int main()
 	// handle events
 	for (Event ev = Input::pollEvent(); ev; ev = Input::pollEvent())
 	  logic.handleEvent(ev);
-
+	logic.checkEvents(display);
+	
 	// update logic
 	logic.tick();
 

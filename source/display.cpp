@@ -230,7 +230,12 @@ void Display::render(Logic const &logic)
   glfwPollEvents();
 }
 
-bool Display::isRunning()
+bool Display::isRunning() const
 {
   return (!glfwWindowShouldClose(window.get()));
+}
+
+bool Display::isKeyPressed(int key) const
+{
+  return glfwGetKey(window.get(), key);
 }
