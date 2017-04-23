@@ -10,8 +10,6 @@ protected:
 
 public:
   Enemy(Entity &);
-
-  void update(void);
 };
 
 #endif /* !ENEMY_H_ */

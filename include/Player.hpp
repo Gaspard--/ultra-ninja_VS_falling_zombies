@@ -11,8 +11,6 @@ private:
 
 public:
   Player(Entity &e);
-
-  void update(void);
 };
 
 #endif /* !PLAYER_H_ */
