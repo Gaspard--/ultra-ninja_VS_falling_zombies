@@ -22,12 +22,14 @@ SRCS_CPP = 	source/main.cpp \
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
-all: $(NAME)
-	@grep --color=auto -ir --include "*.cpp" -E "(FIXME|TODO)" .
-	@grep --color=auto -ir --include "*.hpp" -E "(FIXME|TODO)" .
+all: grep_todo $(NAME)
 
 $(NAME):$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+
+grep_todo:
+	@grep --color=auto -ir --include "*.cpp" -E "(FIXME|TODO)" . || true
+	@grep --color=auto -ir --include "*.hpp" -E "(FIXME|TODO)" . || true
 
 clean:
 	$(RM) $(OBJS)
@@ -37,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re grep_todo
