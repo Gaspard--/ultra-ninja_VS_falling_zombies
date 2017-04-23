@@ -13,6 +13,8 @@ public:
   Player(Entity &e);
 
   void update(void);
+  void acceleration(int dir);
+  void jump();
 };
 
 #endif /* !PLAYER_H_ */
