@@ -29,7 +29,6 @@ private:
   Physics::Fixture      _fixture;
   bool                  _isOnPlanet;
   Renderable		_renderable;
-
 };
 
 

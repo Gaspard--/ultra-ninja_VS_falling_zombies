@@ -15,14 +15,17 @@
 # include <vector>
 # include "Entity.hpp"
 # include "Input.hpp"
+# include "Enemy.hpp"
+# include "Player.hpp"
 
 class Logic
 {
 private:
   std::vector<Entity> _entities;
-  Physics             _physics;
+  std::vector<Enemy *> _enemies;
+  Player _player;
+  Physics _physics;
 
-private:
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);
   void handleButton(GLFWwindow *window, Button button);
