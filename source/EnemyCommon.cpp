@@ -10,8 +10,9 @@ EnemyCommon::EnemyCommon(Entity &e)
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 
-EnemyCommon::~EnemyCommon()
+void EnemyCommon::onDeath()
 {
+  EnemyCommon::onDeath();
   if (_isAttached)
     Logic::getInstance().getPlayer().canMove = true;
 }

@@ -16,8 +16,8 @@ public:
   Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
 
-  virtual void  update(void) = 0;
-  void onDeath();
+  virtual void update(void) = 0;
+  virtual void onDeath();
   void getRekt(int);
 
   Entity &entity;
