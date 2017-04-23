@@ -12,6 +12,7 @@ public:
 
 public:
   EnemyLarge(Entity &);
+  void  update(void) override;
 };
 
 #endif /* !ENEMYLARGE_H_ */
