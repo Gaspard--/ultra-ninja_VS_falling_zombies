@@ -115,8 +115,8 @@ Vect<2, double> Logic::getPlayerPos(void) const
   return _player.entity.fixture.pos;
 }
 
-void Logic::addFlesh(Vect<2, double> pos, Entity entityClone)
-{
-  _entities.push_back(std::shared_ptr<Entity>(new Entity(entityClone)));
-  _flesh.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
-}
+// void Logic::addFlesh(Vect<2, double> pos, Entity entityClone)
+// {
+//   _entities.push_back(std::shared_ptr<Entity>(new Entity(entityClone)));
+//   _fleshs.push_back(std::shared_ptr<Enemy>(new fleshs(*_entities.back())));
+// }
