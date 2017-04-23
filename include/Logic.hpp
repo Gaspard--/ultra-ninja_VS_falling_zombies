@@ -56,7 +56,7 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
-  void addFlesh(Entity &entityParent);
+  void addFlesh(Entity const &entityParent);
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
