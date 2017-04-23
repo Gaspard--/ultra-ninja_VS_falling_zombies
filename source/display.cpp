@@ -196,7 +196,8 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
     {
       Vect<2u, float> const corner((j & 1u), (j >> 1u));
       Vect<2u, float> const sourceCorner(renderable.sourcePos + corner * renderable.sourceSize);
-      Vect<2u, float> const destCorner(rotate(renderable.destPos + (rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * renderable.destSize, {up[1], -up[0]})), rotation));
+      Vect<2u, float> const destCorner(rotate(renderable.destPos + (rotate((corner - Vect<2u, float>{0.5f, 0.5f})
+									   * renderable.destSize, {up[1], -up[0]})), rotation));
 
       std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
       std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
@@ -211,7 +212,8 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
 
 void Display::render(Logic const &logic)
 {
-  camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2() * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
+  camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2()
+				   * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.5f)) * 0.2;
   glClearColor(0.2, 0.2, 0.2, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
