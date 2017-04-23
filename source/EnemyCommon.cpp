@@ -2,7 +2,7 @@
 #include "Logic.hpp"
 
 EnemyCommon::EnemyCommon(Entity &e)
-  : Enemy(e, 20), _isAttached(false)
+  : Enemy(e, 20)
 {
   e.fixture.radius = 0.05;
   e.fixture.mass = 15;
@@ -10,25 +10,22 @@ EnemyCommon::EnemyCommon(Entity &e)
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 
-void EnemyCommon::onDeath()
-{
-  EnemyCommon::onDeath();
-  if (_isAttached)
-    Logic::getInstance().getPlayer().canMove = true;
-}
-
 void EnemyCommon::attack(Player& player)
 {
-  entity.fixture.speed = player.entity.fixture.speed;
+  Vect<2, double> pos = player.entity.fixture.pos;
+  Vect<2, double> perp = {pos[1], -pos[0]};
+  Vect<2, double> diff = (pos - entity.fixture.pos);
+  double scl = perp.scalar(diff);
 
-  if (player.canMove)
-    {
-      player.entity.fixture.mass += entity.fixture.mass;
-      entity.fixture.mass = player.entity.fixture.mass;
-      _isAttached = true;
-    }
+  Vect<2, double> vec(-player.entity.fixture.pos[1], player.entity.fixture.pos[0]);
+  player.entity.fixture.speed = (vec.normalized() * 0.01)
+    * -((0.0 < scl) - (scl < 0.0))
+    + (entity.fixture.pos.normalized() * 0.05);
 
-  player.canMove = false;
+
+  entity.fixture.speed = entity.fixture.speed * 0.5
+    - entity.fixture.pos.normalized() * 0.09 * 0.2;
+  player.getRekt(2);
 }
 
 void    EnemyCommon::update(void)
