@@ -1,4 +1,5 @@
 # include "GUI.hpp"
+# include "display.hpp"
 
 GUI::Button::Button(const Rect& rect, const std::string str) : _rect(rect), _inactiveColor(_rect.color), _overflewColor(_rect.color)
 {
@@ -45,4 +46,10 @@ std::string     GUI::haveElemPressed(const Vect<2, float>& mouse, bool leftClick
     if (i->second.isOverflew(mouse) && leftClick)
       return (i->first);
   return ("");
+}
+
+void    GUI::drawElems(Display& disp)
+{
+  for (auto i = _stack.begin() ; i != _stack.end() ; ++i)
+    i->second.draw(disp);
 }
