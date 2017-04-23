@@ -6,6 +6,7 @@
 class EnemyCommon : public Enemy
 {
 private:
+  bool _isAttached;
 
 public:
   void attack(Player& player) override;

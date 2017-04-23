@@ -103,6 +103,27 @@ void Logic::checkEvents(Display const &display)
 
   if (display.isKeyPressed(GLFW_KEY_C))
     {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemySmall>(enemyPos);
+    }
+  if (display.isKeyPressed(GLFW_KEY_V))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemyCommon>(enemyPos);
+    }
+  if (display.isKeyPressed(GLFW_KEY_N))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemyLarge>(enemyPos);
     }
 }
 
@@ -145,4 +166,9 @@ Logic& Logic::getInstance()
 void Logic::destroyLogic()
 {
   _instance.reset(nullptr);
+}
+
+Player& Logic::getPlayer()
+{
+  return _player;
 }

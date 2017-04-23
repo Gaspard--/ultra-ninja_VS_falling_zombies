@@ -1,7 +1,8 @@
 #include "EnemyCommon.hpp"
+#include "Logic.hpp"
 
 EnemyCommon::EnemyCommon(Entity &e)
-  : Enemy(e, 20)
+  : Enemy(e, 20), _isAttached(false)
 {
   e.fixture.radius = 0.05;
   e.fixture.mass = 15;
@@ -11,7 +12,8 @@ EnemyCommon::EnemyCommon(Entity &e)
 
 EnemyCommon::~EnemyCommon()
 {
-  // logic.getPlayer().canMove = true;
+  if (_isAttached)
+    Logic::getInstance().getPlayer().canMove = true;
 }
 
 void EnemyCommon::attack(Player& player)
@@ -22,6 +24,7 @@ void EnemyCommon::attack(Player& player)
     {
       player.entity.fixture.mass += entity.fixture.mass;
       entity.fixture.mass = player.entity.fixture.mass;
+      _isAttached = true;
     }
 
   player.canMove = false;
