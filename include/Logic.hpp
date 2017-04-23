@@ -95,7 +95,7 @@ public:
   }
 
   template <class func>
-  void for_each_bullets(func f)
+  void for_each_bullet(func f)
   {
     std::for_each(_bullets.begin(), _bullets.end(), f);
   }

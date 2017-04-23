@@ -21,6 +21,7 @@ void Bullet::hit(Enemy &e)
 {
   e.entity.fixture.speed += knockback;
   e.getRekt(damage);
+  isUseless = true;
 
   // is useless after hit
   isUseless = true;

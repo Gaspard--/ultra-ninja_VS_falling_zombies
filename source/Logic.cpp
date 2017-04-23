@@ -62,7 +62,7 @@ void Logic::tick(void)
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
   for_each_swords([](auto &s) { s->update(); });
-  for_each_bullets([](auto &b) { b->update(); });
+  for_each_bullet([](auto &b) { b->update(); });
 
   _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
@@ -167,7 +167,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
   Vect<2u, double> vec(_mousePos - getPlayerPos());
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
-  	return ;
+	return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
 }
 
