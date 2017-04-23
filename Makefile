@@ -25,6 +25,7 @@ SRCS_CPP = 	source/main.cpp \
 		source/EnemyLarge.cpp \
 		source/EnemySmall.cpp \
 		source/Flesh.cpp \
+		source/Sword.cpp \
 		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)

@@ -16,6 +16,7 @@ struct Entity
 
   Physics::Fixture      fixture;
   bool                  isOnPlanet;
+  bool		        isUseless = false;
   Renderable		renderable;
 };
 

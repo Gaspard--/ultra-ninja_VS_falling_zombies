@@ -44,6 +44,7 @@ private:
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
 
+  void _addSword(Entity);
   void spawnEnemy();
 
 public:
@@ -58,6 +59,7 @@ public:
   void addFlesh(Entity &entityParent);
 
   Vect<2, double> getPlayerPos(void) const;
+  Player& getPlayer();
 
   template <class func>
   void for_each_entity(func f) const

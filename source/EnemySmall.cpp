@@ -16,4 +16,5 @@ void EnemySmall::attack(Player& player)
 
 void    EnemySmall::update(void)
 {
+  this->Enemy::update();
 }

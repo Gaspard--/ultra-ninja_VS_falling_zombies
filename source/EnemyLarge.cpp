@@ -13,9 +13,17 @@ EnemyLarge::EnemyLarge(Entity &e)
 
 void EnemyLarge::attack(Player& player)
 {
-  std::cout << "oui" << std::endl;
-  player.entity.fixture.speed = player.entity.fixture.speed * 0.5
-    - player.entity.fixture.pos.normalized() * 0.09 * 0.2;
+  Vect<2, double> pos = player.entity.fixture.pos;
+  Vect<2, double> perp = {pos[1], -pos[0]};
+  Vect<2, double> diff = (pos - entity.fixture.pos);
+  double scl = perp.scalar(diff);
+
+  Vect<2, double> vec(-player.entity.fixture.pos[1], player.entity.fixture.pos[0]);
+  player.entity.fixture.speed = (vec.normalized() * 0.016)
+    * -((0.f < scl) - (scl < 0.f))
+    - (this->entity.fixture.pos.normalized() * 0.06);
+
+
   entity.fixture.speed = entity.fixture.speed * 0.5
     + entity.fixture.pos.normalized() * 0.09 * 0.2;
   player.getRekt(2);
@@ -23,4 +31,5 @@ void EnemyLarge::attack(Player& player)
 
 void    EnemyLarge::update(void)
 {
+  this->Enemy::update();
 }

@@ -35,8 +35,6 @@ void Logic::spawnEnemy()
         case 2:
           _addEnemy<EnemyLarge>(enemyPos);
           break;
-        default:
-          break;
         }
     }
 }
@@ -49,9 +47,17 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
+  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
+    for (auto j(_swords.begin()); j != _swords.end(); ++j)
+      if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
+	(*j)->Hit(**i);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([](auto &e) { e->update(); });
   for_each_flesh([](auto &e) { e->update(); });
+
+  std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
 }
 
 float Logic::getPlanetSize(void) const
@@ -104,6 +110,27 @@ void Logic::checkEvents(Display const &display)
 
   if (display.isKeyPressed(GLFW_KEY_C))
     {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemySmall>(enemyPos);
+    }
+  if (display.isKeyPressed(GLFW_KEY_V))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemyCommon>(enemyPos);
+    }
+  if (display.isKeyPressed(GLFW_KEY_B))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemyLarge>(enemyPos);
     }
 }
 
@@ -118,7 +145,10 @@ void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 
 void Logic::handleButton(GLFWwindow *, Button button)
 {
-    // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
+  // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
+  Vect<2u, double> vec(_mousePos - _player.getPos());
+
+  _addSword(_player.getPos() + vec * 0.3, vec);
   (void)button;
 }
 
@@ -146,4 +176,15 @@ Logic& Logic::getInstance()
 void Logic::destroyLogic()
 {
   _instance.reset(nullptr);
+}
+
+Player& Logic::getPlayer()
+{
+  return _player;
+}
+
+void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
+{
+  _entities.push_back(std::shared_ptr<Entity>(new Entity(pos, {0, 0}, 0.06, 0)));
+  _swords.push_back(std::shared_ptr<Sword>(new Sword(_entities.back(), knockback)));
 }

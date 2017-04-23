@@ -6,6 +6,13 @@ Enemy::Enemy(Entity &e, int hp)
 {
 }
 
+void Enemy::update()
+{
+  isUseless = _hp <= 0;
+  if (isUseless)
+    onDeath();
+}
+
 void Enemy::onDeath()
 {
   Logic::getInstance().addFlesh(entity);
