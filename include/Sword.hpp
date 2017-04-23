@@ -8,7 +8,7 @@
 struct Sword
 {
   Entity &entity;
-  Vect<2u, float> knockBack
+  Vect<2u, float> knockBack;
   int damage;
 
   Sword(Entity &entity, Vect<2u, float> knockback);

@@ -10,6 +10,7 @@
 # include "Enemy.hpp"
 # include "Flesh.hpp"
 # include "Player.hpp"
+# include "Sword.hpp"
 
 class Display;
 
@@ -17,7 +18,7 @@ class Logic
 {
 private:
 
-  static Logic instance;
+  static std::unique_ptr<Logic> _instance;
 
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
@@ -30,6 +31,8 @@ private:
   Vect<2u, float> _mousePos;
 
 private:
+  Logic();
+
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);
   void handleButton(GLFWwindow *window, Button button);
@@ -42,9 +45,12 @@ private:
   }
 
   void addFlesh(Entity entityParent);
+  void spawnEnemy();
 
 public:
-  Logic();
+  static void initLogic();
+  static Logic& getInstance();
+  static void destroyLogic();
 
   void handleEvent(Event const& event);
   void checkEvents(Display const &);

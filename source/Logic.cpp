@@ -5,7 +5,7 @@
 #include "EnemyLarge.hpp"
 #include "EnemySmall.hpp"
 
-Logic Logic::instance = Logic();
+std::unique_ptr<Logic> Logic::_instance(nullptr);
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.6, 1000),
@@ -16,9 +16,8 @@ Logic::Logic()
   _time = 0;
 }
 
-void Logic::tick(void)
+void Logic::spawnEnemy()
 {
-  _time++;
   if (!(rand() % (unsigned int)(_enemies.size() * 20 + 10 + (50 / (_time / 60.0 + 1)))))
     {
       double                angle = std::rand();
@@ -40,6 +39,12 @@ void Logic::tick(void)
           break;
         }
     }
+}
+
+void Logic::tick(void)
+{
+  _time++;
+  spawnEnemy();
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
@@ -84,17 +89,21 @@ void Logic::handleKey(GLFWwindow *window, Key key)
 
 void Logic::checkEvents(Display const &display)
 {
-  if (!_player.canMove)
-    return;
+  if (_player.canMove)
+    {
+      if (display.isKeyPressed(GLFW_KEY_RIGHT))
+	this->_player.acceleration(-1);
+      if (display.isKeyPressed(GLFW_KEY_LEFT))
+	this->_player.acceleration(1);
+      if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
+	this->_player.jump();
+      if (display.isKeyPressed(GLFW_KEY_DOWN))
+	this->_player.fastFall();
+    }
 
-  if (display.isKeyPressed(GLFW_KEY_RIGHT))
-    this->_player.acceleration(-1);
-  if (display.isKeyPressed(GLFW_KEY_LEFT))
-    this->_player.acceleration(1);
-  if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
-    this->_player.jump();
-  if (display.isKeyPressed(GLFW_KEY_DOWN))
-    this->_player.fastFall();
+  if (display.isKeyPressed(GLFW_KEY_C))
+    {
+    }
 }
 
 void Logic::handleMouse(GLFWwindow *, Mouse mouse)
@@ -121,4 +130,19 @@ void Logic::addFlesh(Entity entityParent)
 {
   _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
   _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(*_entities.back())));
+}
+
+void Logic::initLogic()
+{
+  _instance.reset(new Logic());
+}
+
+Logic& Logic::getInstance()
+{
+  return *_instance;
+}
+
+void Logic::destroyLogic()
+{
+  _instance.reset(nullptr);
 }
