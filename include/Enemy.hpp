@@ -15,7 +15,7 @@ public:
 
 public:
   Enemy(Entity &, int hp);
-  virtual ~Enemy() = default;
+  virtual ~Enemy();
 
   Entity &entity;
 };
