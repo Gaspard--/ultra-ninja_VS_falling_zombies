@@ -45,7 +45,6 @@ private:
   }
 
   void spawnEnemy();
-  void addFlesh(Entity &entityParent);
 
 public:
   static void initLogic();
@@ -56,6 +55,7 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
+  void addFlesh(Entity &entityParent);
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
