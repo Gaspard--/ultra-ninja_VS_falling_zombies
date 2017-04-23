@@ -7,6 +7,8 @@
 
 class TextureHandler
 {
+public :
+
   enum TextureList
     {
       BOYAUX,
@@ -15,12 +17,11 @@ class TextureHandler
       TEST
     };
 
-public :
   static void initTextureHandler();
   static TextureHandler& getInstance();
   static void destroyTextureHandler();
 
-  void addTexture(TextureList, std::string);
+  void addTexture(TextureList, std::string const&);
   Texture getTexture(TextureList) const;
 
 private:
