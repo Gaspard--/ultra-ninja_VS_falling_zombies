@@ -35,8 +35,6 @@ void Logic::spawnEnemy()
         case 2:
           _addEnemy<EnemyLarge>(enemyPos);
           break;
-        default:
-          break;
         }
     }
 }
