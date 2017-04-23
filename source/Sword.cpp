@@ -19,7 +19,7 @@ void Sword::update()
   entity.isUseless = isUseless;
 }
 
-void	Sword::Hit(Enemy &e)
+void	Sword::hit(Enemy &e)
 {
   e.entity.fixture.speed += knockback;
   e.getRekt(damage);

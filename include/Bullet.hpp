@@ -10,10 +10,12 @@ struct Bullet
 
   Entity &entity;
   int damage;
+  int lifetime;
   Vect<2u, float> knockback;
   bool isUseless = false;
 
-  void Hit(Enemy &);
+  void update();
+  void hit(Enemy &);
 };
 
 #endif /* !BULLET_H_ */
