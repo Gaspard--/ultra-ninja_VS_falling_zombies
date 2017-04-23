@@ -8,6 +8,7 @@
 # include "Entity.hpp"
 # include "Input.hpp"
 # include "Enemy.hpp"
+# include "Flesh.hpp"
 # include "Player.hpp"
 
 class Display;
@@ -18,6 +19,7 @@ private:
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
   std::vector<std::shared_ptr<Enemy>> _enemies;
+  std::vector<std::shared_ptr<Flesh>> _fleshs;
   Player _player;
   unsigned int  _time;
 
@@ -34,6 +36,8 @@ private:
     _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0, 0})));
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
+
+  void _addFlesh(Vect<2, double> pos);
 
 public:
   Logic();
