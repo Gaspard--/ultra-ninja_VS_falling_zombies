@@ -50,15 +50,16 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-	(*j)->Hit(**i);
+        (*j)->Hit(**i);
   for_each_entity([](auto &e) { e->update(); });
-  for_each_enemy([](auto &e) { e->update(); });
+  for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
+  for_each_swords([](auto &s) { s->update(); });
 
-  std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; });
-  std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
+  _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
+  _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
+  _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
+  _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
 }
 
 float Logic::getPlanetSize(void) const
@@ -100,13 +101,13 @@ void Logic::checkEvents(Display const &display)
   if (_player.canMove)
     {
       if (display.isKeyPressed(GLFW_KEY_RIGHT))
-	this->_player.acceleration(-1);
+        this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_LEFT))
-	this->_player.acceleration(1);
+        this->_player.acceleration(1);
       if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
-	this->_player.jump();
+        this->_player.jump();
       if (display.isKeyPressed(GLFW_KEY_DOWN))
-	this->_player.fastFall();
+        this->_player.fastFall();
     }
 
   if (display.isKeyPressed(GLFW_KEY_C))
@@ -146,10 +147,11 @@ void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 
 void Logic::handleButton(GLFWwindow *, Button button)
 {
-  // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
   Vect<2u, double> vec(_mousePos - getPlayerPos());
 
-  _addSword(getPlayerPos() + vec * 0.3, vec);
+  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
+  	return ;
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
   (void)button;
 }
 
@@ -158,7 +160,7 @@ Vect<2, double> Logic::getPlayerPos(void) const
   return _player.entity.fixture.pos;
 }
 
-void Logic::addFlesh(Entity &entityParent)
+void Logic::addFlesh(Entity const &entityParent)
 {
   _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
   _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(*_entities.back())));

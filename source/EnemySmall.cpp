@@ -19,7 +19,7 @@ void EnemySmall::attack(Player& player)
 
 }
 
-void    EnemySmall::update(void)
+void    EnemySmall::update(const Player& player)
 {
-  this->Enemy::update();
+  this->Enemy::update(player);
 }

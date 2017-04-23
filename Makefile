@@ -11,6 +11,7 @@ NAME = ultra-ninja_VS_falling_zombies
 
 SRCS_CPP = 	source/main.cpp \
 		source/my_opengl.cpp \
+		source/TextureHandler.cpp \
 		source/display.cpp \
 		source/render_context.cpp \
 		source/gl3w.cpp \

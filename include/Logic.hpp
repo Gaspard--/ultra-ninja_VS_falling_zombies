@@ -56,7 +56,7 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
-  void addFlesh(Entity &entityParent);
+  void addFlesh(Entity const &entityParent);
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
@@ -83,6 +83,12 @@ public:
   void for_each_flesh(func f)
   {
     std::for_each(_fleshs.begin(), _fleshs.end(), f);
+  }
+
+  template <class func>
+  void for_each_swords(func f)
+  {
+    std::for_each(_swords.begin(), _swords.end(), f);
   }
 };
 

@@ -6,6 +6,8 @@
 #include "display.hpp"
 #include "bind.hpp"
 
+Display Display::instance{};
+
 inline RenderContext contextFromFiles(std::string name)
 {
   std::stringstream vert;
@@ -41,7 +43,10 @@ Display::GlfwContext::~GlfwContext()
   glfwTerminate();
 }
 
-static Display *display;
+Display& Display::getInstance()
+{
+  return instance;
+}
 
 Display::Display()
   : window([this]{
@@ -49,7 +54,6 @@ Display::Display()
 
       if (!window)
         throw std::runtime_error("opengl: failed to open window");
-      display = this;
       glfwMakeContextCurrent(window.get());
       glfwSwapInterval(1);
       if (gl3wInit())
@@ -65,11 +69,19 @@ Display::Display()
   , camera{0, 1.0}
   , dim{0, 0}
 {
-  glfwSetFramebufferSizeCallback(window.get(), [](GLFWwindow *, int width, int height)
-				 {
-				   glViewport(0, 0, width, height);
-				   display->dim = {height / (float)width, 1.0};
-				 });
+  static std::function<void(GLFWwindow *, int width, int height)> setFrameBuffer =
+    [this] (GLFWwindow *, int width, int height)
+    {
+      glViewport(0, 0, width, height);
+      dim = {height / (float)width, 1.0};
+    };
+
+  auto callback = [] (GLFWwindow *window, int width, int height) {
+    setFrameBuffer(window, width, height);
+  };
+
+  glfwSetFramebufferSizeCallback(window.get(), callback);
+
   {
     Bind<RenderContext> bind(textureContext);
 

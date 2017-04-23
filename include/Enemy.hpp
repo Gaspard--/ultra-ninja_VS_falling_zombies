@@ -11,14 +11,14 @@ protected:
 
 public:
   bool isUseless = false;
-  
+
   virtual void attack(Player& player) = 0;
 
 public:
   Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
 
-  virtual void update(void);
+  virtual void update(const Player&);
   virtual void onDeath();
   void getRekt(int);
 

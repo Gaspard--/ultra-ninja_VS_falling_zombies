@@ -9,7 +9,7 @@ private:
 
 public:
   void attack(Player& player) override;
-  void update(void) override;
+  void update(const Player&) override;
 
 public:
   EnemyCommon(Entity &);
