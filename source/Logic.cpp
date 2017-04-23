@@ -13,7 +13,7 @@
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.4, 1000),
-    _entities({Entity({{0, 0.5}, {0, 0}, 0.04, 1})}),
+    _entities({Entity({{0, 1}, {0, 0}, 0.04, 10})}),
     _player(_entities[0]),
     _mousePos({0, 0})
 {
