@@ -12,6 +12,7 @@ public:
 
 public:
   EnemyCommon(Entity &);
+  void  update(void);
 };
 
 #endif /* !ENEMYCOMMON_H_ */
