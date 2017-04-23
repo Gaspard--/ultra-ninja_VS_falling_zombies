@@ -24,12 +24,12 @@ bool                    Physics::move(Fixture& fixture) const
       /* delete speed against planet */
       fixture.speed -= vec * (vec.scalar(fixture.speed));
       /* friction */
-      fixture.speed *= 0.9;
+      fixture.speed *= 0.95;
     }
   /* application of gravity */
   // fixture.speed -= vec * ((_G * fixture.mass * _planet.mass / CAR(distance)) * fixture.mass);
-  fixture.speed -= vec * fixture.mass * 0.00003;
-  fixture.speed *= 0.95;
+  fixture.speed -= vec * fixture.mass * 0.00002;
+  fixture.speed *= 0.96;
   return (fixture.pos - _planet.pos).length2() < CAR(fixture.radius + _planet.radius) + 0.001;
 }
 

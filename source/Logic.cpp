@@ -6,7 +6,7 @@
 #include "EnemySmall.hpp"
 
 Logic::Logic()
-  : _physics(Vect<2, int>(0, 0), 0.4, 1000),
+  : _physics(Vect<2, int>(0, 0), 0.6, 1000),
     _entities({std::shared_ptr<Entity>(new Entity({{0, 2}, {0, 0}, 0.04, 50}))}),
     _player(*_entities[0]),
     _mousePos({0, 0})
@@ -38,7 +38,10 @@ void Logic::tick(void)
           break;
         }
     }
-  this->_physics.makePhysicsOnEntity(_entities.begin(), _entities.end());
+  this->_physics.updateFixtures(_entities.begin(), _entities.end());
+  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
+    if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
+      (*i)->attack(_player);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([](auto &e) { e->update(); });
 }
