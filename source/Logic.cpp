@@ -2,6 +2,8 @@
 #include "Input.hpp"
 #include "display.hpp"
 #include "EnemyCommon.hpp"
+#include "EnemyLarge.hpp"
+#include "EnemySmall.hpp"
 
 Logic::Logic()
   : _physics(Vect<2, int>(0, 0), 0.4, 1000),
@@ -9,7 +11,9 @@ Logic::Logic()
     _player(*_entities[0]),
     _mousePos({0, 0})
 {
-  _addEnemy<EnemyCommon>({1, 0}, 0.2, 50);
+  _addEnemy<EnemyCommon>({-1, -5});
+  _addEnemy<EnemyLarge>({3.5, 5});
+  _addEnemy<EnemySmall>({-0.7 * 2 - 1, 1.4 * 2});
 }
 
 void Logic::tick(void)

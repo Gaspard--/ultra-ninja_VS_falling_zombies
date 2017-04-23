@@ -22,6 +22,8 @@ SRCS_CPP = 	source/main.cpp \
 		source/Player.cpp \
 		source/Enemy.cpp \
 		source/EnemyCommon.cpp \
+		source/EnemyLarge.cpp \
+		source/EnemySmall.cpp \
 		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
@@ -41,7 +43,6 @@ clean:
 fclean: clean
 	$(RM) $(NAME)
 
-re: fclean
-	make all
+re: fclean all
 
 .PHONY: all clean fclean re grep_todo

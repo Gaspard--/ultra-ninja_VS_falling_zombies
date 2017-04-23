@@ -6,10 +6,11 @@
 class Enemy
 {
 protected:
+  int _hp;
   Entity &_e;
 
 public:
-  Enemy(Entity &);
+  Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
 };
 
