@@ -1,6 +1,6 @@
 #include "Flesh.hpp"
 
-Flesh::Flesh(Entity e)
+Flesh::Flesh(Entity &e)
   : entity(e)
 {
 
