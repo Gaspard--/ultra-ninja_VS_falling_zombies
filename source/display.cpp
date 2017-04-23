@@ -56,7 +56,9 @@ Display::Display()
 	throw std::runtime_error("opengl: Opengl 3.0 not supported");
       return window;
     }())
+  , fontHandler("ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
+  , textContext(contextFromFiles("text"))
   , test(my_opengl::loadTexture("test.bmp"))
 {
   {
@@ -77,6 +79,16 @@ Display::Display()
     glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * sizeof(float), nullptr);
   }
+  {
+    Bind<RenderContext> bind(textContext);
+
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
+    glBufferData(GL_ARRAY_BUFFER, 0, nullptr, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * sizeof(float), nullptr);
+    glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), reinterpret_cast<void *>(2u * sizeof(float)));
+  }
 }
 
 Display::~Display()
@@ -91,6 +103,50 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
 {
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
 }
+
+void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos)
+{
+  fontHandler.renderText(text, [this, fontSize, step](Vect<2u, float> pos, Vect<2u, int> dim, unsigned char *buffer)
+			 {
+			   Texture texture;
+			   Bind<RenderContext> bind(textContext);
+
+			   glActiveTexture(GL_TEXTURE0);
+			   glBindTexture(GL_TEXTURE_2D, texture);
+			   glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			   glTexImage2D(GL_TEXTURE_2D,
+					0,
+					GL_RED,
+					(GLsizei)(dim[0]),
+					(GLsizei)(dim[1]),
+					0,
+					GL_RED,
+					GL_UNSIGNED_BYTE,
+					static_cast<void *>(buffer));
+			   float data[16];
+
+			   for (unsigned int i(0); !(i & 4u); ++i)
+			     {
+			       Vect<2u, float> corner{i & 1u, i >> 1u};
+			       Vect<2u, float> destCorner((Vect<2u, float>(pos) + corner * Vect<2u, float>(dim) / step) / fontSize);
+
+			       data[i * 4 + 0] = corner[0];
+			       data[i * 4 + 1] = corner[1];
+			       data[i * 4 + 2] = destCorner[0];
+			       data[i * 4 + 3] = destCorner[1];
+			     }
+			   glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+			   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			   glEnable(GL_BLEND);
+			   my_opengl::setUniform(0u, "tex", textureContext.program);
+			   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+			   glBindTexture(GL_TEXTURE_2D, 0);
+			   glDisable(GL_BLEND);
+ 
+			 }, fontSize, step, textPos);
+    }
 
 void Display::displayRect(Rect const &rect)
 {
@@ -161,12 +217,13 @@ void Display::render(Logic const &logic)
   glClearColor(0.2, 0.2, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
+  glEnable(GL_BLEND);
   displayPlanet(test, logic.getPlanetSize(), {1.0, 0.0});
   logic.for_each_entity([this](Entity const &e)
 			{
 			  displayRenderable(e.renderable);
 			});
-  // displayRenderable({test, Vect<2u, float>(0.0, 0.0), Vect<2u, float>(1.0, 1.0), Vect<2u, float>(-0.5, (time(nullptr) % 10) * 0.1), Vect<2u, float>(0.5, 0.5)});
+  glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());
   glfwPollEvents();

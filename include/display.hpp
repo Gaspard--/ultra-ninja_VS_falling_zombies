@@ -26,6 +26,8 @@ private:
   glBuffer textureBuffer;
   RenderContext rectContext;
   glBuffer rectBuffer;
+  RenderContext textContext;
+  glBuffer textBuffer;
 public:
   Display();
 
@@ -33,6 +35,8 @@ public:
 
   GLFWwindow *getWindow() const;
 
+  void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos);
+  
   void displayRect(Rect const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
