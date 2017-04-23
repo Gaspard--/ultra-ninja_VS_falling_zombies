@@ -21,12 +21,11 @@ SRCS_CPP = 	source/main.cpp \
 		source/Logic.cpp \
 		source/Player.cpp \
 		source/Enemy.cpp \
+		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
 all: $(NAME)
-	@grep --color=auto -ir --include "*.cpp" -E "(FIXME|TODO)" .
-	@grep --color=auto -ir --include "*.hpp" -E "(FIXME|TODO)" .
 
 $(NAME):$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)

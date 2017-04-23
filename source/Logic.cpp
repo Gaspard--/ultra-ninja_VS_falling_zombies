@@ -17,6 +17,7 @@ Logic::Logic()
     _player(_entities[0]),
     _mousePos({0, 0})
 {
+
 }
 
 void Logic::tick(void)
