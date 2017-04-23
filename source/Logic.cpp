@@ -27,8 +27,10 @@ void Logic::spawnEnemy()
       switch (rand() % 3)
         {
         case 0:
+          _addEnemy<EnemySmall>(enemyPos);
           break;
         case 1:
+          _addEnemy<EnemyCommon>(enemyPos);
           break;
         case 2:
           _addEnemy<EnemyLarge>(enemyPos);
