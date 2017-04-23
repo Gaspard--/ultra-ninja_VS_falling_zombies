@@ -10,9 +10,9 @@ public:
   void update(void);
 
   Entity entity;
+  bool isUseless;
 
 private:
-  bool isUseless;
   int cooldown;
 };
 

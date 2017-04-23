@@ -56,8 +56,8 @@ void Logic::tick(void)
   for_each_flesh([](auto &f) { f->update(); });
 
   std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
   std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
+  std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; });
   std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
 }
 
@@ -147,9 +147,9 @@ void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 void Logic::handleButton(GLFWwindow *, Button button)
 {
   // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
-  Vect<2u, double> vec(_mousePos - _player.getPos());
+  Vect<2u, double> vec(_mousePos - getPlayerPos());
 
-  _addSword(_player.getPos() + vec * 0.3, vec);
+  _addSword(getPlayerPos() + vec * 0.3, vec);
   (void)button;
 }
 
@@ -186,6 +186,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity(pos, {0, 0}, 0.06, 0)));
-  _swords.push_back(std::shared_ptr<Sword>(new Sword(_entities.back(), knockback)));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
+  _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }
