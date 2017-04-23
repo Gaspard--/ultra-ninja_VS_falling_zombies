@@ -14,6 +14,7 @@ public:
 
   void update(void);
   void setSpeed(Vect<2, double>);
+  Vect<2, double> const &getPos(void) const;
 };
 
 #endif /* !PLAYER_H_ */
