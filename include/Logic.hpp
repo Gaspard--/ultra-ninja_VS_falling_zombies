@@ -44,7 +44,7 @@ private:
     _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
   }
 
-  void _addSword(Entity);
+  void _addSword(Vect<2, double> pos, Vect<2, double> knockback);
   void spawnEnemy();
 
 public:
