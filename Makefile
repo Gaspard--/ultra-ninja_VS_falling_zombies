@@ -18,7 +18,10 @@ SRCS_CPP = 	source/main.cpp \
 		source/Physics.cpp \
 		source/Input.cpp \
 		source/Entity.cpp \
-		source/Logic.cpp
+		source/Logic.cpp \
+		source/Player.cpp \
+		source/Enemy.cpp \
+		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 

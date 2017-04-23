@@ -3,24 +3,27 @@
 Player::Player(Entity &e)
   : _e(e)
 {
+  _e.renderable.texture = my_opengl::loadTexture("test.bmp");
+  _e.renderable.destSize = {0.1, 0.1};
 }
 
-void Player::update(void)
+void Player::acceleration(int dir)
 {
-  _e.update();
+    Vect<2, double> vec(0, 0);
+
+    vec[0] = -this->_e.fixture.speed[1];
+    vec[1] = this->_e.fixture.speed[0];
+    this->_e.fixture.speed = (this->_e.fixture.speed * 0.8 + vec.normalized() * 0.2) * dir;
 }
 
-void Player::setSpeed(Vect<2, double> v)
+void Player::jump()
 {
-  _e.getFixture().speed = v;
+    if (this->_e.isOnPlanet)
+	    this->_e.fixture.speed = this->_e.fixture.pos.normalized() * 1.5;
 }
 
-Vect<2, double> const &Player::getPos(void) const
+void Player::fastFall()
 {
-  return _e.getFixture().pos;
-}
-
-Vect<2, double> const &Player::getSpeed(void) const
-{
-  return _e.getFixture().speed;
+    if (!this->_e.isOnPlanet)
+	    this->_e.fixture.speed = -(this->_e.fixture.pos.normalized() * 1.5);
 }

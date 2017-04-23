@@ -28,6 +28,7 @@ private:
   glBuffer rectBuffer;
   RenderContext textContext;
   glBuffer textBuffer;
+  Texture planet;
 public:
   Display();
 
@@ -52,7 +53,6 @@ public:
 
   void render(Logic const &);
   bool isRunning();
-  Texture test;
 };
 
 #endif

@@ -6,8 +6,8 @@
 int main()
 {
   try {
-    Logic logic;
     Display display;
+    Logic logic;
 
     // init input with GLFW window
     Input::setWindow(display.getWindow());

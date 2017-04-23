@@ -59,7 +59,7 @@ Display::Display()
   , fontHandler("ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
-  , test(my_opengl::loadTexture("test.bmp"))
+  , planet(my_opengl::loadTexture("planet.bmp"))
 {
   {
     Bind<RenderContext> bind(textureContext);
@@ -130,12 +130,13 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
 			   for (unsigned int i(0); !(i & 4u); ++i)
 			     {
 			       Vect<2u, float> corner{i & 1u, i >> 1u};
-			       Vect<2u, float> destCorner((Vect<2u, float>(pos) + corner * Vect<2u, float>(dim) / step) / fontSize);
+			       Vect<2u, float> destCorner(Vect<2u, float>(pos) + corner * Vect<2u, float>(dim));
 
 			       data[i * 4 + 0] = corner[0];
 			       data[i * 4 + 1] = corner[1];
 			       data[i * 4 + 2] = destCorner[0];
 			       data[i * 4 + 3] = destCorner[1];
+			       std::cout << destCorner[0] << ", " << destCorner[1] << std::endl;
 			     }
 			   glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 			   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -144,9 +145,8 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
 			   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			   glBindTexture(GL_TEXTURE_2D, 0);
 			   glDisable(GL_BLEND);
- 
 			 }, fontSize, step, textPos);
-    }
+}
 
 void Display::displayRect(Rect const &rect)
 {
@@ -218,11 +218,12 @@ void Display::render(Logic const &logic)
   glClear(GL_COLOR_BUFFER_BIT);
 
   glEnable(GL_BLEND);
-  displayPlanet(test, logic.getPlanetSize(), {1.0, 0.0});
+  displayPlanet(planet, logic.getPlanetSize(), {1.0, 0.0});
   logic.for_each_entity([this](Entity const &e)
 			{
 			  displayRenderable(e.renderable);
 			});
+  displayText("lol MDR", 128, {0.1f, 0.1f}, {0.1f, 0.1f});
   glDisable(GL_BLEND);
 
   glfwSwapBuffers(window.get());

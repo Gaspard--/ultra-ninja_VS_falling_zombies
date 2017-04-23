@@ -13,9 +13,9 @@ public:
   Player(Entity &e);
 
   void update(void);
-  void setSpeed(Vect<2, double>);
-  Vect<2, double> const &getPos(void) const;
-  Vect<2, double> const &getSpeed(void) const;
+  void acceleration(int dir);
+  void jump();
+  void fastFall();
 };
 
 #endif /* !PLAYER_H_ */

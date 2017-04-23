@@ -9,6 +9,7 @@
 #include FT_FREETYPE_H
 
 #include "Vect.hpp"
+#include <iostream>
 
 class Display;
 
@@ -33,9 +34,12 @@ public:
       {
 	FT_GlyphSlot &slot(face->glyph);  /* a small shortcut */
 	FT_Load_Char(face, (FT_ULong)*it, FT_LOAD_RENDER);
-    	renderBuffer((pen + Vect<2u, float>{slot->bitmap_left, slot->bitmap_top} / (float)size) * step,
-		     {slot->bitmap.pitch, slot->bitmap.rows}, slot->bitmap.buffer);
+    	renderBuffer(((pen + Vect<2u, float>{slot->bitmap_left, slot->bitmap_top} / (float)size)) * step,
+		     (Vect<2u, float>{slot->bitmap.pitch, slot->bitmap.rows} * step / (float)size)
+		     , slot->bitmap.buffer);
 
+	// std::cout << ((Vect<2u, float>{slot->bitmap.pitch, slot->bitmap.rows} / (float)size) * step
+	// 	     )[1] << std::endl;
 	pen[0] += (face->glyph->advance.x >> 8u) / (float)size;
       }
 }

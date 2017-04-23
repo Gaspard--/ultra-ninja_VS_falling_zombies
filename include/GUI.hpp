@@ -2,9 +2,10 @@
 # define GUI_HPP
 
 # include "Rect.hpp"
-# include "display.hpp"
 # include <string>
 # include <unordered_map>
+
+class   Display;
 
 class   GUI
 {
@@ -37,6 +38,8 @@ public:
   };
 
   void  addElem(const std::string& key, const Button& elem);
+
+  void  drawElems(Display&);
 
   std::string   haveElemPressed(const Vect<2, float>&, bool leftClick);
 
