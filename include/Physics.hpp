@@ -57,7 +57,7 @@ public:
     for (T i = begin ; i != end ; ++i)
       (*i)->isOnPlanet = this->move((*i)->fixture);
   }
-  
+
   /* Planet size getter */
 
   double        getPlanetRadius(void) const;
