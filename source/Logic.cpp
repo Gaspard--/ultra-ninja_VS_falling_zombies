@@ -70,7 +70,7 @@ void Logic::checkEvents(Display const &display)
   if (display.isKeyPressed(GLFW_KEY_RIGHT))
     this->_player.acceleration(1);
   if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
-    this->_player.acceleration(1);
+    this->_player.jump();
   if (display.isKeyPressed(GLFW_KEY_DOWN))
     this->_player.fastFall();
 }

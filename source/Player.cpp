@@ -9,21 +9,19 @@ Player::Player(Entity &e)
 
 void Player::acceleration(int dir)
 {
-    Vect<2, double> vec(0, 0);
+  Vect<2, double> vec(-this->_e.fixture.pos[1], this->_e.fixture.pos[0]);
 
-    vec[0] = -this->_e.fixture.speed[1];
-    vec[1] = this->_e.fixture.speed[0];
-    this->_e.fixture.speed = (this->_e.fixture.speed * 0.998 + vec.normalized() * 0.002 * dir);
+  this->_e.fixture.speed = (this->_e.fixture.speed * 0.99 + vec.normalized() * 0.001 * dir);
 }
 
 void Player::jump()
 {
     if (this->_e.isOnPlanet)
-	    this->_e.fixture.speed = this->_e.fixture.pos.normalized() * 0.03;
+      this->_e.fixture.speed = this->_e.fixture.speed + this->_e.fixture.pos.normalized() * 0.06;
 }
 
 void Player::fastFall()
 {
     if (!this->_e.isOnPlanet)
-	    this->_e.fixture.speed = -(this->_e.fixture.pos.normalized() * 1.5);
+      this->_e.fixture.speed = -(this->_e.fixture.pos.normalized() * 0.06);
 }
