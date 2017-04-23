@@ -117,7 +117,7 @@ Vect<2, double> Logic::getPlayerPos(void) const
   return _player.entity.fixture.pos;
 }
 
-void Logic::addFlesh(Entity entityParent)
+void Logic::addFlesh(Entity &entityParent)
 {
   _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
   _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(*_entities.back())));
