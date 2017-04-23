@@ -6,13 +6,11 @@
 class EnemyLarge : public Enemy
 {
 private:
-
-public:
-  // SPIKE
-  void attack(Player& player) override;
-
 public:
   EnemyLarge(Entity &);
+
+  // SPIKE
+  void attack(Player& player) override;
 };
 
 #endif /* !ENEMYLARGE_H_ */

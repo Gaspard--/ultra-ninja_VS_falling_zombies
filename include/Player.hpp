@@ -7,6 +7,7 @@
 class Player
 {
 private:
+  int _hp;
 
 public:
   Player(Entity &e);
@@ -17,6 +18,7 @@ public:
   void acceleration(int dir);
   void jump();
   void fastFall();
+  void getRekt(int);
 };
 
 #endif /* !PLAYER_H_ */

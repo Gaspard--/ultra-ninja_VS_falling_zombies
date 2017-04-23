@@ -17,6 +17,8 @@ public:
   Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
 
+  void getRekt(int);
+
   Entity &entity;
 };
 

@@ -25,3 +25,8 @@ void Player::fastFall()
     if (!this->entity.isOnPlanet)
       this->entity.fixture.speed = -(this->entity.fixture.pos.normalized() * 0.06);
 }
+
+void Player::getRekt(int dmg)
+{
+  _hp -= dmg;
+}
