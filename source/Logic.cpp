@@ -42,25 +42,12 @@ void Logic::handleEvent(Event const& event)
 
 void Logic::handleKey(GLFWwindow *window, Key key)
 {
-  // switch (key.key)
-  //   {
-  //   case GLFW_KEY_ESCAPE:
-  //     glfwSetWindowShouldClose(window, true);
-  //     break;
-  //   case GLFW_KEY_LEFT:
-  //     this->_player.acceleration(-1);
-  //     break;
-  //   case GLFW_KEY_RIGHT:
-  //     this->_player.acceleration(1);
-  //     break;
-  //   case GLFW_KEY_UP:
-  //   case GLFW_KEY_SPACE:
-  //     this->_player.jump();
-  //     break;
-  //   case GLFW_KEY_DOWN:
-  //     this->_player.fastFall();
-  //     break;
-  //   }
+  switch (key.key)
+    {
+    case GLFW_KEY_ESCAPE:
+      glfwSetWindowShouldClose(window, true);
+      break;
+    }
 }
 
 void Logic::checkEvents(Display const &display)
