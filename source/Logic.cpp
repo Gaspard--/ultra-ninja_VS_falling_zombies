@@ -55,10 +55,10 @@ void Logic::tick(void)
   for_each_enemy([](auto &e) { e->update(); });
   for_each_flesh([](auto &f) { f->update(); });
 
-  std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; });
-  std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; });
-  std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; });
+  _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
+  _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
+  _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
+  _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
 }
 
 float Logic::getPlanetSize(void) const
@@ -149,7 +149,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
   // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
   Vect<2u, double> vec(_mousePos - getPlayerPos());
 
-  _addSword(getPlayerPos() + vec * 0.3, vec);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
   (void)button;
 }
 
