@@ -42,6 +42,8 @@ void    EnemyLarge::update(const Player& player)
         entity.fixture.speed = right;
       else
         entity.fixture.speed = left;
+      if (!(rand() % (int)(10000 * ((entity.fixture.speed + entity.fixture.pos).normalized() - player.entity.fixture.pos.normalized()).length2() + 1)))
+        entity.fixture.speed = -(entity.fixture.pos.normalized() * 0.06);
     }
   this->Enemy::update(player);
 }

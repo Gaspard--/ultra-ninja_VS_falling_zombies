@@ -147,9 +147,10 @@ void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 
 void Logic::handleButton(GLFWwindow *, Button button)
 {
-  // TODO Ajouter la création d'une Sword lors d'un clic + Cooldown sur attaque.
   Vect<2u, double> vec(_mousePos - getPlayerPos());
 
+  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
+  	return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
   (void)button;
 }
