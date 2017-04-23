@@ -9,12 +9,14 @@ struct Sword
 {
   Entity &entity;
   int damage;
+  int lifetime;
   Vect<2u, float> knockback;
   bool isUseless = false;
 
   Sword(Entity &entity, Vect<2u, double> knockback);
   ~Sword();
 
+  void update();
   void Hit(Enemy &);
 };
 
