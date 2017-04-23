@@ -9,7 +9,17 @@ EnemyCommon::EnemyCommon(Entity &e)
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 
+EnemyCommon::~EnemyCommon()
+{
+  // logic.getPlayer().canMove = true;
+}
+
 void EnemyCommon::attack(Player& player)
 {
+  _e.fixture.speed = player.entity.fixture.speed;
 
+  player.entity.fixture.mass += _e.fixture.mass;
+  _e.fixture.mass = player.entity.fixture.mass;
+
+  player.canMove = false;
 }

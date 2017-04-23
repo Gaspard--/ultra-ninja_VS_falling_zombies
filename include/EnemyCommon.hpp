@@ -12,6 +12,7 @@ public:
 
 public:
   EnemyCommon(Entity &);
+  ~EnemyCommon();
 };
 
 #endif /* !ENEMYCOMMON_H_ */

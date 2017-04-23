@@ -2,8 +2,7 @@
 # define ENEMY_H_
 
 # include "Entity.hpp"
-
-class Player;
+# include "Player.hpp"
 
 class Enemy
 {

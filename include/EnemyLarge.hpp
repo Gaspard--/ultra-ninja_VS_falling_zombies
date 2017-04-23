@@ -8,7 +8,6 @@ class EnemyLarge : public Enemy
 private:
 
 public:
-  // SPIKE
   void attack(Player& player) override;
 
 public:
