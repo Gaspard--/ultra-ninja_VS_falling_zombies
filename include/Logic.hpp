@@ -38,10 +38,10 @@ private:
 
   template <typename T>
   void _addEnemy(Vect<2, double> pos)
-    {
-      _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0, 0})));
-      _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
-    }
+  {
+    _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0, 0})));
+    _enemies.push_back(std::shared_ptr<Enemy>(new T (*_entities.back())));
+  }
 
 public:
   Logic();
@@ -53,15 +53,15 @@ public:
 
   template <class func>
   void for_each_entity(func f) const
-    {
-      std::for_each(_entities.begin(), _entities.end(), f);
-    }
+  {
+    std::for_each(_entities.begin(), _entities.end(), f);
+  }
 
   template <class func>
   void for_each_entity(func f)
-    {
-      std::for_each(_entities.begin(), _entities.end(), f);
-    }
+  {
+    std::for_each(_entities.begin(), _entities.end(), f);
+  }
 };
 
 #endif // !LOGIC_HPP_
