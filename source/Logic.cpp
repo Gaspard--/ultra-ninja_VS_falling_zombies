@@ -25,7 +25,7 @@ Logic::Logic(unsigned int maxMobs)
 
 void Logic::spawnEnemy()
 {
-  if (!(rand() % (unsigned int)(_enemies.size() * 20 + 10 + (50 / (_time / 60.0 + 1)))))
+  if (!(rand() % (unsigned int)(_enemies.size() * 10 + 5 + (25 / (_time / 60.0 + 1)))))
     {
       double                angle = std::rand();
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
@@ -34,13 +34,13 @@ void Logic::spawnEnemy()
       switch (rand() % 4)
         {
         case 0:
-          if (_time / 60 > 30)
+          if (_time / 60 > 20)
             _addEnemy<EnemyLarge>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
           break;
         case 1:
-          if (_time / 60 > 15)
+          if (_time / 60 > 10)
             _addEnemy<EnemyCommon>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
