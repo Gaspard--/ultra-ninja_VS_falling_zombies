@@ -1,7 +1,5 @@
 #include "TextureHandler.hpp"
 
-#include <iostream>
-
 std::unique_ptr<TextureHandler> TextureHandler::_instance(nullptr);
 
 TextureHandler::TextureHandler()
