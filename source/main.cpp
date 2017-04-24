@@ -16,12 +16,12 @@ int main()
     {
       TextureHandlerInit()
       {
-	TextureHandler::initTextureHandler();
+        TextureHandler::initTextureHandler();
       }
 
       ~TextureHandlerInit()
       {
-	TextureHandler::destroyTextureHandler();
+        TextureHandler::destroyTextureHandler();
       }
     } textureHandlerIniter;
 
@@ -29,12 +29,12 @@ int main()
     {
       LogicInit()
       {
-	Logic::initLogic();
+        Logic::initLogic(10);
       }
 
       ~LogicInit()
       {
-	Logic::destroyLogic();
+        Logic::destroyLogic();
       }
     } logicIniter;
 
@@ -42,11 +42,11 @@ int main()
       {
         // handle events
         for (Event ev = Input::pollEvent(); ev; ev = Input::pollEvent())
-	  Logic::getInstance().handleEvent(ev);
-	Logic::getInstance().checkEvents(display);
+          Logic::getInstance().handleEvent(ev);
+        Logic::getInstance().checkEvents(display);
 
         // update logic
-	Logic::getInstance().tick();
+        Logic::getInstance().tick();
 
         // render
         display.render(Logic::getInstance());

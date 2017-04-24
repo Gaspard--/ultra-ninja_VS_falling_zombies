@@ -26,12 +26,15 @@ private:
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
   Player _player;
-  unsigned int  _time;
+
+  unsigned int          _time;
+  unsigned int          _score;
+  const unsigned int    _maxMobs;
 
   Vect<2u, float> _mousePos;
 
 private:
-  Logic();
+  Logic(unsigned int);
 
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);
@@ -48,7 +51,7 @@ private:
   void spawnEnemy();
 
 public:
-  static void initLogic();
+  static void initLogic(unsigned int);
   static Logic& getInstance();
   static void destroyLogic();
 
@@ -71,6 +74,9 @@ public:
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
   Vect<2u, float> getMouse() const;
+  unsigned int  getRemainingsSpace(void) const;
+  unsigned int  getScore(void) const;
+  unsigned int  getTime(void) const;
 
   template <class func>
   void for_each_entity(func f) const
@@ -86,6 +92,12 @@ public:
 
   template <class func>
   void for_each_enemy(func f)
+  {
+    std::for_each(_enemies.begin(), _enemies.end(), f);
+  }
+
+  template <class func>
+  void for_each_enemy(func f) const
   {
     std::for_each(_enemies.begin(), _enemies.end(), f);
   }
