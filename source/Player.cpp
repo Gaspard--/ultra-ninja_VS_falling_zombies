@@ -1,4 +1,5 @@
 #include "Player.hpp"
+#include "Logic.hpp"
 #include "TextureHandler.hpp"
 
 Player::Player(Entity &e, bool canMove)
@@ -12,6 +13,8 @@ Player::Player(Entity &e, bool canMove)
 void Player::update(void)
 {
     _cooldownDash -= (_cooldownDash > 0);
+    if (entity.isOnPlanet)
+      Logic::getInstance().resetCombo();
 }
 
 void Player::acceleration(int dir)
