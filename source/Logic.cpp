@@ -7,13 +7,15 @@
 
 std::unique_ptr<Logic> Logic::_instance(nullptr);
 
-Logic::Logic()
+Logic::Logic(unsigned int maxMobs)
   : _physics(Vect<2, int>(0, 0), 0.6, 1000),
     _entities({std::shared_ptr<Entity>(new Entity({{0, 2}, {0, 0}, 0.04, 50}))}),
     _player(*_entities[0]),
+    _maxMobs(maxMobs),
     _mousePos({0, 0})
 {
   _time = 0;
+  _score = 0;
 }
 
 void Logic::spawnEnemy()
@@ -28,18 +30,18 @@ void Logic::spawnEnemy()
         {
         case 0:
           if (_time / 60 > 30)
-            _addEnemy<EnemySmall>(enemyPos);
-          else
             _addEnemy<EnemyLarge>(enemyPos);
+          else
+            _addEnemy<EnemySmall>(enemyPos);
           break;
         case 1:
           if (_time / 60 > 15)
             _addEnemy<EnemyCommon>(enemyPos);
           else
-            _addEnemy<EnemyLarge>(enemyPos);
+            _addEnemy<EnemySmall>(enemyPos);
           break;
         case 2:
-          _addEnemy<EnemyLarge>(enemyPos);
+          _addEnemy<EnemySmall>(enemyPos);
           break;
         }
     }
@@ -70,6 +72,27 @@ void Logic::tick(void)
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
+}
+
+unsigned int    Logic::getRemainingsSpace(void) const
+{
+  unsigned int  remaining;
+
+  remaining = _maxMobs;
+  for_each_enemy([&remaining](const auto &e) {if (e->entity.isOnPlanet && remaining) remaining--;});
+  if (_player.entity.isOnPlanet && remaining)
+    remaining--;
+  return (remaining);
+}
+
+unsigned int  Logic::getScore(void) const
+{
+  return (_score);
+}
+
+unsigned int  Logic::getTime(void) const
+{
+  return (_time / 60);
 }
 
 float Logic::getPlanetSize(void) const
@@ -186,9 +209,9 @@ Vect<2, double> Logic::getPlayerPos(void) const
   return _player.entity.fixture.pos;
 }
 
-void Logic::initLogic()
+void Logic::initLogic(unsigned int maxMobs)
 {
-  _instance.reset(new Logic());
+  _instance.reset(new Logic(maxMobs));
 }
 
 Logic& Logic::getInstance()
