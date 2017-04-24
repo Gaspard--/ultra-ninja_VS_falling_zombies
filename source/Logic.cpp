@@ -197,7 +197,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
-  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
+  _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
   (void)button;
 }
 
@@ -228,6 +228,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.20, 0.075, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }
