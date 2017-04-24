@@ -169,19 +169,14 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
-  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.1);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
+  _player.entity.fixture.speed -= vec.normalized() * 0.003;
   (void)button;
 }
 
 Vect<2, double> Logic::getPlayerPos(void) const
 {
   return _player.entity.fixture.pos;
-}
-
-void Logic::addFlesh(Entity const &entityParent)
-{
-  _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
-  _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(*_entities.back())));
 }
 
 void Logic::initLogic()
