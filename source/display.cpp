@@ -61,11 +61,13 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
+  , blood(my_opengl::loadTexture("resources/BloodSpray.bmp"))
+  , planetRenderTexture({1024, 1024})
   , camera{0, 1.0}
   , dim{0, 0}
   , size{0, 0}
 {
-  static std::function<void(int width, int height)> setFrameBuffer =
+  static auto setFrameBuffer =
     [this] (int width, int height)
     {
       glViewport(0, 0, width, height);
@@ -104,6 +106,22 @@ Display::Display()
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * sizeof(float), nullptr);
     glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), reinterpret_cast<void *>(2u * sizeof(float)));
+  }
+  {
+    glBindFramebuffer(GL_FRAMEBUFFER, planetRenderTexture.framebuffer);
+    glViewport(0, 0, 1024, 1024);
+    glClearColor(0.2, 0.2, 0.5, 0.2);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    {
+      Vect<2u, float> olddim(dim);
+
+      dim = {1.0, 1.0};
+      displayPlanet(planet, 2.0, {1.0, 0.0});
+      dim = olddim;
+    }
+    glDisable(GL_BLEND);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
   }
 }
 
@@ -204,6 +222,36 @@ void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotatio
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+void Display::drawBlood(Vect<2u, float> rotation)
+{
+  glBindFramebuffer(GL_FRAMEBUFFER, planetRenderTexture.framebuffer);
+  glViewport(0, 0, 1024, 1024);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  displayPlanet(blood, 2.0, rotation);
+  // {
+  //   Bind<RenderContext> bind(textureContext);
+  //   float buffer[4u * 4u];
+
+  //   for (unsigned int j(0u); j != 4u; ++j)
+  //     {
+  // 	Vect<2u, float> const corner((j & 1u), (j >> 1u));
+  // 	Vect<2u, float> const destCorner(rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * 2.0, rotation));
+
+  // 	std::copy(&corner[0u], &corner[2u], &buffer[j * 4u]);
+  // 	std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
+  //     }
+  //   glActiveTexture(GL_TEXTURE0);
+  //   glBindTexture(GL_TEXTURE_2D, blood);
+  //   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  //   my_opengl::setUniform(dim, "dim", textureContext.program);
+  //   my_opengl::setUniform(0u, "tex", textureContext.program);
+  //   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
+  //   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  // }
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glViewport(0, 0, size[0], size[1]);
+}
+
 void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> rotation)
 {
   Bind<RenderContext> bind(textureContext);
@@ -258,7 +306,7 @@ void Display::displayRenderableAsHUD(Renderable const& renderable)
 {
   Bind<RenderContext> bind(textureContext);
   float buffer[4u * 4u];
-  Vect<2u, float> up(renderable.destPos.normalized());
+  Vect<2u, float> const up(renderable.destPos.normalized());
 
   for (unsigned int j(0u); j != 4u; ++j)
     {
@@ -282,12 +330,25 @@ void Display::render(Logic const &logic)
 {
   camera = camera * 0.8 + ((rotate(logic.getPlayerPos() / logic.getPlayerPos().length2()
                                    * Vect<2u, float>{1.0f, -1.0f}, {0.0f, 1.0f}) * 0.4f)) * 0.2;
+  {
+    Vect<2u, float> olddim(dim);
+
+    dim = {1.0, 1.0};
+    glEnable(GL_BLEND);
+    logic.for_each_flesh([this](auto const &flesh)
+			 {
+			   if (flesh->entity.isOnPlanet)
+			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}));
+			 });
+    glDisable(GL_BLEND);
+    dim = olddim;
+  }
   glClearColor(0.2, 0.2, 0.2, 0.0);
   glClear(GL_COLOR_BUFFER_BIT);
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
-  displayPlanet(planet, logic.getPlanetSize(), camera);
+  displayPlanet(planetRenderTexture.texture, logic.getPlanetSize(), camera);
   logic.for_each_entity([this, logic](auto const &e)
                         {
                           this->displayRenderable(e->renderable, camera);

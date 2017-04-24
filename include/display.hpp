@@ -10,6 +10,7 @@
 #include "FreeTypeLib.hpp"
 #include "Entity.hpp"
 #include "Rect.hpp"
+#include "render_texture.hpp"
 
 class Display
 {
@@ -34,10 +35,11 @@ private:
   RenderContext textContext;
   glBuffer textBuffer;
   Texture planet;
+  Texture blood;
+  RenderTexture planetRenderTexture;
   Vect<2u, float> camera;
   Vect<2u, float> dim;
   Vect<2u, float> size;
-
 public:
   static Display& getInstance();
 
@@ -48,6 +50,8 @@ public:
   void displayRect(Rect const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
+
+  void drawBlood(Vect<2u, float> rotation);
 
   /**
    * Displays a renderable in the world.
