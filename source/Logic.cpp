@@ -59,7 +59,8 @@ void Logic::tick(void)
 {
   _time++;
 
-  spawnEnemy();
+  if (!_gameOver)
+    spawnEnemy();
 
   _multiplier += (1.0 / 600.0);
 
@@ -101,6 +102,7 @@ void Logic::tick(void)
   if (this->getOccupedSpace() == _maxMobs && !_gameOver)
     {
       _gameOver = true;
+      _player.canMove = false;
       std::cout << "GAME OVER" << std::endl;
     }
 }
