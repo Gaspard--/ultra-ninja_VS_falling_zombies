@@ -84,6 +84,7 @@ public:
   unsigned int  getRemainingsSpace(void) const;
   unsigned int  getScore(void) const;
   unsigned int  getTime(void) const;
+  unsigned int  getMaxMobs(void) const;
 
   template <class func>
   void for_each_entity(func f) const
