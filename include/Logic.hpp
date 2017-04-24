@@ -12,6 +12,7 @@
 # include "Player.hpp"
 # include "Sword.hpp"
 # include "Bullet.hpp"
+# include "EnemyShooter.hpp"
 
 class Display;
 
@@ -27,6 +28,7 @@ private:
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
   std::vector<std::shared_ptr<Bullet>> _bullets;
+  std::vector<std::shared_ptr<EnemyShooter>> _shooters;
   Player _player;
   unsigned int  _time;
 
@@ -100,5 +102,8 @@ public:
     std::for_each(_bullets.begin(), _bullets.end(), f);
   }
 };
+
+template <>
+void Logic::_addEnemy<EnemyShooter>(Vect<2, double> pos);
 
 #endif // !LOGIC_HPP_

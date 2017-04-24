@@ -58,6 +58,10 @@ void Logic::tick(void)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
         (*j)->hit(**i);
 
+  for (auto& s : _shooters)
+    if (s->isInRange(_player))
+      s->shoot(_player);
+
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
@@ -213,4 +217,12 @@ void Logic::_addBullet(Vect<2, double> pos, Vect<2, double> knockback)
 {
   _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
   _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_entities.back(), knockback)));
+}
+
+template <>
+void Logic::_addEnemy<EnemyShooter>(Vect<2, double> pos)
+{
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0, 0})));
+  _enemies.push_back(std::shared_ptr<Enemy>(new EnemyShooter (*_entities.back())));
+  _shooters.push_back(std::shared_ptr<EnemyShooter>(std::static_pointer_cast<EnemyShooter>(_enemies.back())));
 }
