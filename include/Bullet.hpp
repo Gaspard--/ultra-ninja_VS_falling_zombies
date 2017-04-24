@@ -13,6 +13,7 @@ struct Bullet
   int lifetime;
   bool isUseless = false;
   bool _lock = false;
+  int up = 5;
 
   void update();
   void hit(Player &);

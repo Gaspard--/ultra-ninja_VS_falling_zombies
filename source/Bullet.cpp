@@ -34,7 +34,8 @@ void Bullet::update()
   if (diff.length2() < CAR(0.8))
     {
       entity.fixture.speed = diff * 0.10;
-      _lock = true;
+      if (up == 0)
+	_lock = true;
     }
   else
     {
@@ -48,6 +49,9 @@ void Bullet::update()
       else
 	entity.fixture.speed = left;
     }
+
+  if (--up >= 0)
+    entity.fixture.speed = entity.fixture.speed + entity.fixture.pos.normalized() * 0.05;
 }
 
 void Bullet::hit(Player &player)
