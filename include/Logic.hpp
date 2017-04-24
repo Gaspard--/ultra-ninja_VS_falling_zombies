@@ -56,7 +56,17 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
-  void addFlesh(Entity const &entityParent);
+
+  template<class Func>
+  void addFlesh(Entity const &entityParent, Func func)
+  {
+    _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
+    Entity &e(*_entities.back());
+
+    func(e);
+    _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(e)));
+  }
+
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
