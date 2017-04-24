@@ -20,11 +20,12 @@ void Sword::update()
   entity.isUseless = isUseless;
 }
 
-void	Sword::Hit(Enemy &e, Player &p)
+void	Sword::hit(Enemy &e, Player &p)
 {
-  if (lifetime != 3)
+  e.entity.fixture.speed += knockback * 0.1;
+  if (lifetime != 1)
     return ;
-  e.entity.fixture.speed += knockback;
+  e.entity.fixture.speed += knockback * 0.9;
   p.entity.fixture.speed -= knockback * 0.3;
   e.getRekt(damage);
 }

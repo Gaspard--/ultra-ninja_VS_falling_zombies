@@ -11,9 +11,6 @@ public:
 
   Entity &entity;
   bool isUseless;
-
-private:
-  int cooldown;
 };
 
 #endif /* !FLESH_HPP_ */

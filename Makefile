@@ -26,8 +26,10 @@ SRCS_CPP = 	source/main.cpp \
 		source/EnemyCommon.cpp \
 		source/EnemyLarge.cpp \
 		source/EnemySmall.cpp \
+		source/EnemyShooter.cpp \
 		source/Flesh.cpp \
 		source/Sword.cpp \
+		source/Bullet.cpp \
 		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)

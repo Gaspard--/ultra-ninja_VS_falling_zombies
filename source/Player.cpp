@@ -2,7 +2,7 @@
 #include "TextureHandler.hpp"
 
 Player::Player(Entity &e, bool canMove)
-  : entity(e), canMove(canMove)
+  : _cooldownDash(0), entity(e), canMove(canMove)
 {
   entity.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BOYAUX);
   entity.renderable.destSize = {0.1, 0.1};
@@ -40,8 +40,8 @@ void Player::jump()
 
 void Player::fastFall()
 {
-    if (!this->entity.isOnPlanet)
-      this->entity.fixture.speed = -(this->entity.fixture.pos.normalized() * 0.06);
+  if (!this->entity.isOnPlanet)
+    this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
 }
 
 void Player::getRekt(int dmg)

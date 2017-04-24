@@ -13,6 +13,7 @@ void TextureHandler::initTextureHandler()
   // Already loaded in display.cpp
   // _instance->addTexture(PLANET, "resources/planet.bmp");
   _instance->addTexture(SWORDRADIUS, "resources/swordRadius.bmp");
+  _instance->addTexture(BULLET, "resources/bite.bmp");
   _instance->addTexture(TEST, "resources/test.bmp");
 }
 

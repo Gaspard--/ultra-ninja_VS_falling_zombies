@@ -11,6 +11,8 @@
 # include "Flesh.hpp"
 # include "Player.hpp"
 # include "Sword.hpp"
+# include "Bullet.hpp"
+# include "EnemyShooter.hpp"
 
 class Display;
 
@@ -22,14 +24,19 @@ private:
 
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
+  std::vector<std::shared_ptr<Entity>> _projectiles;
   std::vector<std::shared_ptr<Enemy>> _enemies;
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
+  std::vector<std::shared_ptr<Bullet>> _bullets;
+  std::vector<std::shared_ptr<EnemyShooter>> _shooters;
   Player _player;
 
   unsigned int          _time;
   unsigned int          _score;
   const unsigned int    _maxMobs;
+
+  bool                  _gameOver;
 
   Vect<2u, float> _mousePos;
 
@@ -59,17 +66,17 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
+  void addBullet(Vect<2, double> pos);
 
   template<class Func>
-  void addFlesh(Entity const &entityParent, Func func)
+  void addFlesh(Entity const &entityParent, Func func, bool projectile)
   {
-    _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
-    Entity &e(*_entities.back());
+    (projectile ? _projectiles : _entities).push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
+    Entity &e(*(projectile ? _projectiles : _entities).back());
 
     func(e);
     _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(e)));
   }
-
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
@@ -88,6 +95,18 @@ public:
   void for_each_entity(func f)
   {
     std::for_each(_entities.begin(), _entities.end(), f);
+  }
+
+  template <class func>
+  void for_each_projectile(func f) const
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
+  }
+
+  template <class func>
+  void for_each_projectile(func f)
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
   }
 
   template <class func>
@@ -113,6 +132,15 @@ public:
   {
     std::for_each(_swords.begin(), _swords.end(), f);
   }
+
+  template <class func>
+  void for_each_bullet(func f)
+  {
+    std::for_each(_bullets.begin(), _bullets.end(), f);
+  }
 };
+
+template <>
+void Logic::_addEnemy<EnemyShooter>(Vect<2, double> pos);
 
 #endif // !LOGIC_HPP_
