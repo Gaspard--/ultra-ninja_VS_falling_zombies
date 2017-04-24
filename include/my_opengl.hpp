@@ -100,6 +100,7 @@ namespace	my_opengl
   Shader	createShader(GLenum const shadertype, GLchar const *src);
   void		programError(GLuint const program);
   void		setUniform(Vect<4, float> const data, char const *target, Program program);
+  void		setUniform(Vect<3, float> const data, char const *target, Program program);
   void		setUniform(Vect<2, float> const data, char const *target, Program program);
   void		setUniform(int const data, char const *target, Program program);
 
