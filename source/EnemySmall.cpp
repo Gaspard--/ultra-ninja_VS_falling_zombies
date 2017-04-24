@@ -9,6 +9,7 @@ EnemySmall::EnemySmall(Entity &e)
   e.fixture.radius = 0.03;
   e.fixture.mass = 20;
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
+  _maxAnimationFrame = 8;
 }
 
 void EnemySmall::attack(Player& player)

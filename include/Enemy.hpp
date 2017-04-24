@@ -10,6 +10,7 @@ protected:
   int _hp;
   int _coolDown;
   int _animation;
+  int _maxAnimationFrame;
 
 public:
   bool isUseless = false;
