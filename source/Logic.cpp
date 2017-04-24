@@ -57,10 +57,12 @@ void Logic::spawnEnemy()
 
 void Logic::tick(void)
 {
-  _time++;
 
   if (!_gameOver)
-    spawnEnemy();
+    {
+      _time++;
+      spawnEnemy();
+    }
 
   _multiplier += (1.0 / 600.0);
 
