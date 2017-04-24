@@ -3,7 +3,8 @@
 Bullet::Bullet(Entity &entity, Vect<2u, double> knockback)
   : entity(entity), damage(3), lifetime(20), knockback(knockback)
 {
-    entity.renderable.texture = my_opengl::loadTexture("resources/bite.bmp");
+  entity.fixture.mass = 0;
+  entity.renderable.texture = my_opengl::loadTexture("resources/bite.bmp");
 }
 
 Bullet::~Bullet()

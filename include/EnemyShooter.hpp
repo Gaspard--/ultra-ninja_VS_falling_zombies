@@ -11,6 +11,7 @@ public:
 
   void attack(Player& player) override;
   void shoot();
+  void update(const Player& player) override;
 };
 
 #endif /* !ENEMYSHOOTER_H_ */
