@@ -52,6 +52,7 @@ public:
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
 
   void drawBlood(Vect<2u, float> rotation);
+  void displayInterface(void);
 
   /**
    * Displays a renderable in the world.

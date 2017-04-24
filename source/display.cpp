@@ -173,7 +173,7 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
                              }
                            glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
                            glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
-			   my_opengl::setUniform(dim, "dim", textContext.program);
+                           my_opengl::setUniform(dim, "dim", textContext.program);
                            my_opengl::setUniform(0u, "tex", textContext.program);
                            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
                          }, fontSize, step);
@@ -198,6 +198,17 @@ void Display::displayRect(Rect const &rect)
   my_opengl::setUniform(rect.color, "rect_color", rectContext.program);
   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
+void    Display::displayInterface(void)
+{
+  Logic logic = Logic::getInstance();
+  int   size = (std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs())).size();
+
+  displayText(std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs()),
+              256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0});
+  displayText("Score : " + std::to_string(logic.getScore()),
+              256, {0.2f, 0.2f}, {-1, 1}, {1, 0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
@@ -354,12 +365,11 @@ void Display::render(Logic const &logic)
                           this->displayRenderable(e->renderable, camera);
                         });
   logic.for_each_projectile([this, logic](auto const &e)
-			    {
-			      this->displayEntityWithSpeed(*e, camera);
-			    });
-  displayText("MASSE BITE SUCE DES QUEUES", 256, {0.1f, 0.1f}, {-0.2f, -0.2f}, camera);
+                            {
+                              this->displayEntityWithSpeed(*e, camera);
+                            });
+  displayInterface();
   glDisable(GL_BLEND);
-
   glfwSwapBuffers(window.get());
   glfwPollEvents();
 }

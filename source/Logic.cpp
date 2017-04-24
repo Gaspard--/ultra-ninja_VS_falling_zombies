@@ -30,26 +30,26 @@ void Logic::spawnEnemy()
       Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
 
       switch (rand() % 4)
-	{
-	case 0:
-	  if (_time / 60 > 30)
-	    _addEnemy<EnemyLarge>(enemyPos);
-	  else
-	    _addEnemy<EnemySmall>(enemyPos);
-	  break;
-	case 1:
-	  if (_time / 60 > 15)
-	    _addEnemy<EnemyCommon>(enemyPos);
-	  else
-	    _addEnemy<EnemySmall>(enemyPos);
-	  break;
-	case 2:
-	  _addEnemy<EnemySmall>(enemyPos);
-	  break;
-	case 3:
-	  _addEnemy<EnemyShooter>(enemyPos);
-	  break;
-	}
+        {
+        case 0:
+          if (_time / 60 > 30)
+            _addEnemy<EnemyLarge>(enemyPos);
+          else
+            _addEnemy<EnemySmall>(enemyPos);
+          break;
+        case 1:
+          if (_time / 60 > 15)
+            _addEnemy<EnemyCommon>(enemyPos);
+          else
+            _addEnemy<EnemySmall>(enemyPos);
+          break;
+        case 2:
+          _addEnemy<EnemySmall>(enemyPos);
+          break;
+        case 3:
+          _addEnemy<EnemyShooter>(enemyPos);
+          break;
+        }
     }
 }
 
@@ -69,7 +69,7 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-	(*j)->hit(**i, _player);
+        (*j)->hit(**i, _player);
 
   for (auto& s : _shooters)
     if (s->isInRange(_player))
@@ -99,6 +99,11 @@ void Logic::tick(void)
       _gameOver = true;
       std::cout << "GAME OVER" << std::endl;
     }
+}
+
+unsigned int  Logic::getMaxMobs(void) const
+{
+  return (_maxMobs);
 }
 
 unsigned int    Logic::getRemainingsSpace(void) const
