@@ -5,7 +5,7 @@ EnemySmall::EnemySmall(Entity &e)
   : Enemy(e, 10)
 {
   e.fixture.radius = 0.03;
-  e.fixture.mass = 10;
+  e.fixture.mass = 5;
   e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
@@ -22,6 +22,7 @@ void EnemySmall::attack(Player& player)
 
 bool    EnemySmall::update(const Player& player)
 {
-  this->Enemy::update(player);
+  if (this->Enemy::update(player) && entity.isOnPlanet)
+    entity.fixture.speed = entity.fixture.speed + entity.fixture.pos.normalized() * 0.08;
   return (false);
 }
