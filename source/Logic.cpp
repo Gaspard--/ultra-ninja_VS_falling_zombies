@@ -108,10 +108,7 @@ void Logic::tick(void)
     {
       _gameOver = true;
       _player.canMove = false;
-      std::cout << "GAME OVER" << std::endl;
     }
-  if (this->getOccupedSpace() >= _maxMobs)
-    _gameOver = true;
 }
 
 void    Logic::addToScore(int add)
@@ -284,7 +281,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
 {
   Vect<2u, double> vec(getMouse() - getPlayerPos());
 
-  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
+  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS || _gameOver)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
 }
