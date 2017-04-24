@@ -12,6 +12,34 @@ void SoundHandler::initSoundHandler()
   if (!_instance->mainMusic.openFromFile("resources/small_world.ogg"))
     throw ("Music not charged");
   _instance->addSoundBuffer(SHOOT, "resources/shoot.wav");
+  _instance->addSoundBuffer(BOYAUX1, "resources/boyaux1.wav");
+  _instance->addSoundBuffer(BOYAUX2, "resources/boyaux2.wav");
+  _instance->addSoundBuffer(BOYAUX3, "resources/boyaux3.wav");
+  _instance->addSoundBuffer(BOYAUX4, "resources/boyaux4.wav");
+  _instance->addSoundBuffer(BOYAUX5, "resources/boyaux5.wav");
+  _instance->addSoundBuffer(BOYAUX6, "resources/boyaux6.wav");
+  _instance->addSoundBuffer(BOYAUX1, "resources/boyaux1.wav");
+  _instance->addSoundBuffer(CHAN1, "resources/chan1.wav");
+  _instance->addSoundBuffer(CHAN2, "resources/chan2.wav");
+  _instance->addSoundBuffer(CHAN3, "resources/chan3.wav");
+  _instance->addSoundBuffer(DESU1, "resources/desu1.wav");
+  _instance->addSoundBuffer(DESU2, "resources/desu2.wav");
+  _instance->addSoundBuffer(DESU3, "resources/desu3.wav");
+  _instance->addSoundBuffer(KOREWA1, "resources/korewa1.wav");
+  _instance->addSoundBuffer(MOBSPAWN1, "resources/mobspawn1.wav");
+  _instance->addSoundBuffer(MOBSPAWN2, "resources/mobspawn2.wav");
+  _instance->addSoundBuffer(MOBSPAWN3, "resources/mobspawn3.wav");
+  _instance->addSoundBuffer(MOBSPAWN4, "resources/mobspawn4.wav");
+  _instance->addSoundBuffer(MOBSPAWN5, "resources/mobspawn5.wav");
+  _instance->addSoundBuffer(MOBSPAWN6, "resources/mobspawn6.wav");
+  _instance->addSoundBuffer(NANI1, "resources/nani1.wav");
+  _instance->addSoundBuffer(NANI2, "resources/nani2.wav");
+  _instance->addSoundBuffer(PROUT, "resources/prout.wav");
+  _instance->addSoundBuffer(SHOOT, "resources/shoot.wav");
+  _instance->addSoundBuffer(WTSW1, "resources/watashiwa1.wav");
+  _instance->addSoundBuffer(WTSW2, "resources/watashiwa2.wav");
+  _instance->addSoundBuffer(WTSW3, "resources/watashiwa3.wav");
+
 }
 
 SoundHandler& SoundHandler::getInstance()

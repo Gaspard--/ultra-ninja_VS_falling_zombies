@@ -11,7 +11,34 @@ public:
 
   enum SoundList
     {
-      SHOOT
+      BOYAUX1,
+      BOYAUX2,
+      BOYAUX3,
+      BOYAUX4,
+      BOYAUX5,
+      BOYAUX6,
+      CHAN1,
+      CHAN2,
+      CHAN3,
+      DASH,
+      DESU1,
+      DESU2,
+      DESU3,
+      KOREWA1,
+      KOREWA2,
+      MOBSPAWN1,
+      MOBSPAWN2,
+      MOBSPAWN3,
+      MOBSPAWN4,
+      MOBSPAWN5,
+      MOBSPAWN6,
+      NANI1,
+      NANI2,
+      PROUT,
+      SHOOT,
+      WTSW1,
+      WTSW2,
+      WTSW3,
     };
 
   static void initSoundHandler();
