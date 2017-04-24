@@ -212,9 +212,15 @@ void    Display::displayInterface(void)
               { 0.5 + 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace()});
   displayText("Current Population",
               256, {0.05f, 0.05f}, {-0.017f * 18, -0.315f}, {sqrt(camera.length2()), 0}, {1.0, 1.0, 1.0});
+<<<<<<< HEAD
   displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.75, -0.80}, {1, 0}, {0.2, 0.5, 1.0});
   displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.75, -1.00}, {1, 0}, {0.2, 0.5, 1.0});
   if (logic.getGameOver())
+=======
+  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.0 / dim[0], 0.72}, {1, 0}, {1.0, 1.0, 0.5});
+  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.0 / dim[0], 0.5}, {1, 0}, {1.0, 0.5, 1.0});
+  if (logic.getGameOver() == true)
+>>>>>>> 4a968c984b3586e617d9c47e757e573a064533da
     displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.4}, {1, 0}, {1.0, 0.25, 0.0});
 }
 
@@ -246,26 +252,6 @@ void Display::drawBlood(Vect<2u, float> rotation, Texture texture)
   glViewport(0, 0, 1024, 1024);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   displayPlanet(texture, 2.0, rotation);
-  // {
-  //   Bind<RenderContext> bind(textureContext);
-  //   float buffer[4u * 4u];
-
-  //   for (unsigned int j(0u); j != 4u; ++j)
-  //     {
-  //    Vect<2u, float> const corner((j & 1u), (j >> 1u));
-  //    Vect<2u, float> const destCorner(rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * 2.0, rotation));
-
-  //    std::copy(&corner[0u], &corner[2u], &buffer[j * 4u]);
-  //    std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
-  //     }
-  //   glActiveTexture(GL_TEXTURE0);
-  //   glBindTexture(GL_TEXTURE_2D, blood);
-  //   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-  //   my_opengl::setUniform(dim, "dim", textureContext.program);
-  //   my_opengl::setUniform(0u, "tex", textureContext.program);
-  //   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
-  //   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-  // }
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glViewport(0, 0, size[0], size[1]);
 }
