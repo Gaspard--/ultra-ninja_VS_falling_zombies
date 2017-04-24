@@ -7,6 +7,9 @@ class EnemySmall : public Enemy
 {
 private:
 
+  int   _dir;
+  const double  _attackDist;
+
 public:
   void attack(Player& player) override;
 
