@@ -15,6 +15,7 @@ SRCS_CPP = 	source/main.cpp \
 		source/SoundHandler.cpp \
 		source/display.cpp \
 		source/render_context.cpp \
+		source/render_texture.cpp \
 		source/gl3w.cpp \
 		source/FreeTypeLib.cpp \
 		source/Physics.cpp \

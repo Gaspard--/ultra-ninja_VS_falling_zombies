@@ -129,6 +129,12 @@ public:
   }
 
   template <class func>
+  void for_each_flesh(func f) const
+  {
+    std::for_each(_fleshs.begin(), _fleshs.end(), f);
+  }
+
+  template <class func>
   void for_each_swords(func f)
   {
     std::for_each(_swords.begin(), _swords.end(), f);

@@ -14,8 +14,8 @@ bool                    Physics::move(Fixture& fixture) const
   Vect<2, double>       vec(0, 0);
 
   fixture.pos += fixture.speed;
-  distance = sqrt((fixture.pos - _planet.pos).length2()); // + CAR(fixture.pos.y() - _planet.pos.y()));
-  vec = (fixture.pos - _planet.pos) / distance; //, (fixture.pos.y() - _planet.pos.y()) / distance);
+  distance = sqrt((fixture.pos - _planet.pos).length2());
+  vec = (fixture.pos - _planet.pos) / distance;
   /* Is fixture touching the planet ?*/
   if (haveCollision(fixture, _planet))
     {
