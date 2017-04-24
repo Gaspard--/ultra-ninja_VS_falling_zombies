@@ -36,6 +36,8 @@ private:
   unsigned int          _score;
   const unsigned int    _maxMobs;
 
+  bool                  _gameOver;
+
   Vect<2u, float> _mousePos;
 
 private:

@@ -17,6 +17,7 @@ Logic::Logic(unsigned int maxMobs)
 {
   _time = 0;
   _score = 0;
+  _gameOver = false;
 }
 
 void Logic::spawnEnemy()
@@ -88,9 +89,14 @@ void Logic::tick(void)
   _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
-  _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ std::cout << b << ", " << b->isUseless << std::endl;return b->isUseless; }), _bullets.end());
+  _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ return b->isUseless; }), _bullets.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
+  if (!this->getRemainingsSpace() && !_gameOver)
+    {
+      _gameOver = true;
+      std::cout << "GAME OVER" << std::endl;
+    }
 }
 
 unsigned int    Logic::getRemainingsSpace(void) const
@@ -271,8 +277,8 @@ void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 
 void Logic::addBullet(Vect<2, double> pos)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
-  _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_entities.back())));
+  _projectiles.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
+  _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_projectiles.back())));
 }
 
 template <>
