@@ -16,6 +16,7 @@ Logic::Logic(unsigned int maxMobs)
 {
   _time = 0;
   _score = 0;
+  _gameOver = false;
 }
 
 void Logic::spawnEnemy()
@@ -72,6 +73,11 @@ void Logic::tick(void)
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
+  if (!this->getRemainingsSpace() && !_gameOver)
+    {
+      _gameOver = true;
+      std::cout << "GAME OVER" << std::endl;
+    }
 }
 
 unsigned int    Logic::getRemainingsSpace(void) const
