@@ -27,24 +27,27 @@ void Logic::spawnEnemy()
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
       Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
 
-      switch (rand() % 3)
-        {
-        case 0:
-          if (_time / 60 > 30)
-            _addEnemy<EnemyLarge>(enemyPos);
-          else
-            _addEnemy<EnemySmall>(enemyPos);
-          break;
-        case 1:
-          if (_time / 60 > 15)
-            _addEnemy<EnemyCommon>(enemyPos);
-          else
-            _addEnemy<EnemySmall>(enemyPos);
-          break;
-        case 2:
-          _addEnemy<EnemySmall>(enemyPos);
-          break;
-        }
+      switch (rand() % 4)
+	{
+	case 0:
+	  if (_time / 60 > 30)
+	    _addEnemy<EnemyLarge>(enemyPos);
+	  else
+	    _addEnemy<EnemySmall>(enemyPos);
+	  break;
+	case 1:
+	  if (_time / 60 > 15)
+	    _addEnemy<EnemyCommon>(enemyPos);
+	  else
+	    _addEnemy<EnemySmall>(enemyPos);
+	  break;
+	case 2:
+	  _addEnemy<EnemySmall>(enemyPos);
+	  break;
+	case 3:
+	  _addEnemy<EnemyShooter>(enemyPos);
+	  break;
+	}
     }
 }
 

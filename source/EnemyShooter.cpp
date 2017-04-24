@@ -7,7 +7,6 @@ EnemyShooter::EnemyShooter(Entity &e)
 {
   e.fixture.radius = 0.02;
   e.fixture.mass = 8;
-  // FIXME: REPLACE BULLET BY TEST or SHOOTER TEXTURE
   e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
   e.renderable.sourceSize = {1, 1};
@@ -36,7 +35,6 @@ void EnemyShooter::shoot()
 
   logic.addBullet(entity.fixture.pos);
   logic.addBullet(entity.fixture.pos);
-  std::cout << "shoot" << std::endl;
 }
 
 bool EnemyShooter::update(const Player& player)
@@ -52,6 +50,9 @@ bool EnemyShooter::update(const Player& player)
     (_cooldown == 0) ? entity.fixture.speed = right : entity.fixture.speed = left;
   else
     (_cooldown == 0) ? entity.fixture.speed = left : entity.fixture.speed = right;
+
+  if (_cooldown != 0)
+    entity.fixture.speed *= 0.7;
 
   if (!entity.isOnPlanet)
     entity.fixture.speed = -(entity.fixture.pos.normalized() * 0.01);
