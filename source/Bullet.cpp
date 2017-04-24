@@ -5,7 +5,7 @@ Bullet::Bullet(Entity &entity)
   : entity(entity), damage(3), lifetime(20)
 {
   entity.fixture.mass = 5;
-  entity.fixture.radius = 0.01;
+  entity.fixture.radius = 0.02;
   entity.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BULLET);
   entity.renderable.destSize = {entity.fixture.radius * 2.1, entity.fixture.radius * 2.1};
   entity.renderable.sourceSize = {1, 1};

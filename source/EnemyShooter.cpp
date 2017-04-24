@@ -8,7 +8,7 @@ EnemyShooter::EnemyShooter(Entity &e)
   e.fixture.radius = 0.02;
   e.fixture.mass = 8;
   // FIXME: REPLACE BULLET BY TEST or SHOOTER TEXTURE
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BULLET);
+  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
   e.renderable.sourceSize = {1, 1};
 }
@@ -20,7 +20,7 @@ void EnemyShooter::attack(Player&)
 
 bool EnemyShooter::isInRange(Player const& player)
 {
-  double range = 1.2;
+  double range = 0.8;
 
   return (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
 }
