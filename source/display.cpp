@@ -212,8 +212,8 @@ void    Display::displayInterface(void)
               { 0.5 + 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace()});
   displayText("Current Population",
               256, {0.05f, 0.05f}, {-0.017f * 18, -0.315f}, {sqrt(camera.length2()), 0}, {1.0, 1.0, 1.0});
-  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0}, {1.0, 1.0, 0.5});
-  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0}, {1.0, 0.5, 1.0});
+  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0}, {0.2, 0.5, 1.0});
+  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0}, {0.2, 0.5, 1.0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
