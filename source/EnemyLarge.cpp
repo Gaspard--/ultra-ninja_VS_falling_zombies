@@ -30,13 +30,13 @@ void EnemyLarge::attack(Player& player)
   player.getRekt(2);
 }
 
-void    EnemyLarge::update(const Player& player)
+bool    EnemyLarge::update(const Player& player)
 {
   Vect<2, double> vec(-entity.fixture.pos[1], entity.fixture.pos[0]);
   Vect<2, double> right(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
   Vect<2, double> left(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * 1);
 
-  if (!entity.isOnPlanet)
+  if (this->Enemy::update(player) && !entity.isOnPlanet)
     {
       if (((right + entity.fixture.pos) - player.entity.fixture.pos).length2() <
           ((left + entity.fixture.pos) - player.entity.fixture.pos).length2())
@@ -46,5 +46,5 @@ void    EnemyLarge::update(const Player& player)
       if (!(rand() % (int)(10000 * ((entity.fixture.speed + entity.fixture.pos).normalized() - player.entity.fixture.pos.normalized()).length2() + 1)))
         entity.fixture.speed = -(entity.fixture.pos.normalized() * 0.06);
     }
-  this->Enemy::update(player);
+  return (false);
 }

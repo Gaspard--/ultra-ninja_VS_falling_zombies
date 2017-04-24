@@ -4,15 +4,22 @@
 Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
 {
+  _coolDown = 0;
 }
 
-void Enemy::update(const Player& player)
+bool Enemy::update(const Player& player)
 {
   (void)player;
   isUseless = _hp <= 0;
   entity.isUseless = isUseless;
   if (isUseless)
     onDeath();
+  if (_coolDown)
+    {
+      --_coolDown;
+      return (false);
+    }
+  return (true);
 }
 
 void Enemy::onDeath()
@@ -25,4 +32,5 @@ void Enemy::onDeath()
 void Enemy::getRekt(int dmg)
 {
   _hp -= dmg;
+  _coolDown = 30;
 }
