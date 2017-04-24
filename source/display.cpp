@@ -211,6 +211,8 @@ void    Display::displayInterface(void)
               256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0}, {1.0, 0.0, 0.5});
   displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0}, {1.0, 1.0, 0.5});
   displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0}, {1.0, 0.5, 1.0});
+  if (logic.getGameOver() == true)
+    displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.4}, {1, 0}, {1.0, 0.25, 0.0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)

@@ -305,6 +305,11 @@ Player& Logic::getPlayer()
   return _player;
 }
 
+bool Logic::getGameOver() const
+{
+  return _gameOver;
+}
+
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
   _projectiles.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));

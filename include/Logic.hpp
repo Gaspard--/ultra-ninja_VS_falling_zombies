@@ -90,6 +90,7 @@ public:
   unsigned int  getScore(void) const;
   std::string   getTime(void) const;
   unsigned int  getMaxMobs(void) const;
+  bool		getGameOver(void) const;
 
   template <class func>
   void for_each_entity(func f) const
