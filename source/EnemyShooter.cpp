@@ -1,6 +1,7 @@
 #include "EnemyShooter.hpp"
 #include "Logic.hpp"
 #include "TextureHandler.hpp"
+#include "SoundHandler.hpp"
 
 EnemyShooter::EnemyShooter(Entity &e)
   : Enemy(e, 15), _cooldown(0)
@@ -31,7 +32,7 @@ void EnemyShooter::shoot()
 
   _cooldown = 400;
 
-  //FIXME ajouter ici shoot.wav
+  SoundHandler::getInstance().playSound(SoundHandler::SHOOT);
   Logic &logic = Logic::getInstance();
 
   logic.addBullet(entity.fixture.pos);
