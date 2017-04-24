@@ -11,7 +11,7 @@ Player::Player(Entity &e, bool canMove)
 
 void Player::update(void)
 {
-    _cooldownDash -= (_cooldownDash > 0);
+  _cooldownDash -= (_cooldownDash > 0);
 }
 
 void Player::acceleration(int dir)

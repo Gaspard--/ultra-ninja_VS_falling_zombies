@@ -15,6 +15,7 @@ public :
       PLANET,
       SWORDRADIUS,
       BULLET,
+      ZOMBIE,
       TEST
     };
 

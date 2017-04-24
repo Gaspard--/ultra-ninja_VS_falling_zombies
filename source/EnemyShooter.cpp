@@ -8,9 +8,7 @@ EnemyShooter::EnemyShooter(Entity &e)
 {
   e.fixture.radius = 0.02;
   e.fixture.mass = 50;
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
-  e.renderable.sourceSize = {1, 1};
   e.fixture.speed = e.fixture.speed + e.fixture.pos.normalized() * 0.08;
 }
 

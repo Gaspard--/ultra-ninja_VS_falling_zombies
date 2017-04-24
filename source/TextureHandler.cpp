@@ -14,6 +14,7 @@ void TextureHandler::initTextureHandler()
   // _instance->addTexture(PLANET, "resources/planet.bmp");
   _instance->addTexture(SWORDRADIUS, "resources/swordRadius.bmp");
   _instance->addTexture(BULLET, "resources/bite.bmp");
+  _instance->addTexture(ZOMBIE, "resources/ZombieSpriteSheet.bmp");
   _instance->addTexture(TEST, "resources/test.bmp");
 }
 
