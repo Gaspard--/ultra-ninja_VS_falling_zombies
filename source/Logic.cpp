@@ -62,6 +62,10 @@ void Logic::tick(void)
     if (s->isInRange(_player))
       s->shoot();
 
+  for (auto& b : _bullets)
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
+      b->hit(_player);
+
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });

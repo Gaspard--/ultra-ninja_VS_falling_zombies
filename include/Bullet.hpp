@@ -15,7 +15,7 @@ struct Bullet
   bool isUseless = false;
 
   void update();
-  void hit(Enemy &);
+  void hit(Player &);
 };
 
 #endif /* !BULLET_H_ */

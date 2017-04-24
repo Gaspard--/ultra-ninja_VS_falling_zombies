@@ -39,11 +39,10 @@ void Bullet::update()
     }
 }
 
-void Bullet::hit(Enemy &e)
+void Bullet::hit(Player &player)
 {
-  e.getRekt(damage);
+  player.getRekt(damage);
   isUseless = true;
-
-    // TODO appliquer le vecteur de la fixture de bullet à la vitesse de l'ennemi
-    // TODO enlever des HP à l'Enemy touché.
+  std::cout << "hit" << std::endl;
+  // TODO EXPLOSION
 }

@@ -20,7 +20,7 @@ void EnemyShooter::attack(Player&)
 
 bool EnemyShooter::isInRange(Player const& player)
 {
-  double range = 0.8;
+  double range = 1.2;
 
   return (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
 }
