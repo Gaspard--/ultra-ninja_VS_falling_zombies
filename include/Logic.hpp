@@ -60,6 +60,7 @@ public:
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
+  Vect<2u, float> getMouse() const;
 
   template <class func>
   void for_each_entity(func f) const
