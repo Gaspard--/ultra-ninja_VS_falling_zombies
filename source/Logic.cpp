@@ -109,13 +109,14 @@ void Logic::checkEvents(Display const &display)
 {
   if (_player.canMove)
     {
-      if (display.isKeyPressed(GLFW_KEY_RIGHT))
+      if (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))
         this->_player.acceleration(-1);
-      if (display.isKeyPressed(GLFW_KEY_LEFT))
+      if (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))
         this->_player.acceleration(1);
-      if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_UP))
+      if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_W)
+          || display.isKeyPressed(GLFW_KEY_UP))
         this->_player.jump();
-      if (display.isKeyPressed(GLFW_KEY_DOWN))
+      if (display.isKeyPressed(GLFW_KEY_S) || display.isKeyPressed(GLFW_KEY_DOWN))
         this->_player.fastFall();
     }
 
@@ -168,7 +169,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
 	return ;
-  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.01);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.1);
 }
 
 Vect<2, double> Logic::getPlayerPos(void) const
@@ -204,7 +205,7 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.4, 0.06, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }
 

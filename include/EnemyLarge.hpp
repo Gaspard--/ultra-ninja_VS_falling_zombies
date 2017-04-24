@@ -12,7 +12,7 @@ public:
   // SPIKE
   void attack(Player& player) override;
 
-  void  update(const Player&) override;
+  bool  update(const Player&) override;
 };
 
 #endif /* !ENEMYLARGE_H_ */

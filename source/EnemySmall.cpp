@@ -20,7 +20,8 @@ void EnemySmall::attack(Player& player)
 
 }
 
-void    EnemySmall::update(const Player& player)
+bool    EnemySmall::update(const Player& player)
 {
   this->Enemy::update(player);
+  return (false);
 }
