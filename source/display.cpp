@@ -241,26 +241,6 @@ void Display::drawBlood(Vect<2u, float> rotation, Texture texture)
   glViewport(0, 0, 1024, 1024);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   displayPlanet(texture, 2.0, rotation);
-  // {
-  //   Bind<RenderContext> bind(textureContext);
-  //   float buffer[4u * 4u];
-
-  //   for (unsigned int j(0u); j != 4u; ++j)
-  //     {
-  // 	Vect<2u, float> const corner((j & 1u), (j >> 1u));
-  // 	Vect<2u, float> const destCorner(rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * 2.0, rotation));
-
-  // 	std::copy(&corner[0u], &corner[2u], &buffer[j * 4u]);
-  // 	std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
-  //     }
-  //   glActiveTexture(GL_TEXTURE0);
-  //   glBindTexture(GL_TEXTURE_2D, blood);
-  //   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-  //   my_opengl::setUniform(dim, "dim", textureContext.program);
-  //   my_opengl::setUniform(0u, "tex", textureContext.program);
-  //   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
-  //   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-  // }
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glViewport(0, 0, size[0], size[1]);
 }
