@@ -156,6 +156,14 @@ void Logic::checkEvents(Display const &display)
 
       _addEnemy<EnemyShooter>(enemyPos);
     }
+ if (display.isKeyPressed(GLFW_KEY_J))
+    {
+      double                angle = std::rand();
+      double                dist = getPlanetSize() / 2;
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      addBullet(enemyPos);
+    }
 }
 
 void Logic::handleMouse(GLFWwindow *, Mouse mouse)

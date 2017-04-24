@@ -20,6 +20,13 @@ void EnemyShooter::attack(Player&)
 
 bool EnemyShooter::isInRange(Player const& player)
 {
+  Logic &logic = Logic::getInstance();
+  // TODO if (within attack range) -> attack
+  // target : player
+
+  logic.addBullet(entity.fixture.pos);
+  logic.addBullet(entity.fixture.pos);
+  // TODO actual shoot
   double range = 0.8;
 
   return (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
@@ -33,7 +40,7 @@ void EnemyShooter::shoot(Player const& player)
 bool EnemyShooter::update(const Player& player)
 {
   Vect<2, double> vec(-entity.fixture.pos[1], entity.fixture.pos[0]);
-  Vect<2, double> right(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
+  Vect<2, double> right(entity.fixture.speed * 0.99 - vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
   Vect<2, double> left(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * 1);
 
   if (((right + entity.fixture.pos) - player.entity.fixture.pos).length2() <
