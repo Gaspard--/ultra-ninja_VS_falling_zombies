@@ -33,7 +33,7 @@ private:
   Player _player;
 
   unsigned int          _time;
-  unsigned int          _score;
+  unsigned long int          _score;
   unsigned int          _combo;
   double        _multiplier;
   const unsigned int    _maxMobs;
