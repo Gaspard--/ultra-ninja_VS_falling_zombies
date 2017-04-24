@@ -32,6 +32,7 @@ void EnemyShooter::shoot()
 
   _cooldown = 700;
 
+  //FIXME ajouter ici shoot.wav
   Logic &logic = Logic::getInstance();
 
   logic.addBullet(entity.fixture.pos);
