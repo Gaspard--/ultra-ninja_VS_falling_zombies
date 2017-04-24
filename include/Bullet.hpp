@@ -11,6 +11,7 @@ struct Bullet
   Entity &entity;
   int damage;
   int lifetime;
+  double _accel = 1.0;
   bool isUseless = false;
 
   void update();

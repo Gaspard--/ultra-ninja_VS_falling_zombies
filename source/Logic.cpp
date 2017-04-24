@@ -159,7 +159,7 @@ void Logic::checkEvents(Display const &display)
  if (display.isKeyPressed(GLFW_KEY_J))
     {
       double                angle = std::rand();
-      double                dist = getPlanetSize() / 2;
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 20.0);
       Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
 
       addBullet(enemyPos);

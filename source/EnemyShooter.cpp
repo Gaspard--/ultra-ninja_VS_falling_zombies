@@ -37,7 +37,7 @@ void EnemyShooter::shoot(Player const&)
 bool EnemyShooter::update(const Player& player)
 {
   Vect<2, double> vec(-entity.fixture.pos[1], entity.fixture.pos[0]);
-  Vect<2, double> right(entity.fixture.speed * 0.99 - vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
+  Vect<2, double> right(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
   Vect<2, double> left(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * 1);
 
   if (((right + entity.fixture.pos) - player.entity.fixture.pos).length2() <
