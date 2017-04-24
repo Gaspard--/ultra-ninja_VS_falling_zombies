@@ -268,8 +268,8 @@ void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 
 void Logic::addBullet(Vect<2, double> pos)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
-  _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_entities.back())));
+  _projectiles.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
+  _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_projectiles.back())));
 }
 
 template <>
