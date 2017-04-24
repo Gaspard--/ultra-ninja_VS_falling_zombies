@@ -1,6 +1,7 @@
 # include <iostream>
 # include "display.hpp"
 # include "Logic.hpp"
+# include "TextureHandler.hpp"
 # include "Input.hpp"
 # include <random>
 
@@ -8,10 +9,22 @@ int main()
 {
   std::srand(time(NULL));
   try {
-    Display display;
+    Display& display = Display::getInstance();
     Input::setWindow(display.getWindow());
 
-    // init input with GLFW window
+    struct TextureHandlerInit
+    {
+      TextureHandlerInit()
+      {
+	TextureHandler::initTextureHandler();
+      }
+
+      ~TextureHandlerInit()
+      {
+	TextureHandler::destroyTextureHandler();
+      }
+    } textureHandlerIniter;
+
     struct LogicInit
     {
       LogicInit()

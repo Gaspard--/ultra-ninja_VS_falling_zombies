@@ -12,7 +12,7 @@ public:
 
 public:
   EnemySmall(Entity &);
-  void  update(const Player&) override;
+  bool  update(const Player&) override;
 };
 
 #endif /* !ENEMYSMALL_H_ */

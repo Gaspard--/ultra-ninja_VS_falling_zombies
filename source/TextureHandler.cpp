@@ -1,11 +1,21 @@
 #include "TextureHandler.hpp"
 
+#include <iostream>
+
 std::unique_ptr<TextureHandler> TextureHandler::_instance(nullptr);
+
+TextureHandler::TextureHandler()
+{
+}
 
 void TextureHandler::initTextureHandler()
 {
   _instance.reset(new TextureHandler());
-  _instance->_textures[BOYAUX] = my_opengl::loadTexture("resources/test.bmp");
+  _instance->addTexture(BOYAUX, "resources/boyaux.bmp");
+  // Already loaded in display.cpp
+  // _instance->addTexture(PLANET, "resources/planet.bmp");
+  _instance->addTexture(SWORDRADIUS, "resources/swordRadius.bmp");
+  _instance->addTexture(TEST, "resources/test.bmp");
 }
 
 TextureHandler& TextureHandler::getInstance()
@@ -18,7 +28,12 @@ void TextureHandler::destroyTextureHandler()
   _instance.reset(nullptr);
 }
 
-void TextureHandler::addTexture(TextureList id, std::string path)
+void TextureHandler::addTexture(TextureList id, std::string const& path)
 {
-  // TextureHandler::getInstance()._textures.insert
+  _instance->_textures[id] = my_opengl::loadTexture(path);
+}
+
+Texture TextureHandler::getTexture(TextureList id) const
+{
+  return (_instance->_textures[id]);
 }

@@ -14,6 +14,11 @@
 class Display
 {
 private:
+  Display();
+  ~Display();
+
+  static Display instance;
+
   struct GlfwContext
   {
     GlfwContext();
@@ -31,15 +36,14 @@ private:
   Texture planet;
   Vect<2u, float> camera;
   Vect<2u, float> dim;
-public:
-  Display();
 
-  ~Display();
+public:
+  static Display& getInstance();
 
   GLFWwindow *getWindow() const;
 
   void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos,  Vect<2u, float> rotation);
-  
+
   void displayRect(Rect const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
@@ -55,7 +59,7 @@ public:
 
   void displayRenderableAsHUD(Renderable const& renderable);
 
-  
+
   void render(Logic const &);
   bool isRunning() const;
   bool isKeyPressed(int key) const;
