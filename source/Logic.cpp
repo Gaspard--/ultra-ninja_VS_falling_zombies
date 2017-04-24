@@ -27,10 +27,16 @@ void Logic::spawnEnemy()
       switch (rand() % 3)
         {
         case 0:
-          _addEnemy<EnemySmall>(enemyPos);
+          if (_time / 60 > 30)
+            _addEnemy<EnemySmall>(enemyPos);
+          else
+            _addEnemy<EnemyLarge>(enemyPos);
           break;
         case 1:
-          _addEnemy<EnemyCommon>(enemyPos);
+          if (_time / 60 > 15)
+            _addEnemy<EnemyCommon>(enemyPos);
+          else
+            _addEnemy<EnemyLarge>(enemyPos);
           break;
         case 2:
           _addEnemy<EnemyLarge>(enemyPos);
@@ -50,11 +56,12 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->Hit(**i);
+        (*j)->Hit(**i, _player);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
   for_each_swords([](auto &s) { s->update(); });
+  _player.update();
 
   _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
@@ -100,6 +107,10 @@ void Logic::checkEvents(Display const &display)
 {
   if (_player.canMove)
     {
+      if (display.isKeyPressed(GLFW_KEY_Q))
+          this->_player.dash(1);
+      if (display.isKeyPressed(GLFW_KEY_E))
+          this->_player.dash(-1);
       if (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))
         this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))
@@ -163,7 +174,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
-  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.1);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
   (void)button;
 }
 
@@ -194,6 +205,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.4, 0.06, 0})));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }

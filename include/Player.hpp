@@ -8,6 +8,7 @@ class Player
 {
 private:
   int _hp;
+  int _cooldownDash;
 
 public:
   Player(Entity &e, bool canMove = true);
@@ -17,6 +18,7 @@ public:
 
   void update(void);
   void acceleration(int dir);
+  void dash(int dir);
   void jump();
   void fastFall();
   void getRekt(int);
