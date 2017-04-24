@@ -18,8 +18,8 @@ Bullet::~Bullet()
 void Bullet::update()
 {
   Player &player = Logic::getInstance().getPlayer();
-
   Vect<2, double> diff(player.entity.fixture.pos - entity.fixture.pos);
+
   if (diff.length2() < CAR(0.8))
     {
       entity.fixture.speed = diff * 0.05 * _accel;
