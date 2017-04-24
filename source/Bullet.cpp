@@ -59,6 +59,6 @@ void Bullet::hit(Player &player)
   player.getRekt(damage);
   isUseless = true;
   entity.isUseless = true;
-  player.entity.fixture.speed = entity.fixture.speed * 1.1;
+  player.entity.fixture.speed = entity.fixture.speed * 3;
   // TODO EXPLOSION
 }
