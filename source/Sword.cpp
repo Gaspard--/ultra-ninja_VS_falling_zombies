@@ -1,4 +1,5 @@
 #include "Sword.hpp"
+#include "Logic.hpp"
 #include "TextureHandler.hpp"
 
 Sword::Sword(Entity &entity, Vect<2u, double> knockback)
@@ -22,6 +23,11 @@ void Sword::update()
 
 void	Sword::hit(Enemy &e, Player &p)
 {
+  if (!p.entity.isOnPlanet)
+  {
+    Logic::getInstance().incCombo();
+    Logic::getInstance().addToScore(1);
+  }
   e.entity.fixture.speed += knockback * 0.1;
   if (lifetime != 1)
     return ;

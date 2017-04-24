@@ -1,18 +1,48 @@
 #include "Player.hpp"
+#include "Logic.hpp"
 #include "TextureHandler.hpp"
 #include "SoundHandler.hpp"
 
 Player::Player(Entity &e, bool canMove)
   : _cooldownDash(0), entity(e), canMove(canMove)
 {
-  entity.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BOYAUX);
+  entity.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::PLAYER);
   entity.renderable.destSize = {0.1, 0.1};
-  entity.renderable.sourceSize = {1, 1};
+  entity.renderable.sourceSize = {0.5, 1};
+  _animation = 0;
+  _maxAnimationFrame = 10;
+}
+
+void Player::animate()
+{
+  if (!entity.isOnPlanet) {
+    entity.renderable.sourcePos = {0.5, 0};
+  }
+
+  if (entity.fixture.speed[0] <= 0.0035 && entity.fixture.speed[0] >= -0.0035 &&
+      entity.fixture.speed[1] <= 0.0035 && entity.fixture.speed[1] >= -0.0035)
+    {
+      entity.renderable.sourcePos = {0.0, 0};
+      return;
+    }
+
+  if (entity.isOnPlanet && ++_animation >= _maxAnimationFrame)
+    {
+      if (entity.renderable.sourcePos[0] == 0)
+	entity.renderable.sourcePos = {0.5, 0};
+      else
+	entity.renderable.sourcePos = {0.0, 0};
+      _animation = 0;
+    }
 }
 
 void Player::update(void)
 {
-    _cooldownDash -= (_cooldownDash > 0);
+  animate();
+
+  _cooldownDash -= (_cooldownDash > 0);
+  if (entity.isOnPlanet)
+    Logic::getInstance().resetCombo();
 }
 
 void Player::acceleration(int dir)

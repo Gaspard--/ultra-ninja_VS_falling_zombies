@@ -34,6 +34,8 @@ private:
 
   unsigned int          _time;
   unsigned int          _score;
+  unsigned int          _combo;
+  double        _multiplier;
   const unsigned int    _maxMobs;
 
   bool                  _gameOver;
@@ -67,6 +69,9 @@ public:
   float getPlanetSize(void) const;
   void tick(void);
   void addBullet(Vect<2, double> pos);
+  void addToScore(int);
+  void resetCombo();
+  void incCombo();
 
   template<class Func>
   void addFlesh(Entity const &entityParent, Func func, bool projectile)
@@ -81,10 +86,11 @@ public:
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
   Vect<2u, float> getMouse() const;
-  unsigned int  getRemainingsSpace(void) const;
+  unsigned int  getOccupedSpace(void) const;
   unsigned int  getScore(void) const;
   std::string   getTime(void) const;
   unsigned int  getMaxMobs(void) const;
+  bool		getGameOver(void) const;
 
   template <class func>
   void for_each_entity(func f) const

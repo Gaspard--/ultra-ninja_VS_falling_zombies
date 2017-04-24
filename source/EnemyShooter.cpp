@@ -4,13 +4,11 @@
 #include "SoundHandler.hpp"
 
 EnemyShooter::EnemyShooter(Entity &e)
-  : Enemy(e, 15), _cooldown(0)
+  : Enemy(e, 1), _cooldown(0)
 {
   e.fixture.radius = 0.02;
   e.fixture.mass = 50;
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
-  e.renderable.sourceSize = {1, 1};
   e.fixture.speed = e.fixture.speed + e.fixture.pos.normalized() * 0.08;
 }
 

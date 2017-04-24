@@ -8,12 +8,32 @@ Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
 {
   _coolDown = 0;
+  _animation = 0;
+  _maxAnimationFrame = 10;
+  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::ZOMBIE);
+  e.renderable.sourceSize = {0.5, 1};
 }
 
-bool Enemy::update(const Player& player)
+void Enemy::animate()
 {
-  // std::cout << entity.renderable.destSize[0] << std::endl;
-  (void)player;
+  if (!entity.isOnPlanet) {
+    entity.renderable.sourcePos = {0.5, 0};
+  }
+
+  if (entity.isOnPlanet && ++_animation >= _maxAnimationFrame)
+    {
+      if (entity.renderable.sourcePos[0] == 0)
+	entity.renderable.sourcePos = {0.5, 0};
+      else
+	entity.renderable.sourcePos = {0.0, 0};
+      _animation = 0;
+    }
+}
+
+bool Enemy::update(const Player&)
+{
+  animate();
+
   isUseless = _hp <= 0;
   entity.isUseless = isUseless;
   if (isUseless)
@@ -41,6 +61,8 @@ void Enemy::playRandomDeathSound(void)
 void Enemy::onDeath()
 {
   Enemy::playRandomDeathSound();
+  Logic::getInstance().incCombo();
+  Logic::getInstance().addToScore(10);
   for (unsigned int i(0); i < 20; ++i)
     {
       Vect<2u, float> dir(std::cos(i), std::sin(i));

@@ -35,8 +35,8 @@ private:
   RenderContext textContext;
   glBuffer textBuffer;
   Texture planet;
-  Texture blood;
-  Texture mobSpray;
+  Texture bloodSpray[3];
+  Texture mobSpray[3];
   RenderTexture planetRenderTexture;
   Vect<2u, float> camera;
   Vect<2u, float> dim;

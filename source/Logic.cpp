@@ -19,6 +19,8 @@ Logic::Logic(unsigned int maxMobs)
   _time = 0;
   _score = 0;
   _gameOver = false;
+  _combo = 0;
+  _multiplier = 0;
 }
 
 void Logic::spawnEnemy()
@@ -60,6 +62,8 @@ void Logic::tick(void)
 
   spawnEnemy();
 
+  _multiplier += (1.0 / 600.0);
+
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
   this->_physics.updateFixtures(_projectiles.begin(), _projectiles.end());
 
@@ -95,11 +99,23 @@ void Logic::tick(void)
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
   SoundHandler::getInstance().deleteSounds();
-  if (!this->getRemainingsSpace() && !_gameOver)
-    {
-      _gameOver = true;
-      std::cout << "GAME OVER" << std::endl;
-    }
+  if (this->getOccupedSpace() >= _maxMobs)
+    _gameOver = true;
+}
+
+void    Logic::addToScore(int add)
+{
+    _score += _combo * add * (_multiplier == 0 ? 1 : _multiplier);
+}
+
+void    Logic::incCombo()
+{
+    _combo++;
+}
+
+void    Logic::resetCombo()
+{
+    _combo = 0;
 }
 
 unsigned int  Logic::getMaxMobs(void) const
@@ -107,14 +123,14 @@ unsigned int  Logic::getMaxMobs(void) const
   return (_maxMobs);
 }
 
-unsigned int    Logic::getRemainingsSpace(void) const
+unsigned int    Logic::getOccupedSpace(void) const
 {
   unsigned int  remaining;
 
-  remaining = _maxMobs;
-  for_each_enemy([&remaining](const auto &e) {if (e->entity.isOnPlanet && remaining) remaining--;});
-  if (_player.entity.isOnPlanet && remaining)
-    remaining--;
+  remaining = 0;
+  for_each_enemy([&remaining](const auto &e) {if (e->entity.isOnPlanet) remaining++;});
+  if (_player.entity.isOnPlanet)
+    remaining++;
   return (remaining);
 }
 
@@ -286,6 +302,11 @@ void Logic::destroyLogic()
 Player& Logic::getPlayer()
 {
   return _player;
+}
+
+bool Logic::getGameOver() const
+{
+  return _gameOver;
 }
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)

@@ -61,8 +61,8 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
-  , blood(my_opengl::loadTexture("resources/BloodSpray.bmp"))
-  , mobSpray(my_opengl::loadTexture("resources/MobSpray.bmp"))
+  , bloodSpray{my_opengl::loadTexture("resources/BloodSpray.bmp"), my_opengl::loadTexture("resources/BloodSpray2.bmp"), my_opengl::loadTexture("resources/BloodSpray3.bmp")}
+  , mobSpray{my_opengl::loadTexture("resources/MobSpray.bmp"), my_opengl::loadTexture("resources/MobSpray2.bmp"), my_opengl::loadTexture("resources/MobSpray3.bmp")}
   , planetRenderTexture({1024, 1024})
   , camera{0, 1.0}
   , dim{0, 0}
@@ -205,12 +205,17 @@ void Display::displayRect(Rect const &rect)
 void    Display::displayInterface(void)
 {
   Logic logic = Logic::getInstance();
-  int   size = (std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs())).size();
+  int   size = (std::to_string(logic.getOccupedSpace()) + "/" + std::to_string(logic.getMaxMobs())).size();
 
-  displayText(std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs()),
-              256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0}, {1.0, 0.0, 0.5});
-  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0}, {1.0, 1.0, 0.5});
-  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0}, {1.0, 0.5, 1.0});
+  displayText(std::to_string(logic.getOccupedSpace()) + "/" + std::to_string(logic.getMaxMobs()),
+              256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0},
+              { 0.5 + 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace()});
+  displayText("Current Population",
+              256, {0.05f, 0.05f}, {-0.017f * 18, -0.315f}, {sqrt(camera.length2()), 0}, {1.0, 1.0, 1.0});
+  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -0.80}, {1, 0}, {1.0, 1.0, 1.0});
+  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -1.00}, {1, 0}, {1.0, 1.0, 1.0});
+  if (logic.getGameOver())
+    displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.4}, {1, 0}, {1.0, 0.25, 0.0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
@@ -241,26 +246,6 @@ void Display::drawBlood(Vect<2u, float> rotation, Texture texture)
   glViewport(0, 0, 1024, 1024);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   displayPlanet(texture, 2.0, rotation);
-  // {
-  //   Bind<RenderContext> bind(textureContext);
-  //   float buffer[4u * 4u];
-
-  //   for (unsigned int j(0u); j != 4u; ++j)
-  //     {
-  // 	Vect<2u, float> const corner((j & 1u), (j >> 1u));
-  // 	Vect<2u, float> const destCorner(rotate((corner - Vect<2u, float>{0.5f, 0.5f}) * 2.0, rotation));
-
-  // 	std::copy(&corner[0u], &corner[2u], &buffer[j * 4u]);
-  // 	std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
-  //     }
-  //   glActiveTexture(GL_TEXTURE0);
-  //   glBindTexture(GL_TEXTURE_2D, blood);
-  //   glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
-  //   my_opengl::setUniform(dim, "dim", textureContext.program);
-  //   my_opengl::setUniform(0u, "tex", textureContext.program);
-  //   glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
-  //   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-  // }
   glBindFramebuffer(GL_FRAMEBUFFER, 0);
   glViewport(0, 0, size[0], size[1]);
 }
@@ -349,15 +334,15 @@ void Display::render(Logic const &logic)
     dim = {1.0, 1.0};
     glEnable(GL_BLEND);
     logic.for_each_flesh([this](auto const &flesh)
-			 {
-			   if (flesh->entity.isOnPlanet)
-			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), blood);
-			 });
+                         {
+                           if (flesh->entity.isOnPlanet)
+                             this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), bloodSpray[rand() % 3]);
+                         });
     logic.for_each_enemy([this](auto const &enemy)
-			 {
-			   if (enemy->entity.isOnPlanet && rand() % 10 == 0)
-			     this->drawBlood(rotate(enemy->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), mobSpray);
-			 });
+                         {
+                           if (enemy->entity.isOnPlanet && rand() % 10 == 0)
+                             this->drawBlood(rotate(enemy->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), mobSpray[rand() % 3]);
+                         });
     glDisable(GL_BLEND);
     dim = olddim;
   }

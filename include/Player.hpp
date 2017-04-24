@@ -9,6 +9,8 @@ class Player
 private:
   int _hp;
   int _cooldownDash;
+  int _animation;
+  int _maxAnimationFrame;
 
 public:
   Player(Entity &e, bool canMove = true);
@@ -22,6 +24,7 @@ public:
   void jump();
   void fastFall();
   void getRekt(int);
+  void animate();
 
   static void playRandomPlayerSound(void);
 };

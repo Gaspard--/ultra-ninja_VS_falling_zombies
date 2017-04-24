@@ -21,10 +21,10 @@ void Bullet::update()
     {
       entity.fixture.speed *= 1.02;
       if (--lifetime < 0)
-	{
-	  isUseless = true;
-	  entity.isUseless = true;
-	}
+        {
+          isUseless = true;
+          entity.isUseless = true;
+        }
       return;
     }
 
@@ -35,7 +35,7 @@ void Bullet::update()
     {
       entity.fixture.speed = diff * 0.10;
       if (up == 0)
-	_lock = true;
+        _lock = true;
     }
   else
     {
@@ -44,10 +44,10 @@ void Bullet::update()
       Vect<2, double> left(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * 1);
 
       if (((right + entity.fixture.pos) - player.entity.fixture.pos).length2() <
-	  ((left + entity.fixture.pos) - player.entity.fixture.pos).length2())
-	entity.fixture.speed = right;
+          ((left + entity.fixture.pos) - player.entity.fixture.pos).length2())
+        entity.fixture.speed = right;
       else
-	entity.fixture.speed = left;
+        entity.fixture.speed = left;
     }
 
   if (--up >= 0)
@@ -59,5 +59,6 @@ void Bullet::hit(Player &player)
   player.getRekt(damage);
   isUseless = true;
   entity.isUseless = true;
+  player.entity.fixture.speed = entity.fixture.speed * 3;
   // TODO EXPLOSION
 }
