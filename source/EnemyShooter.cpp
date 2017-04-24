@@ -4,7 +4,7 @@
 #include "SoundHandler.hpp"
 
 EnemyShooter::EnemyShooter(Entity &e)
-  : Enemy(e, 15), _cooldown(0)
+  : Enemy(e, 1), _cooldown(0)
 {
   e.fixture.radius = 0.02;
   e.fixture.mass = 50;
