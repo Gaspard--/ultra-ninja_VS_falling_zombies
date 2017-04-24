@@ -50,7 +50,7 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->Hit(**i);
+        (*j)->Hit(**i, _player);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
@@ -164,7 +164,6 @@ void Logic::handleButton(GLFWwindow *, Button button)
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
-  _player.entity.fixture.speed -= vec.normalized() * 0.003;
   (void)button;
 }
 
@@ -195,6 +194,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.4, 0.06, 0})));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }
