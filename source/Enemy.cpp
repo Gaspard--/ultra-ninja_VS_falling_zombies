@@ -2,6 +2,7 @@
 #include "Enemy.hpp"
 #include "Logic.hpp"
 #include "TextureHandler.hpp"
+#include "SoundHandler.hpp"
 
 Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
@@ -25,8 +26,21 @@ bool Enemy::update(const Player& player)
   return (true);
 }
 
+void Enemy::playRandomSpawnSound(void)
+{
+  SoundHandler &sh = SoundHandler::getInstance();
+  sh.playSound(sh.mobspawn[rand() % sh.mobspawn.size()]);
+}
+
+void Enemy::playRandomDeathSound(void)
+{
+  SoundHandler &sh = SoundHandler::getInstance();
+  sh.playSound(sh.boyaux[rand() % sh.boyaux.size()]);
+}
+
 void Enemy::onDeath()
 {
+  Enemy::playRandomDeathSound();
   for (unsigned int i(0); i < 20; ++i)
     {
       Vect<2u, float> dir(std::cos(i), std::sin(i));

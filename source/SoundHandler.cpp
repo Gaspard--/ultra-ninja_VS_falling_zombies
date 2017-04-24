@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "SoundHandler.hpp"
 
 std::unique_ptr<SoundHandler> SoundHandler::_instance(nullptr);
@@ -18,14 +19,15 @@ void SoundHandler::initSoundHandler()
   _instance->addSoundBuffer(BOYAUX4, "resources/boyaux4.wav");
   _instance->addSoundBuffer(BOYAUX5, "resources/boyaux5.wav");
   _instance->addSoundBuffer(BOYAUX6, "resources/boyaux6.wav");
-  _instance->addSoundBuffer(BOYAUX1, "resources/boyaux1.wav");
   _instance->addSoundBuffer(CHAN1, "resources/chan1.wav");
   _instance->addSoundBuffer(CHAN2, "resources/chan2.wav");
   _instance->addSoundBuffer(CHAN3, "resources/chan3.wav");
+  _instance->addSoundBuffer(DASH, "resources/dash.wav");
   _instance->addSoundBuffer(DESU1, "resources/desu1.wav");
   _instance->addSoundBuffer(DESU2, "resources/desu2.wav");
   _instance->addSoundBuffer(DESU3, "resources/desu3.wav");
   _instance->addSoundBuffer(KOREWA1, "resources/korewa1.wav");
+  _instance->addSoundBuffer(KOREWA2, "resources/korewa2.wav");
   _instance->addSoundBuffer(MOBSPAWN1, "resources/mobspawn1.wav");
   _instance->addSoundBuffer(MOBSPAWN2, "resources/mobspawn2.wav");
   _instance->addSoundBuffer(MOBSPAWN3, "resources/mobspawn3.wav");
@@ -39,7 +41,10 @@ void SoundHandler::initSoundHandler()
   _instance->addSoundBuffer(WTSW1, "resources/watashiwa1.wav");
   _instance->addSoundBuffer(WTSW2, "resources/watashiwa2.wav");
   _instance->addSoundBuffer(WTSW3, "resources/watashiwa3.wav");
-
+  _instance->boyaux = {{BOYAUX1, BOYAUX2, BOYAUX3, BOYAUX4, BOYAUX5, BOYAUX6}};
+  _instance->mobspawn = {{MOBSPAWN1, MOBSPAWN2, MOBSPAWN3, MOBSPAWN4, MOBSPAWN5, MOBSPAWN6}};
+  _instance->player_sounds = {{CHAN1, CHAN2, CHAN3, DESU1, DESU2, DESU3,
+    KOREWA1, KOREWA2, NANI1, NANI2, WTSW1, WTSW2, WTSW3}};
 }
 
 SoundHandler& SoundHandler::getInstance()

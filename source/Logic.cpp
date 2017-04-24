@@ -50,6 +50,7 @@ void Logic::spawnEnemy()
           _addEnemy<EnemyShooter>(enemyPos);
           break;
         }
+      Enemy::playRandomSpawnSound();
     }
 }
 
@@ -259,6 +260,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
+  _player.playRandomPlayerSound();
 }
 
 Vect<2, double> Logic::getPlayerPos(void) const

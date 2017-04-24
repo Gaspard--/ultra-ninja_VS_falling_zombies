@@ -51,6 +51,10 @@ public:
   void addSoundBuffer(SoundList, std::string const&);
   sf::SoundBuffer* getSoundBuffer(SoundList) const;
 
+  std::array<SoundList, 6> boyaux;
+  std::array<SoundList, 6> mobspawn;
+  std::array<SoundList, 13> player_sounds;
+
 private:
 
   SoundHandler();

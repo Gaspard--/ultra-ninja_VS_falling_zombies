@@ -22,6 +22,8 @@ public:
   void jump();
   void fastFall();
   void getRekt(int);
+
+  static void playRandomPlayerSound(void);
 };
 
 #endif /* !PLAYER_H_ */
