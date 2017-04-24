@@ -26,7 +26,8 @@ public:
   void getRekt(int);
   void animate();
 
-  static void playRandomPlayerSound(void);
+  static void playRandomPlayerActionSound(void);
+  static void playRandomPlayerEuuuhSound(void);
 };
 
 #endif /* !PLAYER_H_ */

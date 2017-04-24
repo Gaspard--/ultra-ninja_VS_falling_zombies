@@ -69,7 +69,7 @@ void Player::jump()
   if (this->entity.isOnPlanet)
     {
       this->entity.fixture.speed = this->entity.fixture.speed + this->entity.fixture.pos.normalized() * 0.03;
-      playRandomPlayerSound();
+      playRandomPlayerActionSound();
     }
 }
 
@@ -78,17 +78,24 @@ void Player::fastFall()
   if (!this->entity.isOnPlanet)
     {
       this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
-      playRandomPlayerSound();
+      playRandomPlayerActionSound();
     }
 }
 
 void Player::getRekt(int dmg)
 {
   _hp -= dmg;
+  Player::playRandomPlayerEuuuhSound();
 }
 
-void Player::playRandomPlayerSound()
+void Player::playRandomPlayerActionSound()
 {
   SoundHandler &sh = SoundHandler::getInstance();
   sh.playSound(sh.player_sounds[rand() % sh.player_sounds.size()], 50);
+}
+
+void Player::playRandomPlayerEuuuhSound()
+{
+  SoundHandler &sh = SoundHandler::getInstance();
+  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()], 50);
 }

@@ -26,6 +26,8 @@ void SoundHandler::initSoundHandler()
   _instance->addSoundBuffer(DESU1, "resources/desu1.wav");
   _instance->addSoundBuffer(DESU2, "resources/desu2.wav");
   _instance->addSoundBuffer(DESU3, "resources/desu3.wav");
+  _instance->addSoundBuffer(EUUUH1, "resources/euuuh1.wav");
+  _instance->addSoundBuffer(EUUUH2, "resources/euuuh2.wav");
   _instance->addSoundBuffer(KOREWA1, "resources/korewa1.wav");
   _instance->addSoundBuffer(KOREWA2, "resources/korewa2.wav");
   _instance->addSoundBuffer(MOBSPAWN1, "resources/mobspawn1.wav");
@@ -41,6 +43,7 @@ void SoundHandler::initSoundHandler()
   _instance->addSoundBuffer(WTSW1, "resources/watashiwa1.wav");
   _instance->addSoundBuffer(WTSW2, "resources/watashiwa2.wav");
   _instance->addSoundBuffer(WTSW3, "resources/watashiwa3.wav");
+  _instance->euuuh = {{EUUUH1, EUUUH2}};
   _instance->boyaux = {{BOYAUX1, BOYAUX2, BOYAUX3, BOYAUX4, BOYAUX5, BOYAUX6}};
   _instance->mobspawn = {{MOBSPAWN1, MOBSPAWN2, MOBSPAWN3, MOBSPAWN4, MOBSPAWN5, MOBSPAWN6}};
   _instance->player_sounds = {{CHAN1, CHAN2, CHAN3, DESU1, DESU2, DESU3,

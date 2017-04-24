@@ -24,6 +24,8 @@ public:
       DESU1,
       DESU2,
       DESU3,
+      EUUUH1,
+      EUUUH2,
       KOREWA1,
       KOREWA2,
       MOBSPAWN1,
@@ -51,6 +53,7 @@ public:
   void addSoundBuffer(SoundList, std::string const&);
   sf::SoundBuffer* getSoundBuffer(SoundList) const;
 
+  std::array<SoundList, 3> euuuh;
   std::array<SoundList, 6> boyaux;
   std::array<SoundList, 6> mobspawn;
   std::array<SoundList, 13> player_sounds;
