@@ -9,8 +9,9 @@ private:
 public:
   EnemyShooter(Entity &);
 
+  bool isInRange(Player const& player);
   void attack(Player& player) override;
-  void shoot();
+  void shoot(Player const& player);
   bool update(Player const& player) override;
 };
 

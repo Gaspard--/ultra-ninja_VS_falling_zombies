@@ -18,16 +18,24 @@ void EnemyShooter::attack(Player&)
   // do nothing
 }
 
-void EnemyShooter::shoot()
+bool EnemyShooter::isInRange(Player const& player)
 {
   Logic &logic = Logic::getInstance();
-  Player& player = logic.getPlayer();
   // TODO if (within attack range) -> attack
   // target : player
 
   logic.addBullet(entity.fixture.pos);
   logic.addBullet(entity.fixture.pos);
   // TODO actual shoot
+  double range = 0.8;
+
+  return (entity.fixture.pos - player.entity.fixture.pos).length2() <
+    CAR(range + player.entity.fixture.radius);
+}
+
+void EnemyShooter::shoot(Player const& player)
+{
+  std::cout << "shoot" << std::endl;
 }
 
 bool EnemyShooter::update(const Player& player)
