@@ -56,7 +56,8 @@ void Logic::tick(void)
 {
   _time++;
 
-  spawnEnemy();
+  // FIXME: uncomment
+  // spawnEnemy();
 
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
   this->_physics.updateFixtures(_projectiles.begin(), _projectiles.end());

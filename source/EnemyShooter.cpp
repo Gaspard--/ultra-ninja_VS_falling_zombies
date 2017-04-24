@@ -6,10 +6,11 @@ EnemyShooter::EnemyShooter(Entity &e)
   : Enemy(e, 15), _cooldown(0)
 {
   e.fixture.radius = 0.02;
-  e.fixture.mass = 8;
+  e.fixture.mass = 50;
   e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
   e.renderable.sourceSize = {1, 1};
+  e.fixture.speed = e.fixture.speed + e.fixture.pos.normalized() * 0.08;
 }
 
 void EnemyShooter::attack(Player&)
@@ -21,7 +22,7 @@ bool EnemyShooter::isInRange(Player const& player)
 {
   double range = 0.8;
 
-  return (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
+  return !entity.isOnPlanet && (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
 }
 
 void EnemyShooter::shoot()
@@ -29,7 +30,7 @@ void EnemyShooter::shoot()
   if (_cooldown > 0)
     return;
 
-  _cooldown = 400;
+  _cooldown = 700;
 
   Logic &logic = Logic::getInstance();
 
@@ -51,11 +52,10 @@ bool EnemyShooter::update(const Player& player)
   else
     (_cooldown == 0) ? entity.fixture.speed = left : entity.fixture.speed = right;
 
-  if (_cooldown != 0)
-    entity.fixture.speed *= 0.7;
+  entity.fixture.speed *= 0.8;
 
-  if (!entity.isOnPlanet)
-    entity.fixture.speed = -(entity.fixture.pos.normalized() * 0.01);
+  if (entity.isOnPlanet)
+    entity.fixture.speed = entity.fixture.speed + entity.fixture.pos.normalized() * 0.12;
 
   return this->Enemy::update(player);
 }
