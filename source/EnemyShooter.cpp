@@ -21,6 +21,8 @@ void EnemyShooter::attack(Player&)
 bool EnemyShooter::isInRange(Player const& player)
 {
   double range = 0.8;
+=======
+  Logic &logic = Logic::getInstance();
 
   return (entity.fixture.pos - player.entity.fixture.pos).length2() <
     CAR(range + player.entity.fixture.radius);
