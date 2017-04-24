@@ -43,6 +43,7 @@ void Bullet::hit(Player &player)
 {
   player.getRekt(damage);
   isUseless = true;
+  entity.isUseless = true;
   std::cout << "hit" << std::endl;
   // TODO EXPLOSION
 }

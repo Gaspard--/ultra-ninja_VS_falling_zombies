@@ -76,7 +76,7 @@ void Logic::tick(void)
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
-  _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ return b->isUseless; }), _bullets.end());
+  _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ std::cout << b << ", " << b->isUseless << std::endl;return b->isUseless; }), _bullets.end());
 }
 
 float Logic::getPlanetSize(void) const
