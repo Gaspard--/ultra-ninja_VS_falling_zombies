@@ -99,12 +99,14 @@ void Logic::tick(void)
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
   SoundHandler::getInstance().deleteSounds();
-  if (this->getOccupedSpace() == _maxMobs && !_gameOver)
+  if (this->getOccupedSpace() >= _maxMobs)
     {
       _gameOver = true;
       _player.canMove = false;
       std::cout << "GAME OVER" << std::endl;
     }
+  if (this->getOccupedSpace() >= _maxMobs)
+    _gameOver = true;
 }
 
 void    Logic::addToScore(int add)
