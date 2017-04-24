@@ -33,12 +33,14 @@ void Enemy::onDeath()
 
       Logic::getInstance().addFlesh(entity, [dir](Entity &e)
 				    {
+				      double size(0.4 * (rand() % 3 + 2));
+
 				      e.renderable.sourceSize = {1, 1};
 				      e.renderable.sourcePos = {0, 0};
-				      e.renderable.destSize *= 0.4 * (rand() % 3 + 2);
+				      e.renderable.destSize *= size;
 				      e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BOYAUX);
-				      e.fixture.radius *= 0.5;
-				      e.fixture.speed += dir * (0.02 * (rand() % 3 + 1));
+				      e.fixture.radius *= size;
+				      e.fixture.speed += dir * (0.02 * (rand() % 3 + 1)) * size;
 				      e.fixture.mass = 100;
 				    }, true);
     }
