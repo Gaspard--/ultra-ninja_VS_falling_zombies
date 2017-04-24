@@ -1,13 +1,14 @@
 #include <iostream>
 #include "EnemyLarge.hpp"
 #include "Player.hpp"
+#include "TextureHandler.hpp"
 
 EnemyLarge::EnemyLarge(Entity &e)
   : Enemy(e, 30)
 {
   e.fixture.radius = 0.1;
   e.fixture.mass = 10;
-  e.renderable.texture = my_opengl::loadTexture("resources/test.bmp");
+  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 

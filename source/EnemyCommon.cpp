@@ -1,12 +1,13 @@
 #include "EnemyCommon.hpp"
 #include "Logic.hpp"
+#include "TextureHandler.hpp"
 
 EnemyCommon::EnemyCommon(Entity &e)
   : Enemy(e, 20)
 {
   e.fixture.radius = 0.05;
   e.fixture.mass = 15;
-  e.renderable.texture = my_opengl::loadTexture("resources/test.bmp");
+  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 

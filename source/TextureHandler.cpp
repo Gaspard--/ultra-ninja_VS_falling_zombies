@@ -12,7 +12,8 @@ void TextureHandler::initTextureHandler()
 {
   _instance.reset(new TextureHandler());
   _instance->addTexture(BOYAUX, "resources/boyaux.bmp");
-  _instance->addTexture(PLANET, "resources/planet.bmp");
+  // Already loaded in display.cpp
+  // _instance->addTexture(PLANET, "resources/planet.bmp");
   _instance->addTexture(SWORDRADIUS, "resources/swordRadius.bmp");
   _instance->addTexture(TEST, "resources/test.bmp");
 }
