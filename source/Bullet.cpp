@@ -1,8 +1,8 @@
 #include "Bullet.hpp"
 #include "TextureHandler.hpp"
 
-Bullet::Bullet(Entity &entity, Vect<2u, double> knockback)
-  : entity(entity), damage(3), lifetime(20), knockback(knockback)
+Bullet::Bullet(Entity &entity)
+  : entity(entity), damage(3), lifetime(20)
 {
   entity.fixture.mass = 0;
   entity.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BULLET);
@@ -21,7 +21,6 @@ void Bullet::update()
 
 void Bullet::hit(Enemy &e)
 {
-  e.entity.fixture.speed += knockback;
   e.getRekt(damage);
   isUseless = true;
 

@@ -20,9 +20,10 @@ void EnemyShooter::attack(Player&)
 
 void EnemyShooter::shoot()
 {
+  Logic &logic = Logic::getInstance();
   // TODO if (within attack range) -> attack
   // target : player
-  Player& player = Logic::getInstance().getPlayer();
+  Player& player = logic.getPlayer();
 
   // TODO actual shoot
 }

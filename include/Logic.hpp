@@ -47,7 +47,6 @@ private:
   }
 
   void _addSword(Vect<2, double> pos, Vect<2, double> knockback);
-  void _addBullet(Vect<2, double> pos, Vect<2, double> knockback);
   void spawnEnemy();
 
 public:
@@ -60,6 +59,7 @@ public:
   float getPlanetSize(void) const;
   void tick(void);
   void addFlesh(Entity const &entityParent);
+  void addBullet(Vect<2, double> pos);
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();

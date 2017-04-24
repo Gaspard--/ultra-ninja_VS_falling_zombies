@@ -5,13 +5,12 @@
 
 struct Bullet
 {
-  Bullet(Entity &entity, Vect<2u, double> knockback);
+  Bullet(Entity &entity);
   ~Bullet();
 
   Entity &entity;
   int damage;
   int lifetime;
-  Vect<2u, float> knockback;
   bool isUseless = false;
 
   void update();
