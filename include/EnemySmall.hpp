@@ -9,6 +9,7 @@ private:
 
   int   _dir;
   const double  _attackDist;
+  bool          _dash;
 
 public:
   void attack(Player& player) override;
