@@ -8,6 +8,7 @@ Enemy::Enemy(Entity &e, int hp)
 {
   _coolDown = 0;
   _animation = 0;
+  _maxAnimationFrame = 10;
   e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::ZOMBIE);
   e.renderable.sourceSize = {0.5, 1};
 }
@@ -18,7 +19,7 @@ void Enemy::animate()
     entity.renderable.sourcePos = {0.5, 0};
   }
 
-  if (entity.isOnPlanet && ++_animation >= 10)
+  if (entity.isOnPlanet && ++_animation >= _maxAnimationFrame)
     {
       if (entity.renderable.sourcePos[0] == 0)
 	entity.renderable.sourcePos = {0.5, 0};
