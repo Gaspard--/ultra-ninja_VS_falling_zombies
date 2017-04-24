@@ -61,8 +61,8 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
-  , blood(my_opengl::loadTexture("resources/BloodSpray.bmp"))
-  , mobSpray(my_opengl::loadTexture("resources/MobSpray.bmp"))
+  , bloodSpray{my_opengl::loadTexture("resources/BloodSpray.bmp"), my_opengl::loadTexture("resources/BloodSpray2.bmp"), my_opengl::loadTexture("resources/BloodSpray3.bmp")}
+  , mobSpray{my_opengl::loadTexture("resources/MobSpray.bmp"), my_opengl::loadTexture("resources/MobSpray2.bmp"), my_opengl::loadTexture("resources/MobSpray3.bmp")}
   , planetRenderTexture({1024, 1024})
   , camera{0, 1.0}
   , dim{0, 0}
@@ -351,12 +351,12 @@ void Display::render(Logic const &logic)
     logic.for_each_flesh([this](auto const &flesh)
 			 {
 			   if (flesh->entity.isOnPlanet)
-			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), blood);
+			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), bloodSpray[rand() % 3]);
 			 });
     logic.for_each_enemy([this](auto const &enemy)
 			 {
 			   if (enemy->entity.isOnPlanet && rand() % 10 == 0)
-			     this->drawBlood(rotate(enemy->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), mobSpray);
+			     this->drawBlood(rotate(enemy->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), mobSpray[rand() % 3]);
 			 });
     glDisable(GL_BLEND);
     dim = olddim;
