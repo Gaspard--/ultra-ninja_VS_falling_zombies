@@ -5,13 +5,14 @@ RM =	rm -f
 CPPFLAGS +=	-W -Wall -Wextra
 CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14 -g3
 
-LDFLAGS = `pkg-config --static --libs glfw3` -lfreetype
+LDFLAGS = `pkg-config --static --libs glfw3` -lfreetype -lsfml-audio -lsfml-system
 
 NAME = ultra-ninja_VS_falling_zombies
 
 SRCS_CPP = 	source/main.cpp \
 		source/my_opengl.cpp \
 		source/TextureHandler.cpp \
+		source/SoundHandler.cpp \
 		source/display.cpp \
 		source/render_context.cpp \
 		source/gl3w.cpp \
@@ -25,8 +26,10 @@ SRCS_CPP = 	source/main.cpp \
 		source/EnemyCommon.cpp \
 		source/EnemyLarge.cpp \
 		source/EnemySmall.cpp \
+		source/EnemyShooter.cpp \
 		source/Flesh.cpp \
 		source/Sword.cpp \
+		source/Bullet.cpp \
 		source/GUI.cpp
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)

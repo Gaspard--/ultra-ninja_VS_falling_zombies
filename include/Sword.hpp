@@ -17,7 +17,7 @@ struct Sword
   ~Sword();
 
   void update();
-  void Hit(Enemy &, Player &);
+  void hit(Enemy &, Player &);
 };
 
 #endif // !SWORD_HPP_

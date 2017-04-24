@@ -40,8 +40,8 @@ void Player::jump()
 
 void Player::fastFall()
 {
-    if (!this->entity.isOnPlanet)
-      this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
+  if (!this->entity.isOnPlanet)
+    this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
 }
 
 void Player::getRekt(int dmg)
