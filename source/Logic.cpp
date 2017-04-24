@@ -4,6 +4,7 @@
 #include "EnemyCommon.hpp"
 #include "EnemyLarge.hpp"
 #include "EnemySmall.hpp"
+#include "EnemyShooter.hpp"
 
 std::unique_ptr<Logic> Logic::_instance(nullptr);
 
@@ -51,26 +52,41 @@ void Logic::spawnEnemy()
 void Logic::tick(void)
 {
   _time++;
+
   spawnEnemy();
+
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
   this->_physics.updateFixtures(_projectiles.begin(), _projectiles.end());
+
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
+
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->Hit(**i, _player);
+	(*j)->hit(**i, _player);
+
+  for (auto& s : _shooters)
+    if (s->isInRange(_player))
+      s->shoot();
+
+  for (auto& b : _bullets)
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
+      b->hit(_player);
+
   for_each_entity([](auto &e) { e->update(); });
   for_each_projectile([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
   for_each_swords([](auto &s) { s->update(); });
+  for_each_bullet([](auto &b) { b->update(); });
   _player.update();
 
   _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
+  _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ return b->isUseless; }), _bullets.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
   if (!this->getRemainingsSpace() && !_gameOver)
@@ -178,6 +194,22 @@ void Logic::checkEvents(Display const &display)
 
       _addEnemy<EnemyLarge>(enemyPos);
     }
+  if (display.isKeyPressed(GLFW_KEY_N))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      _addEnemy<EnemyShooter>(enemyPos);
+    }
+ if (display.isKeyPressed(GLFW_KEY_J))
+    {
+      double                angle = std::rand();
+      double                dist = (1 + (double)(std::rand() % 10 + 1) / 20.0);
+      Vect<2, double>       enemyPos(dist * cos(angle), dist * sin(angle));
+
+      addBullet(enemyPos);
+    }
 }
 
 static inline Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
@@ -207,7 +239,6 @@ void Logic::handleButton(GLFWwindow *, Button button)
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
-  (void)button;
 }
 
 Vect<2, double> Logic::getPlayerPos(void) const
@@ -239,4 +270,18 @@ void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
   _projectiles.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_projectiles.back(), knockback)));
+}
+
+void Logic::addBullet(Vect<2, double> pos)
+{
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0.06, 0})));
+  _bullets.push_back(std::shared_ptr<Bullet>(new Bullet(*_entities.back())));
+}
+
+template <>
+void Logic::_addEnemy<EnemyShooter>(Vect<2, double> pos)
+{
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, {0, 0}, 0, 0})));
+  _enemies.push_back(std::shared_ptr<Enemy>(new EnemyShooter (*_entities.back())));
+  _shooters.push_back(std::shared_ptr<EnemyShooter>(std::static_pointer_cast<EnemyShooter>(_enemies.back())));
 }

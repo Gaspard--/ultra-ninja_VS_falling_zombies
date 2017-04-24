@@ -14,6 +14,7 @@ public :
       BOYAUX,
       PLANET,
       SWORDRADIUS,
+      BULLET,
       TEST
     };
 
