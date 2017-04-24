@@ -5,6 +5,8 @@
 # include "Vect.hpp"
 # include "Enemy.hpp"
 
+struct Bullet;
+
 struct Sword
 {
   Entity &entity;
@@ -18,6 +20,7 @@ struct Sword
 
   void update();
   void hit(Enemy &, Player &);
+  void hit(Bullet &e, Player &p);
 };
 
 #endif // !SWORD_HPP_
