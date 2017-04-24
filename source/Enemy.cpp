@@ -46,6 +46,8 @@ bool Enemy::update(const Player&)
 
 void Enemy::onDeath()
 {
+  Logic::getInstance().incCombo();
+  Logic::getInstance().addToScore(10);
   for (unsigned int i(0); i < 20; ++i)
     {
       Vect<2u, float> dir(std::cos(i), std::sin(i));

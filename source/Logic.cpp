@@ -19,6 +19,8 @@ Logic::Logic(unsigned int maxMobs)
   _time = 0;
   _score = 0;
   _gameOver = false;
+  _combo = 0;
+  _multiplier = 0;
 }
 
 void Logic::spawnEnemy()
@@ -58,6 +60,8 @@ void Logic::tick(void)
   _time++;
 
   spawnEnemy();
+
+  _multiplier += (1.0 / 600.0);
 
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
   this->_physics.updateFixtures(_projectiles.begin(), _projectiles.end());
@@ -99,6 +103,21 @@ void Logic::tick(void)
       _gameOver = true;
       std::cout << "GAME OVER" << std::endl;
     }
+}
+
+void	Logic::addToScore(int add)
+{
+    _score += _combo * add * (_multiplier == 0 ? 1 : _multiplier);
+}
+
+void	Logic::incCombo()
+{
+    _combo++;
+}
+
+void	Logic::resetCombo()
+{
+    _combo = 0;
 }
 
 unsigned int  Logic::getMaxMobs(void) const
