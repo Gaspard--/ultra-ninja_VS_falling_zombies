@@ -7,12 +7,31 @@ Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
 {
   _coolDown = 0;
+  _animation = 0;
+  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::ZOMBIE);
+  e.renderable.sourceSize = {0.5, 1};
 }
 
-bool Enemy::update(const Player& player)
+void Enemy::animate()
 {
-  // std::cout << entity.renderable.destSize[0] << std::endl;
-  (void)player;
+  if (!entity.isOnPlanet) {
+    entity.renderable.sourcePos = {0.5, 0};
+  }
+
+  if (entity.isOnPlanet && ++_animation >= 10)
+    {
+      if (entity.renderable.sourcePos[0] == 0)
+	entity.renderable.sourcePos = {0.5, 0};
+      else
+	entity.renderable.sourcePos = {0.0, 0};
+      _animation = 0;
+    }
+}
+
+bool Enemy::update(const Player&)
+{
+  animate();
+
   isUseless = _hp <= 0;
   entity.isUseless = isUseless;
   if (isUseless)

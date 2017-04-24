@@ -8,7 +8,6 @@ EnemySmall::EnemySmall(Entity &e)
   _dash = false;
   e.fixture.radius = 0.03;
   e.fixture.mass = 20;
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
 }
 

@@ -8,9 +8,7 @@ EnemyLarge::EnemyLarge(Entity &e)
 {
   e.fixture.radius = 0.1;
   e.fixture.mass = 10;
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
-  e.renderable.sourceSize = {1, 1};
 }
 
 void EnemyLarge::attack(Player& player)

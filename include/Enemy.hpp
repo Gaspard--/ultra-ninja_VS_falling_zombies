@@ -9,6 +9,7 @@ class Enemy
 protected:
   int _hp;
   int _coolDown;
+  int _animation;
 
 public:
   bool isUseless = false;
@@ -19,6 +20,7 @@ public:
   Enemy(Entity &, int hp);
   virtual ~Enemy() = default;
 
+  void animate();
   virtual bool update(const Player&);
   virtual void onDeath();
   void getRekt(int);
