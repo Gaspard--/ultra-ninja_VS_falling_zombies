@@ -70,17 +70,22 @@ void Logic::tick(void)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
 
-  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
-    for (auto j(_swords.begin()); j != _swords.end(); ++j)
-      if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->hit(**i, _player);
+  for (auto& s : _swords)
+    {
+      for (auto& e : _enemies)
+	if (_physics.haveCollision(e->entity.fixture, s->entity.fixture))
+	  s->hit(*e, _player);
+      for (auto& b : _bullets)
+	if (_physics.haveCollision(b->entity.fixture, s->entity.fixture))
+	  s->hit(*b, _player);
+    }
 
   for (auto& s : _shooters)
     if (s->isInRange(_player))
       s->shoot();
 
   for (auto& b : _bullets)
-    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture) && !b->isUseless)
       b->hit(_player);
 
   for_each_entity([](auto &e) { e->update(); });
