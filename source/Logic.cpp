@@ -163,7 +163,8 @@ void Logic::handleButton(GLFWwindow *, Button button)
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
-  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.1);
+  _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
+  _player.entity.fixture.speed -= vec.normalized() * 0.003;
   (void)button;
 }
 

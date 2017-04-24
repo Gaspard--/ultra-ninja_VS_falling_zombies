@@ -60,7 +60,7 @@ Display::Display()
   , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
-  , planet(my_opengl::loadTexture("resources/planet.bmp"))
+  , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
   , camera{0, 1.0}
   , dim{0, 0}
   , size{0, 0}
