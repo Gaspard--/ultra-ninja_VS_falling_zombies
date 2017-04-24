@@ -25,7 +25,7 @@ Logic::Logic(unsigned int maxMobs)
 
 void Logic::spawnEnemy()
 {
-  if (!(rand() % (unsigned int)(_enemies.size() * 20 + 10 + (50 / (_time / 60.0 + 1)))))
+  if (!(rand() % (unsigned int)(_enemies.size() * 10 + 5 + (25 / (_time / 60.0 + 1)))))
     {
       double                angle = std::rand();
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
@@ -34,13 +34,13 @@ void Logic::spawnEnemy()
       switch (rand() % 4)
         {
         case 0:
-          if (_time / 60 > 30)
+          if (_time / 60 > 20)
             _addEnemy<EnemyLarge>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
           break;
         case 1:
-          if (_time / 60 > 15)
+          if (_time / 60 > 10)
             _addEnemy<EnemyCommon>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
@@ -71,17 +71,22 @@ void Logic::tick(void)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
 
-  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
-    for (auto j(_swords.begin()); j != _swords.end(); ++j)
-      if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->hit(**i, _player);
+  for (auto& s : _swords)
+    {
+      for (auto& e : _enemies)
+	if (_physics.haveCollision(e->entity.fixture, s->entity.fixture))
+	  s->hit(*e, _player);
+      for (auto& b : _bullets)
+	if (_physics.haveCollision(b->entity.fixture, s->entity.fixture))
+	  s->hit(*b, _player);
+    }
 
   for (auto& s : _shooters)
     if (s->isInRange(_player))
       s->shoot();
 
   for (auto& b : _bullets)
-    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture) && !b->isUseless)
       b->hit(_player);
 
   for_each_entity([](auto &e) { e->update(); });

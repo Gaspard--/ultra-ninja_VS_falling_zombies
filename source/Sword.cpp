@@ -35,3 +35,16 @@ void	Sword::hit(Enemy &e, Player &p)
   p.entity.fixture.speed -= knockback * 0.3;
   e.getRekt(damage);
 }
+
+void	Sword::hit(Bullet &e, Player &p)
+{
+  if (!p.entity.isOnPlanet)
+    {
+      Logic::getInstance().incCombo();
+      Logic::getInstance().addToScore(1);
+    }
+  if (lifetime != 0)
+    return ;
+  e.isUseless = true;
+  e.entity.isUseless = true;
+}
