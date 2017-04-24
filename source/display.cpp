@@ -189,8 +189,9 @@ void    Display::displayInterface(void)
 
   displayText(std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs()),
               256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0});
-  displayText("Score : " + std::to_string(logic.getScore()),
-              256, {0.2f, 0.2f}, {-1, 1}, {1, 0});
+  displayText("Score   " + std::to_string(logic.getScore()),
+              256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0});
+  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)

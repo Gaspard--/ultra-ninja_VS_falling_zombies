@@ -83,7 +83,7 @@ public:
   Vect<2u, float> getMouse() const;
   unsigned int  getRemainingsSpace(void) const;
   unsigned int  getScore(void) const;
-  unsigned int  getTime(void) const;
+  std::string   getTime(void) const;
   unsigned int  getMaxMobs(void) const;
 
   template <class func>

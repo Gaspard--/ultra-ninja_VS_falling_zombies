@@ -122,9 +122,19 @@ unsigned int  Logic::getScore(void) const
   return (_score);
 }
 
-unsigned int  Logic::getTime(void) const
+std::string     Logic::getTime(void) const
 {
-  return (_time / 60);
+  std::string   toReturn;
+
+  if (_time / 3600 >= 10)
+    toReturn = std::to_string(_time / 3600) + " m ";
+  else if (_time / 3600)
+    toReturn = "0" + std::to_string(_time / 3600) + " m ";
+  if ((_time / 60) % 60 >= 10)
+    toReturn += std::to_string((_time / 60) % 60) + " s";
+  else
+    toReturn += "0" + std::to_string((_time / 60) % 60) + " s";
+  return (toReturn);
 }
 
 float Logic::getPlanetSize(void) const
