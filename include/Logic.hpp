@@ -35,7 +35,7 @@ private:
   unsigned int          _time;
   unsigned int          _score;
   unsigned int          _combo;
-  double	_multiplier;
+  double        _multiplier;
   const unsigned int    _maxMobs;
 
   bool                  _gameOver;
@@ -86,7 +86,7 @@ public:
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
   Vect<2u, float> getMouse() const;
-  unsigned int  getRemainingsSpace(void) const;
+  unsigned int  getOccupedSpace(void) const;
   unsigned int  getScore(void) const;
   std::string   getTime(void) const;
   unsigned int  getMaxMobs(void) const;
