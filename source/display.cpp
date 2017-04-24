@@ -23,11 +23,6 @@ inline RenderContext contextFromFiles(std::string name)
                                              {vert.str(), frag.str()})};
 }
 
-inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
-{
-  glViewport(0, 0, width, height);
-}
-
 Display::GlfwContext::GlfwContext()
 {
   glfwSetErrorCallback([](int, char const *str)
@@ -68,11 +63,13 @@ Display::Display()
   , planet(my_opengl::loadTexture("resources/planet.bmp"))
   , camera{0, 1.0}
   , dim{0, 0}
+  , size{0, 0}
 {
   static std::function<void(int width, int height)> setFrameBuffer =
     [this] (int width, int height)
     {
       glViewport(0, 0, width, height);
+      size = {width, height};
       dim = {height / (float)width, 1.0};
     };
 
@@ -285,4 +282,19 @@ bool Display::isRunning() const
 bool Display::isKeyPressed(int key) const
 {
   return glfwGetKey(window.get(), key);
+}
+
+Vect<2u, float> Display::getCamera() const
+{
+  return camera;
+}
+
+Vect<2u, float> Display::getDim() const
+{
+  return dim;
+}
+
+Vect<2u, float> Display::getSize() const
+{
+  return size;
 }

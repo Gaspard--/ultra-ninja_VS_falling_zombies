@@ -36,6 +36,7 @@ private:
   Texture planet;
   Vect<2u, float> camera;
   Vect<2u, float> dim;
+  Vect<2u, float> size;
 
 public:
   static Display& getInstance();
@@ -59,6 +60,11 @@ public:
 
   void displayRenderableAsHUD(Renderable const& renderable);
 
+  Vect<2u, float> getCamera() const;
+
+  Vect<2u, float> getDim() const;
+
+  Vect<2u, float> getSize() const;
 
   void render(Logic const &);
   bool isRunning() const;

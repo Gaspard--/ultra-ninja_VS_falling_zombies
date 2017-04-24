@@ -137,21 +137,32 @@ void Logic::checkEvents(Display const &display)
     }
 }
 
+static inline Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
+{
+  return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
+}
+
 void Logic::handleMouse(GLFWwindow *, Mouse mouse)
 {
-  int width = 1920;
-  int height = 1080;
+  Vect<2u, float> const size(Display::getInstance().getSize());
 
   _mousePos = {mouse.x, mouse.y};
-  _mousePos = (_mousePos - Vect<2u, double>(width - height, 0) * 0.5) / Vect<2u, double>(height * 0.5, -height * 0.5) + Vect<2u, double>(-1.0, 1.0);
+  _mousePos = (_mousePos - Vect<2u, double>(size[0] - size[1], 0) * 0.5) / Vect<2u, double>(size[1] * 0.5, -size[1] * 0.5) + Vect<2u, double>(-1.0, 1.0);
+}
+
+Vect<2u, float> Logic::getMouse() const
+{
+  Vect<2u, float> const camera(Display::getInstance().getCamera());
+
+  return rotate(_mousePos, camera * Vect<2u, float>{1.0f, -1.0f} / camera.length2());
 }
 
 void Logic::handleButton(GLFWwindow *, Button button)
 {
-  Vect<2u, double> vec(_mousePos - getPlayerPos());
+  Vect<2u, double> vec(getMouse() - getPlayerPos());
 
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
-  	return ;
+    return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.1, vec * 0.1);
   (void)button;
 }
