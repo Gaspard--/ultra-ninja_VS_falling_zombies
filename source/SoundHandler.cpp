@@ -28,10 +28,11 @@ void SoundHandler::destroySoundHandler()
 
 void SoundHandler::addSound(SoundList id, std::string const& path)
 {
-  _instance->_sound[id] = NULL;
+  _instance->_sound[id] = new sf::SoundBuffer();
+  _instance->_sound[id]->loadFromFile(path);
 }
 
-sf::Sound SoundHandler::getSound(SoundList id) const
+sf::SoundBuffer* SoundHandler::getSound(SoundList id) const
 {
   return (_instance->_sound[id]);
 }

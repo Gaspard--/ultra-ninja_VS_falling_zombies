@@ -19,13 +19,13 @@ public:
   static void destroySoundHandler();
 
   void addSound(SoundList, std::string const&);
-  sf::Sound getSound(SoundList) const;
+  sf::SoundBuffer* getSound(SoundList) const;
 
 private:
 
   SoundHandler();
   static std::unique_ptr<SoundHandler> _instance;
-  std::map<SoundList, sf::Sound> _sound;
+  std::map<SoundList, sf::SoundBuffer*> _sound;
 };
 
 #endif /* !SOUNDHANDLER_HPP_ */
