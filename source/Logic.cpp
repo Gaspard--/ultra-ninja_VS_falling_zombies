@@ -25,7 +25,7 @@ Logic::Logic(unsigned int maxMobs)
 
 void Logic::spawnEnemy()
 {
-  if (!(rand() % (unsigned int)(_enemies.size() * 10 + 5 + (25 / (_time / 60.0 + 1)))))
+  if (!(rand() % (unsigned int)(1 + _enemies.size() * (10 / ((_time / 60.0) / 60.0 + 0.1)))))
     {
       double                angle = std::rand();
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
@@ -76,11 +76,11 @@ void Logic::tick(void)
   for (auto& s : _swords)
     {
       for (auto& e : _enemies)
-	if (_physics.haveCollision(e->entity.fixture, s->entity.fixture))
-	  s->hit(*e, _player);
+        if (_physics.haveCollision(e->entity.fixture, s->entity.fixture))
+          s->hit(*e, _player);
       for (auto& b : _bullets)
-	if (_physics.haveCollision(b->entity.fixture, s->entity.fixture))
-	  s->hit(*b, _player);
+        if (_physics.haveCollision(b->entity.fixture, s->entity.fixture))
+          s->hit(*b, _player);
     }
 
   for (auto& s : _shooters)
