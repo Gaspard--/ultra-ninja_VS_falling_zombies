@@ -36,7 +36,6 @@ void EnemyShooter::shoot()
 
   logic.addBullet(entity.fixture.pos);
   logic.addBullet(entity.fixture.pos);
-  std::cout << "shoot" << std::endl;
 }
 
 bool EnemyShooter::update(const Player& player)
