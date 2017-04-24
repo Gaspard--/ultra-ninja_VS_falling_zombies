@@ -24,7 +24,4 @@ void	Sword::Hit(Enemy &e)
 {
   e.entity.fixture.speed += knockback;
   e.getRekt(damage);
-
-    // TODO appliquer le vecteur de la fixture de sword à la vitesse de l'ennemi
-    // TODO enlever des HP à l'Enemy touché.
 }
