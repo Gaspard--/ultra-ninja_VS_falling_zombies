@@ -6,12 +6,13 @@
 class EnemyShooter : public Enemy
 {
 private:
+  int _cooldown;
 public:
   EnemyShooter(Entity &);
 
   bool isInRange(Player const& player);
   void attack(Player& player) override;
-  void shoot(Player const& player);
+  void shoot();
   bool update(Player const& player) override;
 };
 

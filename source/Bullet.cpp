@@ -37,21 +37,11 @@ void Bullet::update()
       else
 	entity.fixture.speed = left;
     }
-
-//  Vect<2, double> diff(player.entity.fixture.pos - entity.fixture.pos);
-//  double range = 0.8;
-//  double scl = entity.fixture.pos.scalar(player.entity.fixture.pos);
-//  std::cout << scl << std::endl;
-//  if (scl > range)
-//    entity.fixture.speed = diff * 0.05;
 }
 
 void Bullet::hit(Enemy &e)
 {
   e.getRekt(damage);
-  isUseless = true;
-
-  // is useless after hit
   isUseless = true;
 
     // TODO appliquer le vecteur de la fixture de bullet à la vitesse de l'ennemi

@@ -3,7 +3,7 @@
 #include "TextureHandler.hpp"
 
 EnemyShooter::EnemyShooter(Entity &e)
-  : Enemy(e, 15)
+  : Enemy(e, 15), _cooldown(0)
 {
   e.fixture.radius = 0.02;
   e.fixture.mass = 8;
@@ -25,8 +25,13 @@ bool EnemyShooter::isInRange(Player const& player)
   return (entity.fixture.pos - player.entity.fixture.pos).length2() < CAR(range);
 }
 
-void EnemyShooter::shoot(Player const&)
+void EnemyShooter::shoot()
 {
+  if (_cooldown > 0)
+    return;
+
+  _cooldown = 400;
+
   Logic &logic = Logic::getInstance();
 
   logic.addBullet(entity.fixture.pos);
@@ -36,6 +41,8 @@ void EnemyShooter::shoot(Player const&)
 
 bool EnemyShooter::update(const Player& player)
 {
+  _cooldown -= (_cooldown > 0);
+
   Vect<2, double> vec(-entity.fixture.pos[1], entity.fixture.pos[0]);
   Vect<2, double> right(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * -1);
   Vect<2, double> left(entity.fixture.speed * 0.99 + vec.normalized() * (0.0005 * (1.0 + entity.isOnPlanet)) * 1);
