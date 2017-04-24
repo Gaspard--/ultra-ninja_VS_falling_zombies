@@ -27,7 +27,7 @@ bool Enemy::update(const Player& player)
 
 void Enemy::onDeath()
 {
-  for (unsigned int i(0); i < 10; ++i)
+  for (unsigned int i(0); i < 20; ++i)
     {
       Vect<2u, float> dir(std::cos(i), std::sin(i));
 
@@ -35,31 +35,31 @@ void Enemy::onDeath()
 				    {
 				      e.renderable.sourceSize = {1, 1};
 				      e.renderable.sourcePos = {0, 0};
-				      e.renderable.destSize *= 0.5;
+				      e.renderable.destSize *= 0.4 * (rand() % 3 + 2);
 				      e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BOYAUX);
 				      e.fixture.radius *= 0.5;
-				      e.fixture.speed += dir * 0.05;
+				      e.fixture.speed += dir * (0.02 * (rand() % 3 + 1));
 				      e.fixture.mass = 100;
-				    });
+				    }, true);
     }
   Logic::getInstance().addFlesh(entity, [](Entity &e)
 				{
 				  e.renderable.sourceSize[1] *= 0.5;
 				  e.renderable.destSize[1] *= 0.5;
-				  e.fixture.speed += e.fixture.pos.normalized() * 0.1;
+				  e.fixture.speed -= e.fixture.pos.normalized() * 0.1;
 				  e.fixture.radius *= 0.5;
 				  e.fixture.mass = 100;
-				});
+				}, false);
   Logic::getInstance().addFlesh(entity, [](Entity &e)
 				{
 				  e.renderable.sourcePos[1] += e.renderable.sourceSize[1] * 0.5;
 				  e.renderable.sourceSize[1] *= 0.5;
-				  e.renderable.destPos[1] += e.renderable.destSize[1] * 0.5;
 				  e.renderable.destSize[1] *= 0.5;
-				  e.fixture.speed -= e.fixture.pos.normalized() * 0.1;
+				  e.fixture.pos[1] += e.renderable.destSize[1] * 0.5;
+				  e.fixture.speed += e.fixture.pos.normalized() * 0.1;
 				  e.fixture.radius *= 0.5;
 				  e.fixture.mass = 100;
-				});
+				}, false);
 }
 
 void Enemy::getRekt(int dmg)

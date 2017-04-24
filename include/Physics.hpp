@@ -21,19 +21,15 @@ public:
   /************************************/
 
   Physics(const Vect<2, int>& planetCenter, double radius, double mass)
-  : _planet(planetCenter, Vect<2, int>(0, 0), radius, mass) {}
+    : _planet{planetCenter, Vect<2, int>(0, 0), radius, mass, 0.0} {}
 
   struct                Fixture
   {
-    Fixture(const Vect<2, double>& i_pos, const Vect<2, double>& i_speed, double i_radius, double i_mass) : pos(i_pos),
-                                                                                                      speed(i_speed),
-                                                                                                      radius(i_radius),
-                                                                                                      mass(i_mass){}
-
     Vect<2, double>     pos;
     Vect<2, double>     speed;
     double              radius;
     double              mass;
+    double		bounciness{0.0};
   };
 
   /****************************/
