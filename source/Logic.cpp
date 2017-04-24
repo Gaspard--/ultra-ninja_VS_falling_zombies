@@ -60,7 +60,7 @@ void Logic::tick(void)
 
   for (auto& s : _shooters)
     if (s->isInRange(_player))
-      s->shoot(_player);
+      s->shoot();
 
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
