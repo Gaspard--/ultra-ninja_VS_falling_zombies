@@ -27,10 +27,16 @@ void Logic::spawnEnemy()
       switch (rand() % 3)
         {
         case 0:
-          _addEnemy<EnemySmall>(enemyPos);
+          if (_time / 60 > 30)
+            _addEnemy<EnemySmall>(enemyPos);
+          else
+            _addEnemy<EnemyLarge>(enemyPos);
           break;
         case 1:
-          _addEnemy<EnemyCommon>(enemyPos);
+          if (_time / 60 > 15)
+            _addEnemy<EnemyCommon>(enemyPos);
+          else
+            _addEnemy<EnemyLarge>(enemyPos);
           break;
         case 2:
           _addEnemy<EnemyLarge>(enemyPos);
