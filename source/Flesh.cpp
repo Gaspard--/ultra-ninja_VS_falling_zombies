@@ -7,16 +7,14 @@ Flesh::Flesh(Entity &e)
   : entity(e)
 {
   isUseless = false;
-  cooldown = 0;
-  e.fixture.radius = 0.1;
-  // e.renderable.sourceSize = {1, 1};
-  // e.renderable.sourcePos = {0, 0};
-  e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::TEST);
+  e.isUseless = false;
+  e.fixture.bounciness = 1.0;
 }
 
 void Flesh::update(void)
 {
-  if (cooldown == 240)
-    isUseless = true;
-  cooldown++;
+  entity.fixture.radius *= 0.993;
+  entity.renderable.destSize *= 0.993;
+  isUseless = (entity.fixture.radius <= 0.01);
+  entity.isUseless = isUseless;
 }

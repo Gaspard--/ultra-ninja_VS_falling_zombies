@@ -24,18 +24,22 @@ private:
 
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
+  std::vector<std::shared_ptr<Entity>> _projectiles;
   std::vector<std::shared_ptr<Enemy>> _enemies;
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
   std::vector<std::shared_ptr<Bullet>> _bullets;
   std::vector<std::shared_ptr<EnemyShooter>> _shooters;
   Player _player;
-  unsigned int  _time;
+
+  unsigned int          _time;
+  unsigned int          _score;
+  const unsigned int    _maxMobs;
 
   Vect<2u, float> _mousePos;
 
 private:
-  Logic();
+  Logic(unsigned int);
 
   void handleKey(GLFWwindow *window, Key key);
   void handleMouse(GLFWwindow *window, Mouse mouse);
@@ -52,7 +56,7 @@ private:
   void spawnEnemy();
 
 public:
-  static void initLogic();
+  static void initLogic(unsigned int);
   static Logic& getInstance();
   static void destroyLogic();
 
@@ -60,11 +64,24 @@ public:
   void checkEvents(Display const &);
   float getPlanetSize(void) const;
   void tick(void);
-  void addFlesh(Entity const &entityParent);
   void addBullet(Vect<2, double> pos);
+
+  template<class Func>
+  void addFlesh(Entity const &entityParent, Func func, bool projectile)
+  {
+    (projectile ? _projectiles : _entities).push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
+    Entity &e(*(projectile ? _projectiles : _entities).back());
+
+    func(e);
+    _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(e)));
+  }
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
+  Vect<2u, float> getMouse() const;
+  unsigned int  getRemainingsSpace(void) const;
+  unsigned int  getScore(void) const;
+  unsigned int  getTime(void) const;
 
   template <class func>
   void for_each_entity(func f) const
@@ -79,7 +96,25 @@ public:
   }
 
   template <class func>
+  void for_each_projectile(func f) const
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
+  }
+
+  template <class func>
+  void for_each_projectile(func f)
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
+  }
+
+  template <class func>
   void for_each_enemy(func f)
+  {
+    std::for_each(_enemies.begin(), _enemies.end(), f);
+  }
+
+  template <class func>
+  void for_each_enemy(func f) const
   {
     std::for_each(_enemies.begin(), _enemies.end(), f);
   }

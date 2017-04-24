@@ -23,11 +23,6 @@ inline RenderContext contextFromFiles(std::string name)
                                              {vert.str(), frag.str()})};
 }
 
-inline void framebufferSizeCallback(GLFWwindow *, int width, int height)
-{
-  glViewport(0, 0, width, height);
-}
-
 Display::GlfwContext::GlfwContext()
 {
   glfwSetErrorCallback([](int, char const *str)
@@ -65,14 +60,16 @@ Display::Display()
   , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
-  , planet(my_opengl::loadTexture("resources/planet.bmp"))
+  , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
   , camera{0, 1.0}
   , dim{0, 0}
+  , size{0, 0}
 {
   static std::function<void(int width, int height)> setFrameBuffer =
     [this] (int width, int height)
     {
       glViewport(0, 0, width, height);
+      size = {width, height};
       dim = {height / (float)width, 1.0};
     };
 
@@ -232,6 +229,31 @@ void Display::displayRenderable(Renderable const& renderable, Vect<2u, float> ro
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
+void Display::displayEntityWithSpeed(Entity const& e, Vect<2u, float> rotation)
+{
+  Bind<RenderContext> bind(textureContext);
+  float buffer[4u * 4u];
+  Vect<2u, float> up(e.fixture.speed.normalized());
+
+  for (unsigned int j(0u); j != 4u; ++j)
+    {
+      Vect<2u, float> const corner((j & 1u), (j >> 1u));
+      Vect<2u, float> const sourceCorner(e.renderable.sourcePos + corner * e.renderable.sourceSize);
+      Vect<2u, float> const destCorner(rotate(e.renderable.destPos + (rotate((corner - Vect<2u, float>{0.5f, 0.5f})
+                                                                           * e.renderable.destSize, {up[1], -up[0]})), rotation));
+
+      std::copy(&sourceCorner[0u], &sourceCorner[2u], &buffer[j * 4u]);
+      std::copy(&destCorner[0u], &destCorner[2u], &buffer[j * 4u + 2u]);
+    }
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, e.renderable.texture);
+  glBindBuffer(GL_ARRAY_BUFFER, textureBuffer);
+  my_opengl::setUniform(dim, "dim", textureContext.program);
+  my_opengl::setUniform(0u, "tex", textureContext.program);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(buffer), buffer, GL_STATIC_DRAW);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+
 void Display::displayRenderableAsHUD(Renderable const& renderable)
 {
   Bind<RenderContext> bind(textureContext);
@@ -270,6 +292,10 @@ void Display::render(Logic const &logic)
                         {
                           this->displayRenderable(e->renderable, camera);
                         });
+  logic.for_each_projectile([this, logic](auto const &e)
+			    {
+			      this->displayEntityWithSpeed(*e, camera);
+			    });
   displayText("MASSE BITE SUCE DES QUEUES", 256, {0.1f, 0.1f}, {-0.2f, -0.2f}, camera);
   glDisable(GL_BLEND);
 
@@ -285,4 +311,19 @@ bool Display::isRunning() const
 bool Display::isKeyPressed(int key) const
 {
   return glfwGetKey(window.get(), key);
+}
+
+Vect<2u, float> Display::getCamera() const
+{
+  return camera;
+}
+
+Vect<2u, float> Display::getDim() const
+{
+  return dim;
+}
+
+Vect<2u, float> Display::getSize() const
+{
+  return size;
 }

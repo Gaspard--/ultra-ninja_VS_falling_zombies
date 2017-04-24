@@ -1,5 +1,7 @@
+#include <cmath>
 #include "Enemy.hpp"
 #include "Logic.hpp"
+#include "TextureHandler.hpp"
 
 Enemy::Enemy(Entity &e, int hp)
   : _hp(hp), entity(e)
@@ -9,6 +11,7 @@ Enemy::Enemy(Entity &e, int hp)
 
 bool Enemy::update(const Player& player)
 {
+  // std::cout << entity.renderable.destSize[0] << std::endl;
   (void)player;
   isUseless = _hp <= 0;
   entity.isUseless = isUseless;
@@ -24,9 +27,41 @@ bool Enemy::update(const Player& player)
 
 void Enemy::onDeath()
 {
-  Logic::getInstance().addFlesh(entity);
-  Logic::getInstance().addFlesh(entity);
-  Logic::getInstance().addFlesh(entity);
+  for (unsigned int i(0); i < 20; ++i)
+    {
+      Vect<2u, float> dir(std::cos(i), std::sin(i));
+
+      Logic::getInstance().addFlesh(entity, [dir](Entity &e)
+				    {
+				      double size(0.4 * (rand() % 3 + 2));
+
+				      e.renderable.sourceSize = {1, 1};
+				      e.renderable.sourcePos = {0, 0};
+				      e.renderable.destSize *= size;
+				      e.renderable.texture = TextureHandler::getInstance().getTexture(TextureHandler::BOYAUX);
+				      e.fixture.radius *= size;
+				      e.fixture.speed += dir * (0.02 * (rand() % 3 + 1)) * size;
+				      e.fixture.mass = 100;
+				    }, true);
+    }
+  Logic::getInstance().addFlesh(entity, [](Entity &e)
+				{
+				  e.renderable.sourceSize[1] *= 0.5;
+				  e.renderable.destSize[1] *= 0.5;
+				  e.fixture.speed -= e.fixture.pos.normalized() * 0.1;
+				  e.fixture.radius *= 0.5;
+				  e.fixture.mass = 100;
+				}, false);
+  Logic::getInstance().addFlesh(entity, [](Entity &e)
+				{
+				  e.renderable.sourcePos[1] += e.renderable.sourceSize[1] * 0.5;
+				  e.renderable.sourceSize[1] *= 0.5;
+				  e.renderable.destSize[1] *= 0.5;
+				  e.fixture.pos[1] += e.renderable.destSize[1] * 0.5;
+				  e.fixture.speed += e.fixture.pos.normalized() * 0.1;
+				  e.fixture.radius *= 0.5;
+				  e.fixture.mass = 100;
+				}, false);
 }
 
 void Enemy::getRekt(int dmg)

@@ -8,7 +8,7 @@
 #include "render_context.hpp"
 #include "my_opengl.hpp"
 #include "FreeTypeLib.hpp"
-#include "renderable.hpp"
+#include "Entity.hpp"
 #include "Rect.hpp"
 
 class Display
@@ -36,6 +36,7 @@ private:
   Texture planet;
   Vect<2u, float> camera;
   Vect<2u, float> dim;
+  Vect<2u, float> size;
 
 public:
   static Display& getInstance();
@@ -57,8 +58,15 @@ public:
    */
   void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
 
+  void displayEntityWithSpeed(Entity const& e, Vect<2u, float> rotation);
+
   void displayRenderableAsHUD(Renderable const& renderable);
 
+  Vect<2u, float> getCamera() const;
+
+  Vect<2u, float> getDim() const;
+
+  Vect<2u, float> getSize() const;
 
   void render(Logic const &);
   bool isRunning() const;

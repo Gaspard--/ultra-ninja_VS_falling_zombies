@@ -8,7 +8,6 @@ class Enemy
 {
 protected:
   int _hp;
-private:
   int _coolDown;
 
 public:
