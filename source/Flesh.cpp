@@ -7,13 +7,14 @@ Flesh::Flesh(Entity &e)
   : entity(e)
 {
   isUseless = false;
-  cooldown = 0;
   e.isUseless = false;
+  e.fixture.bounciness = 1.0;
 }
 
 void Flesh::update(void)
 {
-  isUseless = (cooldown >= 240);
+  entity.fixture.radius *= 0.993;
+  entity.renderable.destSize *= 0.993;
+  isUseless = (entity.fixture.radius <= 0.01);
   entity.isUseless = isUseless;
-  ++cooldown;
 }

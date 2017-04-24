@@ -22,6 +22,7 @@ private:
 
   Physics _physics;
   std::vector<std::shared_ptr<Entity>> _entities;
+  std::vector<std::shared_ptr<Entity>> _projectiles;
   std::vector<std::shared_ptr<Enemy>> _enemies;
   std::vector<std::shared_ptr<Flesh>> _fleshs;
   std::vector<std::shared_ptr<Sword>> _swords;
@@ -61,15 +62,14 @@ public:
   void tick(void);
 
   template<class Func>
-  void addFlesh(Entity const &entityParent, Func func)
+  void addFlesh(Entity const &entityParent, Func func, bool projectile)
   {
-    _entities.push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
-    Entity &e(*_entities.back());
+    (projectile ? _projectiles : _entities).push_back(std::shared_ptr<Entity>(new Entity(entityParent)));
+    Entity &e(*(projectile ? _projectiles : _entities).back());
 
     func(e);
     _fleshs.push_back(std::shared_ptr<Flesh>(new Flesh(e)));
   }
-
 
   Vect<2, double> getPlayerPos(void) const;
   Player& getPlayer();
@@ -88,6 +88,18 @@ public:
   void for_each_entity(func f)
   {
     std::for_each(_entities.begin(), _entities.end(), f);
+  }
+
+  template <class func>
+  void for_each_projectile(func f) const
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
+  }
+
+  template <class func>
+  void for_each_projectile(func f)
+  {
+    std::for_each(_projectiles.begin(), _projectiles.end(), f);
   }
 
   template <class func>
