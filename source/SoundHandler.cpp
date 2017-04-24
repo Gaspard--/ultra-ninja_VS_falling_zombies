@@ -9,6 +9,8 @@ SoundHandler::SoundHandler()
 void SoundHandler::initSoundHandler()
 {
   _instance.reset(new SoundHandler());
+  if (!_instance->mainMusic.openFromFile("resources/small_world.ogg"))
+    throw ("Music not charged");
   // _instance->addSound(BOYAUX, "resources/boyaux.bmp");
   // Already loaded in display.cpp
   // _instance->addSound(PLANET, "resources/planet.bmp");
@@ -24,6 +26,14 @@ SoundHandler& SoundHandler::getInstance()
 void SoundHandler::destroySoundHandler()
 {
   _instance.reset(nullptr);
+}
+
+
+void SoundHandler::playMainMusic()
+{
+  mainMusic.setLoop(true);
+  mainMusic.setVolume(40);
+  mainMusic.play();
 }
 
 void SoundHandler::addSound(SoundList id, std::string const& path)

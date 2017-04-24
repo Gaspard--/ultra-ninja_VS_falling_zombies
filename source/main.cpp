@@ -2,6 +2,7 @@
 # include "display.hpp"
 # include "Logic.hpp"
 # include "TextureHandler.hpp"
+# include "SoundHandler.hpp"
 # include "Input.hpp"
 # include <random>
 
@@ -11,6 +12,19 @@ int main()
   try {
     Display& display = Display::getInstance();
     Input::setWindow(display.getWindow());
+
+    struct SoundHandlerInit
+    {
+      SoundHandlerInit()
+      {
+        SoundHandler::initSoundHandler();
+      }
+
+      ~SoundHandlerInit()
+      {
+        SoundHandler::destroySoundHandler();
+      }
+    } SoundHandlerIniter;
 
     struct TextureHandlerInit
     {
@@ -38,6 +52,7 @@ int main()
       }
     } logicIniter;
 
+    SoundHandler::getInstance().playMainMusic();
     while (display.isRunning())
       {
         // handle events
