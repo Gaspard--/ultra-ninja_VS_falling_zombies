@@ -8,7 +8,7 @@
 #include "render_context.hpp"
 #include "my_opengl.hpp"
 #include "FreeTypeLib.hpp"
-#include "renderable.hpp"
+#include "Entity.hpp"
 #include "Rect.hpp"
 
 class Display
@@ -57,6 +57,8 @@ public:
    * This function is not suitable to render GUI
    */
   void displayRenderable(Renderable const& renderable, Vect<2u, float> rotation = {1.0, 0.0});
+
+  void displayEntityWithSpeed(Entity const& e, Vect<2u, float> rotation);
 
   void displayRenderableAsHUD(Renderable const& renderable);
 

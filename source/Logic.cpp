@@ -52,6 +52,7 @@ void Logic::tick(void)
   _time++;
   spawnEnemy();
   this->_physics.updateFixtures(_entities.begin(), _entities.end());
+  this->_physics.updateFixtures(_projectiles.begin(), _projectiles.end());
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
@@ -60,6 +61,7 @@ void Logic::tick(void)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
         (*j)->Hit(**i, _player);
   for_each_entity([](auto &e) { e->update(); });
+  for_each_projectile([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
   for_each_swords([](auto &s) { s->update(); });
@@ -69,6 +71,7 @@ void Logic::tick(void)
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
+  _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
 }
 
 unsigned int    Logic::getRemainingsSpace(void) const
@@ -228,6 +231,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
-  _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
+  _projectiles.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
+  _swords.push_back(std::shared_ptr<Sword>(new Sword(*_projectiles.back(), knockback)));
 }
