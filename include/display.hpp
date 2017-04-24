@@ -36,6 +36,7 @@ private:
   glBuffer textBuffer;
   Texture planet;
   Texture blood;
+  Texture mobSpray;
   RenderTexture planetRenderTexture;
   Vect<2u, float> camera;
   Vect<2u, float> dim;
@@ -45,13 +46,13 @@ public:
 
   GLFWwindow *getWindow() const;
 
-  void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos,  Vect<2u, float> rotation);
+  void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos,  Vect<2u, float> rotation, Vect<3u, float> color);
 
   void displayRect(Rect const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
 
-  void drawBlood(Vect<2u, float> rotation);
+  void drawBlood(Vect<2u, float> rotation, Texture texture);
   void displayInterface(void);
 
   /**

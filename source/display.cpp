@@ -62,6 +62,7 @@ Display::Display()
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
   , blood(my_opengl::loadTexture("resources/BloodSpray.bmp"))
+  , mobSpray(my_opengl::loadTexture("resources/MobSpray.bmp"))
   , planetRenderTexture({1024, 1024})
   , camera{0, 1.0}
   , dim{0, 0}
@@ -138,9 +139,9 @@ static Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
   return {a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]};
 }
 
-void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos, Vect<2u, float> rotation)
+void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos, Vect<2u, float> rotation, Vect<3u, float> color)
 {
-  fontHandler.renderText(text, [this, textPos, rotation](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> fontDim)
+  fontHandler.renderText(text, [this, textPos, rotation, color](Vect<2u, float> pen, Vect<2u, float> size, unsigned char *buffer, Vect<2u, int> fontDim)
                          {
                            Texture texture;
                            Bind<RenderContext> bind(textContext);
@@ -174,6 +175,7 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
                            glBindBuffer(GL_ARRAY_BUFFER, textBuffer);
                            glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
                            my_opengl::setUniform(dim, "dim", textContext.program);
+                           my_opengl::setUniform(color, "textColor", textContext.program);
                            my_opengl::setUniform(0u, "tex", textContext.program);
                            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
                          }, fontSize, step);
@@ -206,10 +208,9 @@ void    Display::displayInterface(void)
   int   size = (std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs())).size();
 
   displayText(std::to_string(logic.getRemainingsSpace()) + "/" + std::to_string(logic.getMaxMobs()),
-              256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0});
-  displayText("Score   " + std::to_string(logic.getScore()),
-              256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0});
-  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0});
+              256, {0.2f, 0.2f}, {-0.08f * size, -0.3f}, {sqrt(camera.length2()), 0}, {1.0, 0.0, 0.5});
+  displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-1.8, 0.72}, {1, 0}, {1.0, 1.0, 0.5});
+  displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-1.8, 0.5}, {1, 0}, {1.0, 0.5, 1.0});
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
@@ -234,12 +235,12 @@ void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotatio
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
-void Display::drawBlood(Vect<2u, float> rotation)
+void Display::drawBlood(Vect<2u, float> rotation, Texture texture)
 {
   glBindFramebuffer(GL_FRAMEBUFFER, planetRenderTexture.framebuffer);
   glViewport(0, 0, 1024, 1024);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-  displayPlanet(blood, 2.0, rotation);
+  displayPlanet(texture, 2.0, rotation);
   // {
   //   Bind<RenderContext> bind(textureContext);
   //   float buffer[4u * 4u];
@@ -350,7 +351,12 @@ void Display::render(Logic const &logic)
     logic.for_each_flesh([this](auto const &flesh)
 			 {
 			   if (flesh->entity.isOnPlanet)
-			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}));
+			     this->drawBlood(rotate(flesh->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), blood);
+			 });
+    logic.for_each_enemy([this](auto const &enemy)
+			 {
+			   if (enemy->entity.isOnPlanet && rand() % 10 == 0)
+			     this->drawBlood(rotate(enemy->entity.fixture.pos.normalized(), Vect<2u, float>{0, -1.0}), mobSpray);
 			 });
     glDisable(GL_BLEND);
     dim = olddim;

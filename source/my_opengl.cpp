@@ -26,6 +26,11 @@ void my_opengl::setUniform(Vect<2, float> const data, char const *target, Progra
   glUniform2f(glGetUniformLocation(program, target), data[0], data[1]);
 }
 
+void my_opengl::setUniform(Vect<3, float> const data, char const *target, Program program)
+{
+  glUniform3f(glGetUniformLocation(program, target), data[0], data[1], data[2]);
+}
+
 void my_opengl::setUniform(Vect<4, float> const data, char const *target, Program program)
 {
   glUniform4f(glGetUniformLocation(program, target), data[0], data[1], data[2], data[3]);
