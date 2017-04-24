@@ -1,6 +1,7 @@
 #include "Logic.hpp"
 #include "Input.hpp"
 #include "display.hpp"
+#include "SoundHandler.hpp"
 #include "EnemyCommon.hpp"
 #include "EnemyLarge.hpp"
 #include "EnemySmall.hpp"
@@ -93,6 +94,7 @@ void Logic::tick(void)
   _bullets.erase(std::remove_if(_bullets.begin(), _bullets.end(), [](auto const &b){ return b->isUseless; }), _bullets.end());
   _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
+  SoundHandler::getInstance().deleteSounds();
   if (!this->getRemainingsSpace() && !_gameOver)
     {
       _gameOver = true;
