@@ -9,6 +9,7 @@ EnemyLarge::EnemyLarge(Entity &e)
   e.fixture.radius = 0.1;
   e.fixture.mass = 10;
   e.renderable.destSize = {e.fixture.radius * 2.1, e.fixture.radius * 2.1};
+  _maxAnimationFrame = 30;
 }
 
 void EnemyLarge::attack(Player& player)
