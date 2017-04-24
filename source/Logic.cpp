@@ -58,17 +58,17 @@ void Logic::tick(void)
   for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
     for (auto j(_swords.begin()); j != _swords.end(); ++j)
       if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->Hit(**i);
+        (*j)->Hit(**i, _player);
   for_each_entity([](auto &e) { e->update(); });
   for_each_enemy([this](auto &e) { e->update(_player); });
   for_each_flesh([](auto &f) { f->update(); });
   for_each_swords([](auto &s) { s->update(); });
+  _player.update();
 
   _enemies.erase(std::remove_if(_enemies.begin(), _enemies.end(), [](auto const &e){ return e->isUseless; }), _enemies.end());
-  _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
   _fleshs.erase(std::remove_if(_fleshs.begin(), _fleshs.end(), [](auto const &f){ return f->isUseless; }), _fleshs.end());
   _swords.erase(std::remove_if(_swords.begin(), _swords.end(), [](auto const &s){ return s->isUseless; }), _swords.end());
-  getRemainingsSpace();
+  _entities.erase(std::remove_if(_entities.begin(), _entities.end(), [](auto const &e){ return e->isUseless; }), _entities.end());
 }
 
 unsigned int    Logic::getRemainingsSpace(void) const
@@ -130,6 +130,10 @@ void Logic::checkEvents(Display const &display)
 {
   if (_player.canMove)
     {
+      if (display.isKeyPressed(GLFW_KEY_Q))
+          this->_player.dash(1);
+      if (display.isKeyPressed(GLFW_KEY_E))
+          this->_player.dash(-1);
       if (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))
         this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))
@@ -194,7 +198,6 @@ void Logic::handleButton(GLFWwindow *, Button button)
   if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.1, vec.normalized() * 0.1);
-  _player.entity.fixture.speed -= vec.normalized() * 0.003;
   (void)button;
 }
 
@@ -225,6 +228,6 @@ Player& Logic::getPlayer()
 
 void Logic::_addSword(Vect<2, double> pos, Vect<2, double> knockback)
 {
-  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.4, 0.06, 0})));
+  _entities.push_back(std::shared_ptr<Entity>(new Entity({pos, knockback * 0.2, 0.06, 0})));
   _swords.push_back(std::shared_ptr<Sword>(new Sword(*_entities.back(), knockback)));
 }

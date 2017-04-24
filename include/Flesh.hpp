@@ -9,7 +9,7 @@ public:
   Flesh(Entity &e);
   void update(void);
 
-  Entity entity;
+  Entity &entity;
   bool isUseless;
 
 private:
