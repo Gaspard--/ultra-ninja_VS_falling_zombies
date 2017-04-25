@@ -4,7 +4,7 @@
 
 ## Usage
 1. Clone the project
-2. Install [GLFW] (http://www.glfw.org/) and [SFML] (https://www.sfml-dev.org/) library
+2. Install [GLFW](http://www.glfw.org/) and [SFML](https://www.sfml-dev.org/) library
 3. Open the project directory
 4. `make` the project
 5. Launch the game: `./ultra-ninja_VS_falling_zombies`
