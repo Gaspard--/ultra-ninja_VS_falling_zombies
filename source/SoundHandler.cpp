@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include "SoundHandler.hpp"
 
@@ -12,7 +13,6 @@ void SoundHandler::initSoundHandler()
   _instance.reset(new SoundHandler());
   if (!_instance->mainMusic.openFromFile("resources/small_world.ogg"))
     throw ("Music not charged");
-  _instance->addSoundBuffer(SHOOT, "resources/shoot.wav");
   _instance->addSoundBuffer(BOYAUX1, "resources/boyaux1.wav");
   _instance->addSoundBuffer(BOYAUX2, "resources/boyaux2.wav");
   _instance->addSoundBuffer(BOYAUX3, "resources/boyaux3.wav");
@@ -43,8 +43,8 @@ void SoundHandler::initSoundHandler()
   _instance->addSoundBuffer(WTSW1, "resources/watashiwa1.wav");
   _instance->addSoundBuffer(WTSW2, "resources/watashiwa2.wav");
   _instance->addSoundBuffer(WTSW3, "resources/watashiwa3.wav");
-  _instance->euuuh = {{EUUUH1, EUUUH2}};
   _instance->boyaux = {{BOYAUX1, BOYAUX2, BOYAUX3, BOYAUX4, BOYAUX5, BOYAUX6}};
+  _instance->euuuh = {{EUUUH1, EUUUH2}};
   _instance->mobspawn = {{MOBSPAWN1, MOBSPAWN2, MOBSPAWN3, MOBSPAWN4, MOBSPAWN5, MOBSPAWN6}};
   _instance->player_sounds = {{CHAN1, CHAN2, CHAN3, DESU1, DESU2, DESU3,
     KOREWA1, KOREWA2, NANI1, NANI2, WTSW1, WTSW2, WTSW3}};
@@ -75,6 +75,7 @@ void SoundHandler::playSound(SoundList id, int volume)
   sound->setVolume(volume);
   sound->play();
   _instance->_soundsPlaying.push_back(sound);
+  std::cout << "playing " << id  << std::endl;
 }
 
 void SoundHandler::deleteSounds()

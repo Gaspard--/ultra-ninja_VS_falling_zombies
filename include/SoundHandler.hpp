@@ -58,7 +58,7 @@ public:
   std::array<SoundList, 6> mobspawn;
   std::array<SoundList, 13> player_sounds;
 
-private:
+//private:
 
   SoundHandler();
 

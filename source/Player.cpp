@@ -78,7 +78,7 @@ void Player::fastFall()
   if (!this->entity.isOnPlanet)
     {
       this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
-      playRandomPlayerActionSound();
+      // playRandomPlayerActionSound();
     }
 }
 
@@ -91,11 +91,11 @@ void Player::getRekt(int dmg)
 void Player::playRandomPlayerActionSound()
 {
   SoundHandler &sh = SoundHandler::getInstance();
-  sh.playSound(sh.player_sounds[rand() % sh.player_sounds.size()], 50);
+  sh.playSound(sh.player_sounds[rand() % sh.player_sounds.size()], 60);
 }
 
 void Player::playRandomPlayerEuuuhSound()
 {
   SoundHandler &sh = SoundHandler::getInstance();
-  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()], 50);
+  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()]);
 }
