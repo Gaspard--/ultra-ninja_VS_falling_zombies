@@ -217,7 +217,6 @@ void    Display::displayInterface(void)
   if (logic.getGameOver())
     {
       displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.42}, {1, 0}, {1.0, 0.25, 0.0});
-      // displayText("Press enter to retry", 256, {0.1f, 0.1f}, {-0.65, 0.32}, {1, 0}, {1.0, 0.25, 0.0});
       displayText("Press enter to retry", 256, {0.1f, 0.1f}, {-0.65, -0.82}, {1, 0}, {1.0, 0.25, 0.0});
     }
 }
