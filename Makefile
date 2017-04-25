@@ -1,9 +1,5 @@
-CC =	g++
-
-RM =	rm -f
-
 CPPFLAGS +=	-W -Wall -Wextra
-CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14 -g3
+CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14
 
 LDFLAGS = `pkg-config --static --libs glfw3` -lfreetype -lsfml-audio -lsfml-system
 
@@ -35,10 +31,10 @@ SRCS_CPP = 	source/main.cpp \
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
-all: grep_todo $(NAME)
+all: $(NAME)
 
 $(NAME):$(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 grep_todo:
 	@grep --color=auto -ir --include "*.cpp" -E "(FIXME|TODO)" . || true
