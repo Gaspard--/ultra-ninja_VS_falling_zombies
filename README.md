@@ -1,13 +1,13 @@
 # Ultra ninja VS falling zombies
 
-<!-- History -->
-
 ## Usage
-1. Clone the project `git clone https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git` or [download as zip](https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git)
+1. Clone the project `git clone https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git` or [download as zip](https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies/archive/master.zip)
 2. Install the [GLFW](http://www.glfw.org/) and the [SFML](https://www.sfml-dev.org/) libraries
 3. `cd` into the project directory
 4. `make` the project
 5. Launch the game: `./ultra-ninja_VS_falling_zombies`
+
+**NOT TESTED ON WINDOWS**
 
 ## Story
 
@@ -24,8 +24,6 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 * [A and E] or [Shift + A and D or Right and Left keys] : Dash
 * Mouth and left-click : hit Zombies in the wanted directions
 
-<!-- details -->
-
 ## Developpers
 * [David Zeng](https://github.com/Arcsz)
 * [Jakob Kellendonk](https://github.com/Gaspard--)
@@ -37,4 +35,4 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 ## Special Thanks
 
 * Dimitri Mass (dev-help and some ideas)
-* Yoann Jay (micro lender for sound effects)
+* Yoann Jay (mic lender for sound effects)
