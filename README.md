@@ -7,7 +7,7 @@
 4. `make` the project
 5. Launch the game: `./ultra-ninja_VS_falling_zombies`
 
-**WORKS ON UNIX, BUT SHOULD WORK ON OTHERS SYSTEMS**
+*Tested on Unix.*
 
 ## Story
 
