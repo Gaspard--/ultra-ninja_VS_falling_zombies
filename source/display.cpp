@@ -61,6 +61,7 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
+  , background(my_opengl::loadTexture("resources/BackgroundSpace.bmp"))
   , bloodSpray{my_opengl::loadTexture("resources/BloodSpray.bmp"), my_opengl::loadTexture("resources/BloodSpray2.bmp"), my_opengl::loadTexture("resources/BloodSpray3.bmp")}
   , mobSpray{my_opengl::loadTexture("resources/MobSpray.bmp"), my_opengl::loadTexture("resources/MobSpray2.bmp"), my_opengl::loadTexture("resources/MobSpray3.bmp")}
   , planetRenderTexture({1024, 1024})
@@ -212,6 +213,7 @@ void    Display::displayInterface(void)
               { 0.5 + 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace()});
   displayText("Current Population",
               256, {0.05f, 0.05f}, {-0.017f * 18, -0.315f}, {sqrt(camera.length2()), 0}, {1.0, 1.0, 1.0});
+  displayText("Combo   " + logic.getCombo(), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -0.60}, {1, 0}, {1.0, 1.0, 1.0});
   displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -0.80}, {1, 0}, {1.0, 1.0, 1.0});
   displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -1.00}, {1, 0}, {1.0, 1.0, 1.0});
   if (logic.getGameOver())
@@ -354,6 +356,7 @@ void Display::render(Logic const &logic)
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
+  displayPlanet(background, 4.0, camera.normalized());
   displayPlanet(planetRenderTexture.texture, logic.getPlanetSize(), camera);
   logic.for_each_entity([this, logic](auto const &e)
                         {

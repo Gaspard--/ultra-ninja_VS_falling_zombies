@@ -128,6 +128,7 @@ void    Logic::resetCombo()
     _combo = 0;
 }
 
+
 unsigned int  Logic::getMaxMobs(void) const
 {
   return (_maxMobs);
@@ -147,6 +148,13 @@ unsigned int    Logic::getOccupedSpace(void) const
 unsigned int  Logic::getScore(void) const
 {
   return (_score);
+}
+
+std::string     Logic::getCombo(void) const
+{
+  if (_combo < 2)
+    return ("");
+  return ("x" + std::to_string(_combo));
 }
 
 std::string     Logic::getTime(void) const
