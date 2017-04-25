@@ -1,7 +1,5 @@
 # Ultra ninja VS falling zombies
 
-<!-- History -->
-
 ## Usage
 1. Clone the project `git clone https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git` or [download as zip](https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git)
 2. Install the [GLFW](http://www.glfw.org/) and the [SFML](https://www.sfml-dev.org/) libraries
@@ -21,10 +19,8 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 * Arrow keys (Right and Left) or A and D : move the Ultra-Ninja to right and left
 * W, Space or Up : Jump
 * S or Down : Fast Fall
-* [A and E] or [Shift + A and D or Right and Left keys] : Dash
+* [Q and E] or [Shift + A and D or Right and Left keys] : Dash
 * Mouth and left-click : hit Zombies in the wanted directions
-
-<!-- details -->
 
 ## Developpers
 * [David Zeng](https://github.com/Arcsz)
@@ -36,5 +32,5 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 
 ## Special Thanks
 
-* Dimitri Mass (dev-help and some ideas)
+* Dimitri Mas (dev-help and some ideas)
 * Yoann Jay (micro lender for sound effects)
