@@ -80,6 +80,7 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
+  , planetBackground(my_opengl::loadTexture("resources/BackgroundPlanet.bmp"))
   , background(my_opengl::loadTexture("resources/BackgroundSpace.bmp"))
   , bloodSpray{my_opengl::loadTexture("resources/BloodSpray.bmp"), my_opengl::loadTexture("resources/BloodSpray2.bmp"), my_opengl::loadTexture("resources/BloodSpray3.bmp")}
   , mobSpray{my_opengl::loadTexture("resources/MobSpray.bmp"), my_opengl::loadTexture("resources/MobSpray2.bmp"), my_opengl::loadTexture("resources/MobSpray3.bmp")}
@@ -361,11 +362,16 @@ void Display::render(Logic const &logic)
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   displayPlanet(background, 4.0, camera.normalized());
+  displayPlanet(planetBackground, 1.54, camera);
   displayPlanet(planetRenderTexture.texture, logic.getPlanetSize(), camera);
   logic.for_each_projectile([this, logic](auto const &e)
                             {
                               this->displayEntityWithSpeed(*e, camera);
                             });
+  // logic.for_each_enemy([this, logic](auto const &e)
+  // 		       {
+  // 			 this->displayText(std::to_string(e->_hp), 256, {0.03f, 0.03f}, {0.01, 1.05}, rotate(rotate(camera, e->entity.renderable.destPos), {0.0, -1.0}), {1.0, 0.2, 0.2});
+  // 		       });
   logic.for_each_entity([this, logic](auto const &e)
                         {
                           this->displayRenderable(e->renderable, camera);

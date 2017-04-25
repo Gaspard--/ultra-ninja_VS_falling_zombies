@@ -7,12 +7,12 @@
 class Enemy
 {
 protected:
-  int _hp;
   int _coolDown;
   int _animation;
   int _maxAnimationFrame;
 
 public:
+  int _hp;
   bool isUseless = false;
 
   virtual void attack(Player& player) = 0;
