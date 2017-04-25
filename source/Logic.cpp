@@ -34,13 +34,13 @@ void Logic::spawnEnemy()
       switch (rand() % 4)
         {
         case 0:
-          if (_time / 60 > 20)
+          if (_time / 60 > 30)
             _addEnemy<EnemyLarge>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
           break;
         case 1:
-          if (_time / 60 > 10)
+          if (_time / 60 > 15)
             _addEnemy<EnemyCommon>(enemyPos);
           else
             _addEnemy<EnemySmall>(enemyPos);
@@ -52,17 +52,15 @@ void Logic::spawnEnemy()
           _addEnemy<EnemyShooter>(enemyPos);
           break;
         }
+      Enemy::playRandomSpawnSound();
     }
 }
 
 void Logic::tick(void)
 {
+  _time++;
 
-  if (!_gameOver)
-    {
-      _time++;
-      spawnEnemy();
-    }
+  spawnEnemy();
 
   _multiplier += (1.0 / 600.0);
 
@@ -88,7 +86,7 @@ void Logic::tick(void)
       s->shoot();
 
   for (auto& b : _bullets)
-    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture) && !b->isUseless)
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
       b->hit(_player);
 
   for_each_entity([](auto &e) { e->update(); });
@@ -107,10 +105,7 @@ void Logic::tick(void)
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
   SoundHandler::getInstance().deleteSounds();
   if (this->getOccupedSpace() >= _maxMobs)
-    {
-      _gameOver = true;
-      _player.canMove = false;
-    }
+    _gameOver = true;
 }
 
 void    Logic::addToScore(int add)
@@ -286,9 +281,10 @@ void Logic::handleButton(GLFWwindow *, Button button)
 {
   Vect<2u, double> vec(getMouse() - getPlayerPos());
 
-  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS || _gameOver)
+  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
+  Player::playRandomPlayerActionSound();
 }
 
 Vect<2, double> Logic::getPlayerPos(void) const

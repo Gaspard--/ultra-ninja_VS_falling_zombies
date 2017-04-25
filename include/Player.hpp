@@ -25,6 +25,9 @@ public:
   void fastFall();
   void getRekt(int);
   void animate();
+
+  static void playRandomPlayerActionSound(void);
+  static void playRandomPlayerEuuuhSound(void);
 };
 
 #endif /* !PLAYER_H_ */
