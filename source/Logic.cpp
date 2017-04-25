@@ -210,10 +210,16 @@ void Logic::checkEvents(Display const &display)
 {
   if (_player.canMove)
     {
-      if (display.isKeyPressed(GLFW_KEY_Q))
+      if (display.isKeyPressed(GLFW_KEY_Q) ||
+	  ((display.isKeyPressed(GLFW_KEY_LEFT_SHIFT) ||
+	    display.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) &&
+	   (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))))
           this->_player.dash(1);
-      if (display.isKeyPressed(GLFW_KEY_E))
-          this->_player.dash(-1);
+      if (display.isKeyPressed(GLFW_KEY_E) ||
+	  ((display.isKeyPressed(GLFW_KEY_LEFT_SHIFT) ||
+	    display.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) &&
+	   (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))))
+	  this->_player.dash(-1);
       if (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))
         this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))

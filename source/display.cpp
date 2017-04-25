@@ -362,14 +362,14 @@ void Display::render(Logic const &logic)
   glEnable(GL_BLEND);
   displayPlanet(background, 4.0, camera.normalized());
   displayPlanet(planetRenderTexture.texture, logic.getPlanetSize(), camera);
-  logic.for_each_entity([this, logic](auto const &e)
-                        {
-                          this->displayRenderable(e->renderable, camera);
-                        });
   logic.for_each_projectile([this, logic](auto const &e)
                             {
                               this->displayEntityWithSpeed(*e, camera);
                             });
+  logic.for_each_entity([this, logic](auto const &e)
+                        {
+                          this->displayRenderable(e->renderable, camera);
+                        });
   displayInterface();
   glDisable(GL_BLEND);
   glfwSwapBuffers(window.get());
