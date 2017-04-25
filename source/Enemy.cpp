@@ -49,7 +49,7 @@ bool Enemy::update(const Player&)
 void Enemy::playRandomSpawnSound(void)
 {
   SoundHandler &sh = SoundHandler::getInstance();
-  sh.playSound(sh.mobspawn[rand() % sh.mobspawn.size()]);
+  sh.playSound(sh.mobspawn[rand() % sh.mobspawn.size()], 150);
 }
 
 void Enemy::playRandomDeathSound(void)
