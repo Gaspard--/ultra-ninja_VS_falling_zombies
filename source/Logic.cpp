@@ -230,7 +230,7 @@ void Logic::checkEvents(Display const &display)
       Display::getInstance().resetPlanet();
       Logic::initLogic(_maxMobs);
     }
-
+  #ifdef DEBUG
   if (display.isKeyPressed(GLFW_KEY_C))
     {
       double                angle = std::rand();
@@ -271,6 +271,7 @@ void Logic::checkEvents(Display const &display)
 
       addBullet(enemyPos);
     }
+    #endif // !DEBUG
 }
 
 static inline Vect<2u, float> rotate(Vect<2u, float> a, Vect<2u, float> b)
