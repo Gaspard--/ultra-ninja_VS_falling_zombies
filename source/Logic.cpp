@@ -210,17 +210,23 @@ void Logic::checkEvents(Display const &display)
 {
   if (_player.canMove)
     {
-      if (display.isKeyPressed(GLFW_KEY_Q))
-          this->_player.dash(1);
-      if (display.isKeyPressed(GLFW_KEY_E))
-          this->_player.dash(-1);
+      if (display.isKeyPressed(GLFW_KEY_Q) ||
+	  ((display.isKeyPressed(GLFW_KEY_LEFT_SHIFT) ||
+	    display.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) &&
+	   (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))))
+	this->_player.dash(1);
+      if (display.isKeyPressed(GLFW_KEY_E) ||
+	  ((display.isKeyPressed(GLFW_KEY_LEFT_SHIFT) ||
+	    display.isKeyPressed(GLFW_KEY_RIGHT_SHIFT)) &&
+	   (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))))
+	this->_player.dash(-1);
       if (display.isKeyPressed(GLFW_KEY_D) || display.isKeyPressed(GLFW_KEY_RIGHT))
-        this->_player.acceleration(-1);
+	this->_player.acceleration(-1);
       if (display.isKeyPressed(GLFW_KEY_A) || display.isKeyPressed(GLFW_KEY_LEFT))
-        this->_player.acceleration(1);
+	this->_player.acceleration(1);
       if (display.isKeyPressed(GLFW_KEY_SPACE) || display.isKeyPressed(GLFW_KEY_W)
-          || display.isKeyPressed(GLFW_KEY_UP))
-        this->_player.jump();
+	  || display.isKeyPressed(GLFW_KEY_UP))
+	this->_player.jump();
       if (display.isKeyPressed(GLFW_KEY_S) || display.isKeyPressed(GLFW_KEY_DOWN))
         this->_player.fastFall();
     }
