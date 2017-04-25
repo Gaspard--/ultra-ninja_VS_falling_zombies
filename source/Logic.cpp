@@ -58,9 +58,11 @@ void Logic::spawnEnemy()
 
 void Logic::tick(void)
 {
-  _time++;
-
-  spawnEnemy();
+  if (!_gameOver)
+    {
+      _time++;
+      spawnEnemy();
+    }
 
   _multiplier += (1.0 / 600.0);
 
@@ -86,7 +88,7 @@ void Logic::tick(void)
       s->shoot();
 
   for (auto& b : _bullets)
-    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture))
+    if (_physics.haveCollision(_player.entity.fixture, b->entity.fixture) && !b->isUseless)
       b->hit(_player);
 
   for_each_entity([](auto &e) { e->update(); });
@@ -105,7 +107,10 @@ void Logic::tick(void)
   _projectiles.erase(std::remove_if(_projectiles.begin(), _projectiles.end(), [](auto const &e){ return e->isUseless; }), _projectiles.end());
   SoundHandler::getInstance().deleteSounds();
   if (this->getOccupedSpace() >= _maxMobs)
-    _gameOver = true;
+    {
+      _gameOver = true;
+      _player.canMove = false;
+    }
 }
 
 void    Logic::addToScore(int add)
@@ -281,7 +286,7 @@ void Logic::handleButton(GLFWwindow *, Button button)
 {
   Vect<2u, double> vec(getMouse() - getPlayerPos());
 
-  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS)
+  if (button.button != GLFW_MOUSE_BUTTON_LEFT || button.action != GLFW_PRESS || _gameOver)
     return ;
   _addSword(getPlayerPos() + vec.normalized() * 0.04, vec.normalized() * 0.1);
   Player::playRandomPlayerActionSound();
