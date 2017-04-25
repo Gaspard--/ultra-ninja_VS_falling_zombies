@@ -43,6 +43,25 @@ Display& Display::getInstance()
   return instance;
 }
 
+void Display::resetPlanet()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, planetRenderTexture.framebuffer);
+    glViewport(0, 0, 1024, 1024);
+    glClearColor(0.2, 0.2, 0.5, 0.2);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glEnable(GL_BLEND);
+    {
+      Vect<2u, float> olddim(dim);
+
+      dim = {1.0, 1.0};
+      displayPlanet(planet, 2.0, {1.0, 0.0});
+      dim = olddim;
+    }
+    glDisable(GL_BLEND);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glViewport(0, 0, size[0], size[1]);
+}
+
 Display::Display()
   : window([this]{
       std::unique_ptr<GLFWwindow, decltype(&glfwDestroyWindow)> window(glfwCreateWindow(1920, 1080, "ultra-ninja VS falling zombies", nullptr, nullptr), &glfwDestroyWindow);
@@ -109,22 +128,7 @@ Display::Display()
     glVertexAttribPointer(0, 2, GL_FLOAT, false, 4 * sizeof(float), nullptr);
     glVertexAttribPointer(1, 2, GL_FLOAT, false, 4 * sizeof(float), reinterpret_cast<void *>(2u * sizeof(float)));
   }
-  {
-    glBindFramebuffer(GL_FRAMEBUFFER, planetRenderTexture.framebuffer);
-    glViewport(0, 0, 1024, 1024);
-    glClearColor(0.2, 0.2, 0.5, 0.2);
-    glClear(GL_COLOR_BUFFER_BIT);
-    glEnable(GL_BLEND);
-    {
-      Vect<2u, float> olddim(dim);
-
-      dim = {1.0, 1.0};
-      displayPlanet(planet, 2.0, {1.0, 0.0});
-      dim = olddim;
-    }
-    glDisable(GL_BLEND);
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  }
+  resetPlanet();
 }
 
 Display::~Display()

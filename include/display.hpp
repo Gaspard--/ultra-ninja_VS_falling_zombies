@@ -78,6 +78,8 @@ public:
   void render(Logic const &);
   bool isRunning() const;
   bool isKeyPressed(int key) const;
+
+  void resetPlanet();
 };
 
 #endif

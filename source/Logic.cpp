@@ -221,7 +221,10 @@ void Logic::checkEvents(Display const &display)
     }
 
   if (display.isKeyPressed(GLFW_KEY_ENTER) && _gameOver)
-    Logic::initLogic(_maxMobs);
+    {
+      Display::getInstance().resetPlanet();
+      Logic::initLogic(_maxMobs);
+    }
 
   if (display.isKeyPressed(GLFW_KEY_C))
     {
