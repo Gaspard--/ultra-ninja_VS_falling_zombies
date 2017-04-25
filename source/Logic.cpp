@@ -25,8 +25,7 @@ Logic::Logic(unsigned int maxMobs)
 
 void Logic::spawnEnemy()
 {
-  return;
-  if (!(rand() % (unsigned int)(_enemies.size() * 20 + 10 + (50 / (_time / 60.0 + 1)))))
+  if (!(rand() % (unsigned int)(1 + _enemies.size() * (10 / ((_time / 60.0) / 60.0 + 0.1)))))
     {
       double                angle = std::rand();
       double                dist = (1 + (double)(std::rand() % 10 + 1) / 10.0);
@@ -72,10 +71,15 @@ void Logic::tick(void)
     if (_physics.haveCollision((*i)->entity.fixture, _player.entity.fixture))
       (*i)->attack(_player);
 
-  for (auto i(_enemies.begin()); i != _enemies.end(); ++i)
-    for (auto j(_swords.begin()); j != _swords.end(); ++j)
-      if (_physics.haveCollision((*i)->entity.fixture, (*j)->entity.fixture))
-        (*j)->hit(**i, _player);
+  for (auto& s : _swords)
+    {
+      for (auto& e : _enemies)
+        if (_physics.haveCollision(e->entity.fixture, s->entity.fixture))
+          s->hit(*e, _player);
+      for (auto& b : _bullets)
+        if (_physics.haveCollision(b->entity.fixture, s->entity.fixture))
+          s->hit(*b, _player);
+    }
 
   for (auto& s : _shooters)
     if (s->isInRange(_player))
@@ -207,6 +211,9 @@ void Logic::checkEvents(Display const &display)
       if (display.isKeyPressed(GLFW_KEY_S) || display.isKeyPressed(GLFW_KEY_DOWN))
         this->_player.fastFall();
     }
+
+  if (display.isKeyPressed(GLFW_KEY_ENTER) && _gameOver)
+    Logic::initLogic(_maxMobs);
 
   if (display.isKeyPressed(GLFW_KEY_C))
     {
