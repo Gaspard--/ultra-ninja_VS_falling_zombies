@@ -1,5 +1,5 @@
 CPPFLAGS +=	-W -Wall -Wextra
-CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14 -g3
+CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14
 
 LDFLAGS = `pkg-config --static --libs glfw3` -lfreetype -lsfml-audio -lsfml-system
 
