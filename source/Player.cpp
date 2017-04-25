@@ -97,5 +97,5 @@ void Player::playRandomPlayerActionSound()
 void Player::playRandomPlayerEuuuhSound()
 {
   SoundHandler &sh = SoundHandler::getInstance();
-  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()], 70);
+  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()], 50);
 }
