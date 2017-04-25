@@ -26,6 +26,9 @@ public:
   virtual void onDeath();
   void getRekt(int);
 
+  static void playRandomSpawnSound(void);
+  static void playRandomDeathSound(void);
+
   Entity &entity;
 };
 
