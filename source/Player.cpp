@@ -1,6 +1,7 @@
 #include "Player.hpp"
 #include "Logic.hpp"
 #include "TextureHandler.hpp"
+#include "SoundHandler.hpp"
 
 Player::Player(Entity &e, bool canMove)
   : _cooldownDash(0), entity(e), canMove(canMove)
@@ -59,22 +60,42 @@ void Player::dash(int dir)
   {
     this->entity.fixture.speed += vec.normalized() * (0.01 * (1.0 + entity.isOnPlanet)) * dir;
     _cooldownDash = 15;
+    SoundHandler::getInstance().playSound(SoundHandler::DASH);
   }
 }
 
 void Player::jump()
 {
   if (this->entity.isOnPlanet)
-    this->entity.fixture.speed = this->entity.fixture.speed + this->entity.fixture.pos.normalized() * 0.03;
+    {
+      this->entity.fixture.speed = this->entity.fixture.speed + this->entity.fixture.pos.normalized() * 0.03;
+      playRandomPlayerActionSound();
+    }
 }
 
 void Player::fastFall()
 {
   if (!this->entity.isOnPlanet)
-    this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
+    {
+      this->entity.fixture.speed += -(this->entity.fixture.pos.normalized() * 0.04);
+      // playRandomPlayerActionSound();
+    }
 }
 
 void Player::getRekt(int dmg)
 {
   _hp -= dmg;
+  Player::playRandomPlayerEuuuhSound();
+}
+
+void Player::playRandomPlayerActionSound()
+{
+  SoundHandler &sh = SoundHandler::getInstance();
+  sh.playSound(sh.player_sounds[rand() % sh.player_sounds.size()], 60);
+}
+
+void Player::playRandomPlayerEuuuhSound()
+{
+  SoundHandler &sh = SoundHandler::getInstance();
+  sh.playSound(sh.euuuh[rand() % sh.euuuh.size()]);
 }

@@ -212,10 +212,14 @@ void    Display::displayInterface(void)
               { 0.5 + 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace(), 0.5 - 0.05 * logic.getOccupedSpace()});
   displayText("Current Population",
               256, {0.05f, 0.05f}, {-0.017f * 18, -0.315f}, {sqrt(camera.length2()), 0}, {1.0, 1.0, 1.0});
+  displayText("Combo   " + logic.getCombo(), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -0.60}, {1, 0}, {1.0, 1.0, 1.0});
   displayText("Score   " + std::to_string(logic.getScore()), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -0.80}, {1, 0}, {1.0, 1.0, 1.0});
   displayText("Time   " + logic.getTime(), 256, {0.1f, 0.1f}, {-0.95 / dim[0], -1.00}, {1, 0}, {1.0, 1.0, 1.0});
   if (logic.getGameOver())
-    displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.4}, {1, 0}, {1.0, 0.25, 0.0});
+    {
+      displayText("Game Over", 256, {0.2f, 0.2f}, {-0.65, 0.42}, {1, 0}, {1.0, 0.25, 0.0});
+      displayText("Press enter to retry", 256, {0.1f, 0.1f}, {-0.65, -0.82}, {1, 0}, {1.0, 0.25, 0.0});
+    }
 }
 
 void Display::displayPlanet(Texture texture, float size, Vect<2u, float> rotation)
