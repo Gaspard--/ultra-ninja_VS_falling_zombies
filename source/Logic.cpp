@@ -217,6 +217,9 @@ void Logic::checkEvents(Display const &display)
         this->_player.fastFall();
     }
 
+  if (display.isKeyPressed(GLFW_KEY_ENTER) && _gameOver)
+    Logic::initLogic(_maxMobs);
+
   if (display.isKeyPressed(GLFW_KEY_C))
     {
       double                angle = std::rand();
