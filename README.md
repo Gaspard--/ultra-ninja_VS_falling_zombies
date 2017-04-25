@@ -7,12 +7,12 @@
 4. `make` the project
 5. Launch the game: `./ultra-ninja_VS_falling_zombies`
 
-**NOT TESTED ON WINDOWS**
+**WORKS ON UNIX, BUT SHOULD WORK ON OTHERS SYSTEMS**
 
 ## Story
 
-Ken, the Ultra-Ninja spent most of his life mediting on the small planet Red.
-There he aquired his Ultra-powers.
+Ken, the Ultra-Ninja spent most of his life meditating on the small planet Red.
+There he acquired his Ultra-powers.
 Sadly, the rest of the universe was infected by a virus, which turned everyone into a zombie.
 Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 
@@ -22,9 +22,9 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 * W, Space or Up : Jump
 * S or Down : Fast Fall
 * [Q and E] or [Shift + A and D or Right and Left keys] : Dash
-* Mouth and left-click : hit Zombies in the wanted directions
+* Mouse and left-click : hit Zombies in the wanted directions
 
-## Developpers
+## Developers
 * [David Zeng](https://github.com/Arcsz)
 * [Jakob Kellendonk](https://github.com/Gaspard--)
 * [Jamy Bailly](https://github.com/baillyjamy)
