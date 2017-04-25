@@ -35,7 +35,7 @@ SRCS_CPP = 	source/main.cpp \
 
 OBJS = 	$(SRCS_CPP:.cpp=.o)
 
-all: grep_todo $(NAME)
+all: $(NAME)
 
 $(NAME):$(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
