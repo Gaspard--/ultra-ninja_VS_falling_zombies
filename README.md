@@ -21,7 +21,7 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 * Arrow keys (Right and Left) or A and D : move the Ultra-Ninja to right and left
 * W, Space or Up : Jump
 * S or Down : Fast Fall
-* [A and E] or [Shift + A and D or Right and Left keys] : Dash
+* [Q and E] or [Shift + A and D or Right and Left keys] : Dash
 * Mouth and left-click : hit Zombies in the wanted directions
 
 ## Developpers
@@ -34,5 +34,5 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 
 ## Special Thanks
 
-* Dimitri Mass (dev-help and some ideas)
+* Dimitri Mas (dev-help and some ideas)
 * Yoann Jay (mic lender for sound effects)
