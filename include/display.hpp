@@ -35,6 +35,7 @@ private:
   RenderContext textContext;
   glBuffer textBuffer;
   Texture planet;
+  Texture background;
   Texture bloodSpray[3];
   Texture mobSpray[3];
   RenderTexture planetRenderTexture;

@@ -2,6 +2,7 @@
 #include <fstream>
 #include <memory>
 #include <iostream>
+#include <sstream>
 #include "my_opengl.hpp"
 
 void my_opengl::shaderError(GLenum const shadertype, GLuint const shader)
@@ -265,12 +266,12 @@ Texture::operator GLuint() const
 Texture my_opengl::loadTexture(std::string const &name)
 {
   auto bytesToInt = [](unsigned char *bytes)
-  {
-    return ((unsigned)bytes[3] << 24u)
+    {
+      return ((unsigned)bytes[3] << 24u)
       | ((unsigned)bytes[2] << 16u)
       | ((unsigned)bytes[1] << 8u)
       | (unsigned)bytes[0];
-  };
+    };
   std::ifstream file(name, std::ios::binary);
 
   if (!file)
@@ -300,9 +301,14 @@ Texture my_opengl::loadTexture(std::string const &name)
     file.read(reinterpret_cast<char *>(&data[0]), std::streamsize(dim[0] * dim[1] * sizeof(unsigned int)));
 
     std::streamsize r(file.gcount());
-    if (r != std::streamsize(dim[0] * dim[1] * sizeof(unsigned int)))
-      throw std::runtime_error(name + ": file seems truncated");
 
+    if (r != std::streamsize(dim[0] * dim[1] * sizeof(unsigned int)))
+      {
+	std::stringstream s;
+
+	s << name << ": file seems truncated, " << r << std::string(" bytes read.");
+	throw std::runtime_error(s.str());
+      }
     file.exceptions(std::ios::goodbit);
 
     // {
@@ -345,6 +351,6 @@ Texture my_opengl::loadTexture(std::string const &name)
     glBindTexture(GL_TEXTURE_2D, 0);
     return texture;
   } catch (std::exception const &e) {
-    throw std::runtime_error(name + ": failed to load texture");
+    throw std::runtime_error(name + ": failed to load texture(" + std::string(e.what()) + ")");
   }
 }

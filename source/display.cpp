@@ -61,6 +61,7 @@ Display::Display()
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
+  , background(my_opengl::loadTexture("resources/BackgroundSpace.bmp"))
   , bloodSpray{my_opengl::loadTexture("resources/BloodSpray.bmp"), my_opengl::loadTexture("resources/BloodSpray2.bmp"), my_opengl::loadTexture("resources/BloodSpray3.bmp")}
   , mobSpray{my_opengl::loadTexture("resources/MobSpray.bmp"), my_opengl::loadTexture("resources/MobSpray2.bmp"), my_opengl::loadTexture("resources/MobSpray3.bmp")}
   , planetRenderTexture({1024, 1024})
@@ -355,6 +356,7 @@ void Display::render(Logic const &logic)
 
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
+  displayPlanet(background, 4.0, camera.normalized());
   displayPlanet(planetRenderTexture.texture, logic.getPlanetSize(), camera);
   logic.for_each_entity([this, logic](auto const &e)
                         {
