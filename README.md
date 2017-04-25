@@ -1,4 +1,4 @@
-# Ultra ninja VS falling zombies
+![img](https://raw.githubusercontent.com/Gaspard--/ultra-ninja_VS_falling_zombies/master/resources/Title.png)
 
 ## Usage
 1. Clone the project `git clone https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies.git` or [download as zip](https://github.com/Gaspard--/ultra-ninja_VS_falling_zombies/archive/master.zip)
