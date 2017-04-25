@@ -1,7 +1,3 @@
-CC =	g++
-
-RM =	rm -f
-
 CPPFLAGS +=	-W -Wall -Wextra
 CPPFLAGS +=	-I./include `freetype-config --cflags` -std=c++14 -g3
 
@@ -38,7 +34,7 @@ OBJS = 	$(SRCS_CPP:.cpp=.o)
 all: $(NAME)
 
 $(NAME):$(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 grep_todo:
 	@grep --color=auto -ir --include "*.cpp" -E "(FIXME|TODO)" . || true
