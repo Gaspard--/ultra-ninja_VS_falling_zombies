@@ -75,7 +75,6 @@ void SoundHandler::playSound(SoundList id, int volume)
   sound->setVolume(volume);
   sound->play();
   _instance->_soundsPlaying.push_back(sound);
-  std::cout << "playing " << id  << std::endl;
 }
 
 void SoundHandler::deleteSounds()
