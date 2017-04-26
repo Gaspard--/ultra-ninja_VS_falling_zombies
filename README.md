@@ -36,3 +36,8 @@ Upon waking up, Ken the Ultra-Ninja sets out to defend his small world...
 
 * Dimitri Mas (dev-help and some ideas)
 * Yoann Jay (mic lender for sound effects)
+
+## Ludum Dare Page
+
+This game was developed during the LD38.
+You can visit our LD38 game page [here](https://ldjam.com/events/ludum-dare/38/ultra-ninja-vs-falling-zombies).
