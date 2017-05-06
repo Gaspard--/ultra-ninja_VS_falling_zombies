@@ -29,6 +29,10 @@ Display::GlfwContext::GlfwContext()
                        {
                          throw std::runtime_error(str);
                        });
+  if (gl3wInit())
+    throw std::runtime_error("opengl: failed to initialize 3.0 bindings");    
+  if (!gl3wIsSupported(3, 0))
+    throw std::runtime_error("opengl: Opengl 3.0 not supported");
   if (!glfwInit())
     throw std::runtime_error("opengl: failed to initialize glfw");
 }
@@ -70,10 +74,7 @@ Display::Display()
         throw std::runtime_error("opengl: failed to open window");
       glfwMakeContextCurrent(window.get());
       glfwSwapInterval(1);
-      if (gl3wInit())
-        throw std::runtime_error("opengl: failed to initialize 3.0 bindings");
-      if (!gl3wIsSupported(3, 0))
-        throw std::runtime_error("opengl: Opengl 3.0 not supported");
+    
       return window;
     }())
   , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
