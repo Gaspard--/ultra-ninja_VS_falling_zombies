@@ -2,6 +2,7 @@
 # define SOUNDHANDLER_HPP_
 
 # include <map>
+# include <array>
 # include <memory>
 # include <SFML/Audio.hpp>
 
