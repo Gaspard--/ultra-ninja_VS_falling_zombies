@@ -80,7 +80,7 @@ Display::Display()
         throw std::runtime_error("opengl: Opengl 3.0 not supported");
       return window;
     }())
-  , fontHandler("resources/ObelixPro-Broken-cyr.ttf")
+  , fontHandler(std::string(getenv("PWD")) + "/resources/ObelixPro-Broken-cyr.ttf")
   , textureContext(contextFromFiles("texture"))
   , textContext(contextFromFiles("text"))
   , planet(my_opengl::loadTexture("resources/PlanetRed.bmp"))
@@ -191,7 +191,7 @@ void Display::displayText(std::string const &text, unsigned int fontSize, Vect<2
                          }, fontSize, step);
 }
 
-void Display::displayRect(Rect const &rect)
+void Display::displayRect(Rectangle const &rect)
 {
   Bind<RenderContext> bind(rectContext);
   float buffer[4u * 4u];

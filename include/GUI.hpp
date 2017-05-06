@@ -23,14 +23,14 @@ public:
 
   public:
 
-    Button(const Rect& rect, const std::string str);
+    Button(const Rectangle& rect, const std::string str);
 
     bool        isOverflew(const Vect<2, float>&);
     void        draw(Display&);
 
   private:
 
-    Rect                _rect;
+    Rectangle                _rect;
     Vect<4, float>      _inactiveColor;
     Vect<4, float>      _overflewColor;
     std::string         _str;

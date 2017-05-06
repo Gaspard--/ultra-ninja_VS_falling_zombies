@@ -1,7 +1,7 @@
 # include "GUI.hpp"
 # include "display.hpp"
 
-GUI::Button::Button(const Rect& rect, const std::string str) : _rect(rect), _inactiveColor(_rect.color), _overflewColor(_rect.color)
+GUI::Button::Button(const Rectangle& rect, const std::string str) : _rect(rect), _inactiveColor(_rect.color), _overflewColor(_rect.color)
 {
   _str = str;
   _overflewColor = Vect<4, float>(_inactiveColor[0] * 1.1,

@@ -3,9 +3,9 @@
 
 # include "Vect.hpp"
 
-struct  Rect
+struct  Rectangle
 {
-  Rect(const Vect<2, float>& i_pos, const Vect<2, float>& i_size, const Vect<4, float>& i_color):
+  Rectangle(const Vect<2, float>& i_pos, const Vect<2, float>& i_size, const Vect<4, float>& i_color):
     pos(i_pos),
     size(i_size),
     color(i_color) {}

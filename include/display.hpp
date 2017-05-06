@@ -1,16 +1,17 @@
 #ifndef DISPLAY_HPP_
 # define DISPLAY_HPP_
 
-#include <memory>
+# include <memory>
+# include <cstdlib>
 
-#include "Logic.hpp"
-#include "Vect.hpp"
-#include "render_context.hpp"
-#include "my_opengl.hpp"
-#include "FreeTypeLib.hpp"
-#include "Entity.hpp"
-#include "Rect.hpp"
-#include "render_texture.hpp"
+# include "Logic.hpp"
+# include "Vect.hpp"
+# include "render_context.hpp"
+# include "my_opengl.hpp"
+# include "FreeTypeLib.hpp"
+# include "Entity.hpp"
+# include "Rect.hpp"
+# include "render_texture.hpp"
 
 class Display
 {
@@ -50,7 +51,7 @@ public:
 
   void displayText(std::string const &txt, unsigned int fontSize, Vect<2u, float> step, Vect<2u, float> textPos,  Vect<2u, float> rotation, Vect<3u, float> color);
 
-  void displayRect(Rect const &);
+  void displayRect(Rectangle const &);
 
   void displayPlanet(Texture texture, float size, Vect<2u, float> rotation);
 
