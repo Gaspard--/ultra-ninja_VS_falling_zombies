@@ -1,6 +1,7 @@
 #ifndef ENEMYSMALL_H_
 # define ENEMYSMALL_H_
 
+# include <cstdlib>
 # include "Enemy.hpp"
 
 class EnemySmall : public Enemy
